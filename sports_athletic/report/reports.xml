@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- link css file -->
+        <template id="minimal_layout_sa_report" inherit_id="report.minimal_layout" name="sa_report minimal_layout">
+            <xpath expr='//link[@href="/web/static/lib/bootstrap/css/bootstrap.css"]' position="before">
+                <link rel="stylesheet" href="/sports_athletic/static/src/css/style.css"/>
+            </xpath>
+        </template>
+        <!-- report declaration -->
+
+        <!-- report achat demande -->
+        <report
+                id="report_achat_demande_da"
+                string="Demande d'achat"
+                model="achat.demande"
+                report_type="qweb-pdf"
+                file="sports_athletic.achat_demande_report"
+                name="sports_athletic.achat_demande_report"
+        />
+
+        <report
+                id="report_mission_order_mo"
+                string="Ordre de mission"
+                model="sa.mission.order"
+                report_type="qweb-pdf"
+                file="sports_athletic.mission_order_report"
+                name="sports_athletic.mission_order_report"
+        />
+
+        <report
+                id="report_sa_expense_mo"
+                string="Note de frais"
+                model="sa.expense"
+                report_type="qweb-pdf"
+                file="sports_athletic.sa_expense_report"
+                name="sports_athletic.sa_expense_report"
+        />
+
+    </data>
+</openerp>

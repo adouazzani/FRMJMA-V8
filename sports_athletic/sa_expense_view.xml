@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <!-- type record start -->
+        <!-- tree view -->
+        <record model="ir.ui.view" id="sa_expense_tree_view">
+            <field name="name">sa.expense.tree.view</field>
+            <field name="type">tree</field>
+            <field name="model">sa.expense</field>
+            <field name="arch" type="xml">
+                <tree string="Note de frais">
+                    <field name="name"/>
+                    <field name="applicant"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="amount_total_expense"/>
+                    <field name="reason"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        <!-- form view -->
+        <record model="ir.ui.view" id="sa_expense_form_view">
+            <field name="name">sa.expense.form.view</field>
+            <field name="type">form</field>
+            <field name="model">sa.expense</field>
+            <field name="arch" type="xml" >
+                <form string="Note de frais" version="8.0">
+                    <header>
+                        <button name="action_validate" string="Valider" class="oe_highlight oe_read_only" type="object" attrs="{'invisible': [('state','not in',['draft'])]}"/>
+                        <button name="action_draft" string="Remettre en brouillon" class="oe_highlight oe_read_only" type="object" attrs="{'invisible': [('state','in',['draft'])]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,validate" />
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                            </group>
+                            <group>
+                                <field name="applicant"/>
+                                <field name="job" readonly="1"/>
+                                <field name="department" readonly="1"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="start_date"/>
+                            </group>
+                            <group>
+                                <field name="end_date"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="amount_total_expense"/>
+                            </group>
+                            <group>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Rubriques">
+                                <group>
+                                    <field name="expense_line" nolabel="1">
+                                        <tree editable="bottom">
+                                            <field name="object"/>
+                                            <field name="start_date"/>
+                                            <field name="end_date"/>
+                                            <field name="destination"/>
+                                            <field name="means_of_transport"/>
+                                            <field name="meal" sum="Total"/>
+                                            <field name="traveled_km" sum="Total"/>
+                                            <field name="mileage_allowance" sum="Total"/>
+                                            <field name="ticket" sum="Total"/>
+                                            <field name="overnight" sum="Total"/>
+                                            <field name="various" sum="Total"/>
+                                            <field name="notes"/>
+                                            <field name="amount_total" sum="Total"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <!-- search view -->
+        <record model="ir.ui.view" id="sa_expense_search_view">
+            <field name="name">sa.expense.search.view</field>
+            <field name="model">sa.expense</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Mutuelle">
+                    <field name="name"/>
+                    <field name="applicant"/>
+                    <field name="reason"/>
+                    <group expand="0" string="Groupements">
+                        <filter string="Demandeur" domain="[]" context="{'group_by':'applicant'}" />
+                        <filter string="Département" domain="[]" context="{'group_by':'department'}" />
+                        <filter string="Poste" domain="[]" context="{'group_by':'job'}" />
+                        <filter string="Etat" domain="[]" context="{'group_by':'state'}" />
+                    </group>
+                </search>
+            </field>
+        </record>
+        <!-- action record -->
+        <record model="ir.actions.act_window" id="sa_expense_action">
+            <field name="name">Note de frais</field>
+            <field name="res_model">sa.expense</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="sa_expense_tree_view"/>
+        </record>
+        <!-- technology record end -->
+
+        <menuitem action="sa_expense_action" id="hr_expense.menu_expense_all" name="Note de frais" parent="hr_expense.next_id_49"/>
+
+    </data>
+</openerp>

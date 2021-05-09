@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+		<record id="wizard_liasse_view" model="ir.ui.view">
+			<field name="name">Liasse Fiscale</field>
+			<field name="model">wizard.liasse</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string=" ">
+                    <group colspan="4">
+                        <!--field name="fiscalyear" on_change="onchange_fiscalyear(fiscalyear)" domain="[('company_id','=',company_id)]"/-->
+                        <field name="fiscalyear" on_change="onchange_fiscalyear(fiscalyear)"/>
+                        <separator string="Période" colspan="4"/>
+                        <field name="period_from"/>
+                        <field name="period_to"/>
+                    </group>
+                    <separator string="" colspan="4"/>
+                    <group colspan="4" col="6">
+                        <button icon="gtk-cancel" special="cancel" string="Cancel"/>
+						<button name="print_report" type="object" string="imprimer" icon="gtk-go-forward" />
+                    </group>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_wizard_liasse" model="ir.actions.act_window">
+			<field name="name">Liasse Fiscale</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">wizard.liasse</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+    
+    
+    	<menuitem action="action_wizard_liasse" 
+              id="wizard_liasse_menu" 
+              name="Liasse Fiscale"
+              parent="account.final_accounting_reports"
+              sequence="20"
+            />
+            
+</data>
+</openerp>

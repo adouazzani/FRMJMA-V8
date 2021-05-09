@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <template id="purchase_quotation_frma_report" inherit_id="purchase.report_purchasequotation_document">
+
+            <xpath expr="//table[@class='table table-condensed']" position="replace">
+
+                <table class="table table-condensed">
+                    <thead>
+                        <tr>
+                            <th><strong>Designation</strong></th>
+                            <t t-if="o.display_slip">
+                                <th><strong>Fourniture</strong></th>
+                                <th><strong>Location</strong></th>
+                                <th><strong>Pose</strong></th>
+                                <th><strong>Depose</strong></th>
+                            </t>
+                            <th class="text-center"><strong>Quantité</strong></th>
+                            <th class="text-center"><strong>P.U H.T</strong></th>
+                            <th class="text-center"><strong>Total H.T</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.order_line" t-as="line">
+                            <td>
+                                <span t-field="line.product_id.name_template"/>
+                            </td>
+                            <t t-if="o.display_slip">
+                                <td>
+                                    <span t-field="line.supply"/>
+                                </td>
+                                <td>
+                                    <span t-field="line.renting"/>
+                                </td>
+                                <td>
+                                    <span t-field="line.pose"/>
+                                </td>
+                                <td>
+                                    <span t-field="line.depose"/>
+                                </td>
+                            </t>
+                            <td class="text-right">
+                                <span t-field="line.product_qty"/>
+                                <span t-field="line.product_uom.name" groups="product.group_uom"/>
+                            </td>
+                            <td class="text-right">
+                                <span t-field="line.price_unit"/>
+                            </td>
+                            <td class="text-right">
+                                <span t-field="line.price_subtotal"
+                                      t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="row">
+                    <div class="col-xs-4 pull-right">
+                        <table class="table table-condensed">
+                            <tr class="border-black">
+                                <td><strong>Total HT</strong></td>
+                                <td class="text-right">
+                                    <span t-field="o.amount_untaxed"
+                                          t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>taxes</td>
+                                <td class="text-right">
+                                    <span t-field="o.amount_tax"
+                                          t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+                                </td>
+                            </tr>
+                            <tr class="border-black">
+                                <td><strong>Total TTC</strong></td>
+                                <td class="text-right">
+                                    <span t-field="o.amount_total"
+                                          t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+            </xpath>
+
+        </template>
+
+    </data>
+</openerp>

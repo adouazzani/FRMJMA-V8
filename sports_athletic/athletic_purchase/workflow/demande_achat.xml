@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+<record model="workflow" id='athletic_purchase_demande_achat'>
+            <field name="name">athletic_purchase.demande_achat</field>
+            <field name="osv">athletic_purchase.demande_achat</field>
+            <field name="on_create">True</field>
+</record>
+<!-- Activities -->
+
+<record model="workflow.activity" id='act_draft'>
+            <field name="wkf_id" ref='athletic_purchase_demande_achat' />
+            <field name="flow_start">True</field>
+            <!-- <field name="flow_stop">True</field> -->
+            <field name="name">draft</field>
+             <field name="kind">function</field>
+            <field name="action">action_draft()</field>
+</record>
+<record model="workflow.activity" id='act_resp_dem'>
+            <field name="wkf_id" ref='athletic_purchase_demande_achat' />
+            <!-- <field name="flow_start">True</field> -->
+            <!-- <field name="flow_stop">True</field> -->
+            <field name="name">resp_dem</field>
+            <field name="kind">function</field>
+            <field name="action">action_resp_dem()</field>
+</record>
+<record model="workflow.activity" id='act_resp_fin'>
+            <field name="wkf_id" ref='athletic_purchase_demande_achat' />
+            <!-- <field name="flow_start">True</field> -->
+            <!-- <field name="flow_stop">True</field> -->
+            <field name="name">resp_fin</field>
+            <field name="kind">function</field>
+            <field name="action">action_resp_fin()</field>
+</record>
+<record model="workflow.activity" id='act_dir_frma'>
+            <field name="wkf_id" ref='athletic_purchase_demande_achat' />
+            <field name="flow_stop">True</field>
+            <!-- <field name="flow_stop">True</field> -->
+            <field name="name">dir_frma</field>
+            <field name="kind">function</field>
+            <field name="action">action_dir_frma()</field>
+</record>
+<record model="workflow.activity" id='act_cancel_demande_achat'>
+            <field name="wkf_id" ref='athletic_purchase_demande_achat' />
+            <field name="flow_stop">True</field>
+            <!-- <field name="flow_stop">True</field> -->
+            <field name="name">Annuler</field>
+            <field name="kind">function</field>
+            <field name="action">action_cancel()</field>
+</record>
+<!-- Transitions -->
+
+<record id="t_draft_2_resp_dem" model="workflow.transition">
+            <field name="act_from" ref="act_draft"/>
+            <field name="act_to" ref="act_resp_dem"/>
+            <field name="signal">bt_resp_dem</field>
+</record>
+<record id="t_resp_dem_2_resp_fin" model="workflow.transition">
+            <field name="act_from" ref="act_resp_dem"/>
+            <field name="act_to" ref="act_resp_fin"/>
+            <field name="signal">bt_resp_fin</field>
+</record>
+<record id="t_resp_fin_2_dir_frma" model="workflow.transition">
+            <field name="act_from" ref="act_resp_fin"/>
+            <field name="act_to" ref="act_dir_frma"/>
+            <field name="signal">bt_dir_frma</field>
+</record>
+
+
+<record id="t_draft_2_cancel_dem" model="workflow.transition">
+            <field name="act_from" ref="act_draft"/>
+            <field name="act_to" ref="act_cancel_demande_achat"/>
+            <field name="signal">bt_cancel</field>
+</record>
+<record id="t_resp_dem_2_cancel_dem" model="workflow.transition">
+            <field name="act_from" ref="act_resp_dem"/>
+            <field name="act_to" ref="act_cancel_demande_achat"/>
+            <field name="signal">bt_cancel</field>
+</record>
+<record id="t_resp_fin_2_cancel_dem" model="workflow.transition">
+            <field name="act_from" ref="act_resp_fin"/>
+            <field name="act_to" ref="act_cancel_demande_achat"/>
+            <field name="signal">bt_cancel</field>
+</record>
+</data>
+</openerp>

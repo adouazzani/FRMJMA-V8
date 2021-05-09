@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<document filename="test.pdf">
+       <template>
+	     <pageTemplate id="main">
+		 <pageGraphics>
+		
+                <setFont name="Helvetica-Bold" size="7"/>
+              <!-- Partie 1 -->
+
+	        <drawString x="1.1cm" y="26.5cm">   [[o.name]]  </drawString>
+              
+         
+		</pageGraphics>
+		 <frame id="first" x1="0.5in" y1="0.5in" width="20cm" height="28cm"/>
+		</pageTemplate>
+		</template>
+		<stylesheet>
+		</stylesheet>
+		<story>
+		<para>[[ repeatIn(objects,'o') ]]</para>
+		</story>
+</document>
+

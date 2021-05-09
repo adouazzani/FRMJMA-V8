@@ -1,0 +1,437 @@
+/* Style achat demande report */
+
+.header_da, .info1_table, .product_table{
+    margin: auto;
+}
+
+.header_da td{
+    font-size: 25px;
+    height: 25px;
+    text-align: center;
+    font-weight: bold;
+    vertical-align: middle;
+    width: 320px;
+    font-family: "Times New Roman";
+}
+
+.header_da tr td:nth-child(2){
+    width: 230px;
+}
+
+.logo_es{
+    width: 100px;
+    height: 100px;
+}
+
+.info1_table td{
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    height: 30px;
+    width: 350px;
+    font-family: "Times New Roman";
+}
+
+.info1_table{
+    margin-bottom: 50px;
+}
+
+.info2_table td{
+    font-size: 15px;
+    font-weight: bold;
+    width: 200px;
+    height: 30px;
+    font-family: "Times New Roman";
+}
+
+.info2_table tr td:nth-child(2){
+    width: 600px;
+}
+
+.info2_table{
+    margin-bottom: 20px;
+}
+
+.product_table{
+    border: 1px solid black;
+    margin-bottom: 20px;
+}
+
+.product_table td{
+    text-align: center;
+    width: 120px;
+    vertical-align: middle;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    height: 25px;
+    font-family: "Times New Roman";
+}
+
+.product_table tr:nth-child(1) td{
+    font-weight: bold;
+    height: 30px;
+    border: 1px solid black;
+}
+
+.product_table tr td:nth-child(1){
+    width: 210px;
+}
+
+.product_table tr td:nth-last-child(1){
+    width: 160px;
+}
+
+.approval_circuit{
+    font-size: 18px;
+    text-align: center;
+    font-weight: bold;
+    text-decoration: underline;
+    margin-bottom: 20px;
+    font-family: "Times New Roman";
+}
+
+.approval_table td{
+    text-align: center;
+    height: 80px;
+    vertical-align: middle;
+    border: 1px solid black;
+    padding: 5px;
+    font-family: "Times New Roman";
+}
+
+.approval_table tr td:nth-child(1){
+    font-weight: bold;
+    text-align: left;
+}
+
+.approval_table tr:nth-child(1) td{
+    height: 30px;
+}
+
+.approval_table tr td:nth-child(1){
+    width: 300px;
+}
+
+.approval_table tr td:nth-child(2){
+    width: 250px;
+}
+
+.approval_table tr td:nth-child(3){
+    width: 100px;
+}
+
+.approval_table tr td:nth-child(4){
+    width: 200px;
+}
+
+.info1_mo_table{
+    margin-left:auto;
+    margin-right:auto;
+    margin-bottom: 100px;
+}
+
+.info1_mo_table tr:nth-child(1) td{
+    padding-top: 75px;
+}
+
+.info1_mo_table td{
+    text-align: center;
+    height: 35px;
+    vertical-align: middle;
+    font-size: 18px;
+}
+
+.info1_mo_table tr:nth-child(1) td{
+    font-size: 28px;
+    text-decoration: underline;
+    width: 400px;
+}
+
+.info2_mo_table{
+    margin-left: 100px;
+}
+
+.info2_mo_table td{
+    font-size: 17px;
+    font-weight: bold;
+    height: 55px;
+}
+
+.info2_mo_table tr td:nth-child(1){
+    width: 300px;
+}
+
+.info2_mo_table tr td:nth-child(2){
+    width: 10px;
+}
+
+.info2_mo_table tr td:nth-child(3){
+    width: 400px;
+}
+
+.footer {
+    border-top: 1px solid black;
+    text-align: center;
+    width: 1000px;
+    font-size: 15.5px;
+}
+
+.header{
+    border-bottom: 1px solid black;
+}
+
+.info1_exp_table{
+    margin-left:auto;
+    margin-right:auto;
+    margin-top: 100px;
+}
+
+.info1_exp_table td{
+    font-weight: bold;
+    height: 60px;
+    text-align: center;
+    font-size: 20px;
+    width: 400px;
+    vertical-align: middle;
+}
+
+.info1_exp_table tr:nth-child(1) td{
+    background-color: #BFE1FF;
+    border: 1px solid black;
+}
+
+.info1_exp_table tr:nth-child(2) td{
+    font-style: italic;
+}
+
+.rubric_exp_table{
+    margin-top: 50px;
+    margin-bottom: 70px;
+}
+
+.rubric_exp_table td{
+    font-weight: bold;
+    text-align: center;
+    height: 23px;
+    vertical-align: middle;
+    width: 75px;
+    border: 1px solid black;
+    font-size: 9px;
+}
+
+.rubric_exp_table tr:nth-child(1) td{
+    text-decoration: underline;
+    background-color: #BFE1FF;
+    height: 35px;
+    font-size: 10px;
+}
+
+.rubric_exp_table tr:nth-last-child(1) td{
+    background-color: #BFE1FF;
+    height: 35px;
+}
+
+.rubric_exp_table tr td:nth-child(1){
+    width: 100px;
+}
+
+.total_exp_table{
+    margin: auto;
+    margin-bottom: 150px;
+}
+
+.total_exp_table td{
+    font-weight: bold;
+    height: 30px;
+    vertical-align: middle;
+    width: 50px;
+    border: 1px solid black;
+    text-align: center;
+    padding: 5px;
+}
+
+.total_exp_table tr td:nth-child(1){
+    background: #BFE1FF;
+}
+
+.total_exp_table tr td:nth-child(2){
+    width: 130px;
+    text-align: right;
+}
+
+.signature_exp_table td{
+    font-weight: bold;
+    text-align: center;
+    height: 35px;
+    vertical-align: middle;
+    width: 280px;
+    font-size: 16px;
+}
+
+.signature_exp_table tr:nth-child(1) td:nth-child(2n+1){
+    background: #BFE1FF;
+    border: 1px solid black;
+}
+
+.signature_exp_table tr td:nth-child(2){
+    width: 270px;
+}
+
+.arabic_header{
+    background-image: url(../image/arabic_header.png);
+    background-repeat: no-repeat;
+    background-size: 270px 100px;
+}
+
+.ac_table tr td{
+    vertical-align: middle;
+    text-align: center;
+    font-size: 12px;
+    height: 25px;
+    width: 140px;
+}
+
+.ac_table tr:nth-child(2) td{
+    font-weight: bold;
+    height: 65px;
+}
+
+.ac_table tr:nth-child(3) td:nth-child(1){
+    font-weight: bold;
+}
+
+.ac_table tr td:nth-child(1){
+    width: 250px;
+}
+
+.ac_table .athlete_img{
+    height: 90px;
+    width: 60px;
+    padding-top: 10px;
+}
+
+.ac_table tr:nth-child(4) td:nth-child(1){
+    text-align: left;
+    font-size: 10px;
+}
+
+.athlete_img{
+    height: 96.5px;
+    width: 90px;
+    position: absolute;
+    top: 58.5px;
+    left: 14px;
+}
+
+.athlete_code{
+    position: absolute;
+    top: 153px;
+    left: 14px;
+    font-weight: bold;
+    font-size: 16px;
+    vertical-align: middle;
+    text-align: center;
+    width: 95px;
+}
+
+.athlete_name{
+    position: absolute;
+    top: 138px;
+    left: 120px;
+    font-size: 16.5px;
+    width: 250px;
+    text-align: center;
+}
+
+.club_num{
+    position: absolute;
+    top: 170px;
+    left: 10px;
+    font-weight: bold;
+    font-size: 15px;
+    width: 95px;
+}
+
+.ligue_name{
+    position: absolute;
+    top: 195px;
+    left: 10px;
+    font-size: 9.5px;
+    width: 150px;
+}
+
+.athlete_datenaissance{
+    position: absolute;
+    top: 166px;
+    left: 130px;
+    font-size: 12.5px;
+}
+
+.athlete_barcode{
+    position: absolute;
+    width: 185px;
+    height: 32px;
+    top: 170px;
+    left: 185px;
+    z-index: -1;
+}
+
+/*.athlete_barcode{*/
+/*border: 1px solid black;*/
+/*margin-bottom:-50px;*/
+/*margin-top:-40px;*/
+/*width:500px;*/
+/*height: 40px;*/
+/*}*/
+
+/*.div_athlete_barcode{*/
+/*width:640px;*/
+/*overflow:hidden;*/
+/*margin-left: auto;*/
+/*margin-right: auto;*/
+/*}*/
+
+.ml_saison{
+    font-size: 30px;
+    text-align: center;
+    font-weight: bold;
+    padding-top: 80px;
+}
+
+.ml_club{
+    font-size: 23px;
+    font-weight: bold;
+    padding: 15px;
+    text-align: center;
+}
+
+.ml_category{
+    font-size: 18px;
+    font-weight: bold;
+    padding: 5px;
+}
+
+.ml_table th{
+    font-weight: bold;
+    background-color: #66FFFF;
+    height: 30px;
+}
+
+.ml_table tr td, .ml_table tr th{
+    border: 1px solid black;
+    text-align: center;
+    vertical-align: middle;
+    width: 150px;
+    height: 25px;
+}
+
+.ml_table tr td:nth-child(2){
+    width: 350px;
+}
+
+.carre{
+    width:20px;
+    height:20px;
+    margin:10px auto;
+    border: 1px solid black;
+}

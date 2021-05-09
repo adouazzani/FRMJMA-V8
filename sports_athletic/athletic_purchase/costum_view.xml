@@ -1,0 +1,303 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+
+
+
+
+<!--==================================Demande achat==================================-->
+		<record model="ir.ui.view" id="view_athletic_purchase_demande_achat_form">
+			<field name="name">athletic_purchase.demande_achat.form</field>
+			<field name="model">athletic_purchase.demande_achat</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string=" ">
+					<group>
+						<group colspan="1">
+							<field name="code"/>
+						</group>
+						<group colspan="2">
+							<field name="objet_dem"/>
+						</group>
+						<group colspan="1">
+						<field name="date_dem"/>
+						</group>
+					</group>
+										<newline/>
+										<newline/>
+				<group>
+
+					<group colspan="1">
+
+					</group>
+					<group colspan="1">
+						<field name="service_dem" attrs="{'readonly':[('state','!=','non')]}"/>
+					</group>
+					<group colspan="1">
+						<field name="responsable_dem" on_change="onchange_departement(responsable_dem)"/>
+					</group>
+					<group colspan="1">
+					</group>
+				</group>		
+				<group>
+					<group colspan="1">
+
+					</group>
+					<group colspan="1">
+						<field name="service_dest" on_change="onchange_manager_dest(service_dest)"/>
+					</group>
+					<group colspan="1">
+					<field name="responsable_dest"/>
+					</group>
+					<group colspan="1">
+					</group>
+				</group>
+										<newline/>
+										<newline/>
+								<notebook colspan="4">
+									<page string="Articles">
+										<field name="articles_ids" nolabel="1" mode="tree,form" attrs="{'readonly': [('state','in',('resp_dem','resp_fin','dir_frma','cancel'))]}">
+
+											<form string=" ">
+												<field name="prod_name" on_change="unite_produit(prod_name)"/>
+												<field name="quantity" on_change="onchange_quantity(prod_name,quantity)"/>
+												<field name="unit"  />
+												<field name="quantity_sec" on_change="onchange_quantity_sec(prod_name,quantity_sec)"/>
+												<field name="unit_sec" />
+												<field name="date_prev"/>
+												<field name="manual"/>
+											</form>
+											<tree string=" " editable="bottom">
+												<field name="prod_name" on_change="unite_produit(prod_name)"/>
+												<field name="quantity" on_change="onchange_quantity(prod_name,quantity)"/>
+												<field name="unit"  />
+												<field name="quantity_sec" on_change="onchange_quantity_sec(prod_name,quantity_sec)"/>
+												<field name="unit_sec" />
+												<field name="date_prev"/>
+												<field name="manual"/>
+											</tree>
+										</field>
+									</page>
+									<page string="Rapport de planification et d’exécution du processus d’achat">
+											<group col="4" >
+												<field name="objet"/>
+												<field name="objet_mode"/>
+											</group>
+											<newline/>
+											<group colspan="4" >
+												<separator string="Description :" colspan="4"/>
+											</group>
+											<newline/>
+											<group colspan="4" >
+												<field name="description" colspan="4" nolabel="1"/>
+											</group>
+											<newline/>
+
+											<group colspan="4" >
+												<group colspan="4" >
+													<separator string="Panel des sociétés à consulter :" colspan="4"/>
+												</group>
+											<newline/>
+												<group colspan="4" >
+													<field name="societes" nolabel="1" mode="tree,form" colspan="4">
+											                <form string=" ">
+                                                                       <field name="name"/>
+                                                                        <field name="ref"/>
+                                                                        <field name="phone"/>
+                                                                        <field name="email"/>
+                                                                        <field name="fax"/>
+                                                                        <field name="city"/>
+                                                                        <field name="user_id"/>
+
+											                </form>
+											                <tree string=" " >
+                                                                       <field name="name"/>
+                                                                        <field name="ref"/>
+                                                                        <field name="phone"/>
+                                                                        <field name="email"/>
+                                                                        <field name="fax"/>
+                                                                        <field name="city"/>
+                                                                        <field name="user_id"/>
+											                </tree>
+                                                    </field>
+												</group>
+											</group>
+											<newline/>
+											<group colspan="4" >
+
+												<group colspan="4" >
+													<separator string="Critère d'évaluation des offres :" colspan="4"/>
+												</group>
+											<newline/>
+												<group colspan="4" >
+													<field name="criteres_ids" nolabel="1" mode="tree,form">
+														<form string=" ">
+															<field name="name"/>
+														</form>
+														<tree string=" " editable="bottom">
+															<field name="name"/>
+														</tree>
+													</field>
+												</group>
+											</group>
+									</page>
+									<page string="Validation">
+										<group colspan='4' col='4'>
+											<field name="date_creation"/>
+											<field name="user_creation"/>
+											<field name="date_draft"/>
+											<field name="user_draft"/>
+											<field name="date_resp_dem"/>
+											<field name="user_resp_dem"/>
+											<field name="date_resp_fin"/>
+											<field name="user_resp_fin"/>
+											<field name="date_cancel"/>
+											<field name="user_cancel"/>
+										</group>
+
+
+									</page>
+								</notebook>
+										<newline/>
+				<group>
+					<group colspan="2">
+						<field name="state" select="1"/>
+					</group>
+					<group colspan="2">
+											<button name="bt_resp_dem" string="Valider" states="draft" icon="gtk-go-forward" groups="base_athletic.group_responsable_achats,base_athletic.group_admin_business,purchase.group_purchase_manager"/>
+											<button name="bt_resp_fin" string="Valider" states="resp_dem" icon="gtk-go-forward" groups="base_athletic.group_responsable_financier,base_athletic.group_admin_business"/>
+											<button name="bt_dir_frma" string="Valider" states="resp_fin" icon="gtk-go-forward" groups="base_athletic.group_direction_frma,base_athletic.group_admin_business,base_athletic.group_responsable_financier"/>
+											<button name="bt_cancel" string="Rejeter" states="draft,resp_dem,res_fin,resp_fin" icon="gtk-cancel" groups="base_athletic.group_responsable_achats,base_athletic.group_responsable_financier,base_athletic.group_direction_frma,base_athletic.group_admin_business,purchase.group_purchase_manager"/>
+
+					</group>
+
+
+				</group>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_athletic_purchase_demande_achat_tree">
+			<field name="name">athletic_purchase.demande_achat.tree</field>
+			<field name="model">athletic_purchase.demande_achat</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string=" ">
+					<field name="code"/>
+					<field name="date_dem"/>
+					<field name="service_dem"/>
+					<field name="service_dest"/>
+					<field name="responsable_dem"/>
+					<field name="responsable_dest"/>
+					<field name="state" select="1"/>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_athletic_purchase_demande_achat_1">
+			<field name="name">Demande d'achat</field>
+			<field name="res_model">athletic_purchase.demande_achat</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_athletic_purchase_demande_achat_2">
+			<field name="name">Demande d'achat</field>
+			<field name="res_model">athletic_purchase.demande_achat</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('service_dem','=',department_id)]</field>
+		</record>
+<!--<menuitem id="athletic_purchase_demande_achat_menu_parent_1" name="Demandes d'achats"  action="action_athletic_purchase_demande_achat_1"
+        web_icon="images/purchases.png" web_icon_hover="images/purchases-hover.png" 
+        groups="base_athletic.group_direction_frma,base_athletic.group_admin_business,base_athletic.group_responsable_financier,base_athletic.group_responsable_achats" />
+-->
+    <menuitem
+        id="athletic_purchase_demande_achat_menu_1"
+        string="Demande d'achat"
+        sequence="0"
+        parent="purchase.menu_procurement_management"
+        action="action_athletic_purchase_demande_achat_1"
+        groups="base_athletic.group_direction_frma,base_athletic.group_admin_business,base_athletic.group_responsable_financier,base_athletic.group_responsable_achats,group_demandes_achats_reader"/>
+
+
+<menuitem id="athletic_purchase_demande_achat_menu_parent_2" name="Demandes d'achats"   action="action_athletic_purchase_demande_achat_2"
+        web_icon="images/demande_80.png" web_icon_hover="images/demande_100.png" 
+        groups="base_athletic.group_demandeur_achats" />
+    <menuitem
+        id="athletic_purchase_demande_achat_menu_2"
+        string="Demande d'achat"
+        sequence="1"
+        parent="athletic_purchase_demande_achat_menu_parent_2"
+        action="action_athletic_purchase_demande_achat_2"
+        groups="base_athletic.group_demandeur_achats"/>
+
+<!--==================================Articles==================================-->
+
+	<!--  -->
+
+		<record model="ir.ui.view" id="view_athletic_purchase_demande_achat_articles_form">
+			<field name="name">athletic_purchase.demande_achat_articles.form</field>
+			<field name="model">athletic_purchase.demande_achat_articles</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Articles">
+					<field name="demande_id"/>
+					<field name="date_dem"/>
+					<field name="state"/>
+					<field name="prod_name"/>
+					<field name="quantity"/>
+					<field name="unit"/>
+					<field name="quantity_sec"/>
+					<field name="unit_sec"/>
+					<field name="date_prev"/>
+					<field name="acheter"/>
+					<field name="manual"/>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_athletic_purchase_demande_achat_articles_tree">
+			<field name="name">athletic_purchase.demande_achat_articles.tree</field>
+			<field name="model">athletic_purchase.demande_achat_articles</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Articles" editable="bottom">
+					<field name="acheter"/>
+					<field name="prod_name"/>
+					<field name="quantity"/>
+					<field name="quantity_sec"/>
+					<field name="date_prev"/>
+					<field name="demande_id"/>
+					<field name="date_dem"/>
+					<field name="state"/>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_athletic_purchase_demande_achat_articles">
+			<field name="name">Articles</field>
+			<field name="res_model">athletic_purchase.demande_achat_articles</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+
+    <menuitem name="ACHATS" id="base.menu_purchase_root"  web_icon="images/purchase_80.png" web_icon_hover="images/purchase_100.png" />
+    </data>
+</openerp>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

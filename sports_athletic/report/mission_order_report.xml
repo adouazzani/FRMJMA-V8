@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <template id="mission_order_report_document">
+            <t t-call="sports_athletic.sa_external_layout">
+                <div class="page">
+                    <table class="info1_mo_table">
+                        <tr>
+                            <td><strong>ORDRE DE MISSION</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>N°</strong> <span t-field="o.name"/></td>
+                        </tr>
+                    </table>
+
+                    <table class="info2_mo_table">
+                        <tr>
+                            <td>IL EST ORDONNÉ À</td>
+                            <td>:</td>
+                            <td><span t-field="o.applicant.name"/></td>
+                        </tr>
+                        <tr>
+                            <td>QUALITÉ</td>
+                            <td>:</td>
+                            <td><t t-if="o.job"><span t-field="o.job.name"/></t></td>
+                        </tr>
+                        <tr>
+                            <td>DE SE RENDRE À</td>
+                            <td>:</td>
+                            <td><span t-field="o.destination"/></td>
+                        </tr>
+                        <tr>
+                            <td>DÉPART LE</td>
+                            <td>:</td>
+                            <td><span t-field="o.start_date"/> à <span t-field="o.start_hour"/></td>
+                        </tr>
+                        <tr>
+                            <td>RETOUR LE</td>
+                            <td>:</td>
+                            <td><span t-field="o.end_date"/> à <span t-field="o.end_hour"/></td>
+                        </tr>
+                        <tr>
+                            <td>OBJET DE LA MISSION</td>
+                            <td>:</td>
+                            <td><span t-field="o.reason"/></td>
+                        </tr>
+                        <tr>
+                            <td>ACCOMPAGNÉ DE</td>
+                            <td>:</td>
+                            <td><span t-field="o.accompanist"/></td>
+                        </tr>
+                        <tr>
+                            <td>MOYEN DE TRANSPORT</td>
+                            <td>:</td>
+                            <td><span t-field="o.means_of_transport"/></td>
+                        </tr>
+                    </table>
+
+                </div>
+            </t>
+        </template>
+
+        <template id="mission_order_report">
+            <t t-call="report.html_container">
+                <t t-foreach="doc_ids" t-as="doc_id">
+                    <t t-raw="translate_doc(doc_id, doc_model, 'lang', 'sports_athletic.mission_order_report_document')"/>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</openerp>

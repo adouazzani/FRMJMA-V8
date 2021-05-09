@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_purchase_extended_notification_form" model="ir.ui.view">
+            <field name="name">purchase.extended.notification.form</field>
+            <field name="model">purchase.extended.notification</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Notifications">
+                        <field name="name" />
+                        <field name="type" />
+                        <field name="notification_commande_ids" colspan="4" nolabel="1" attrs="{'invisible':[('type','!=','bon_commande')]}">
+                        <tree string="Templates">
+                        <field name="type" />
+                        <field name="subject" />
+                        <field name="is_mail_active" />
+                        <field name="is_req_active" />
+                        </tree>
+                        <form string="Templates">
+                        <field name="type" />
+                        <field name="subject" />
+                        <field name="is_mail_active" />
+                        <field name="is_req_active" />
+                        <field name="body" colspan="4"/>
+                        </form>
+                        </field>
+                        <field name="notification_demande_ids" colspan="4" nolabel="1" attrs="{'invisible':[('type','!=','demande_achats')]}">
+                        <tree string="Templates">
+                        <field name="type" />
+                        <field name="subject" />
+                        <field name="is_mail_active" />
+                        <field name="is_req_active" />
+                        </tree>
+                        <form string="Templates">
+                        <field name="type" />
+                        <field name="subject" />
+                        <field name="is_mail_active" />
+                        <field name="is_req_active" />
+                        <field name="body" colspan="4"/>
+                        </form>
+                        </field>
+                </form>
+            </field>
+        </record>
+        <record id="view_purchase_extended_notification_tree" model="ir.ui.view">
+            <field name="name">purchase.extended.notification.tree</field>
+            <field name="model">purchase.extended.notification</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Notifications" >
+                        <field name="name" />
+                        <field name="type" />
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="purchase_extended_notification_action" model="ir.actions.act_window">
+            <field name="name">Notifications</field>
+            <field name="res_model">purchase.extended.notification</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+
+
+
+
+
+        <record id="view_purchase_extended_notification_commande_form" model="ir.ui.view">
+            <field name="name">purchase.extended.notification.commande.form</field>
+            <field name="model">purchase.extended.notification.commande</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Notifications bons de commande">
+                        <field name="type" />
+                        <field name="subject" />
+                        <field name="is_mail_active" />
+                        <field name="is_req_active" />
+                        <field name="body"  colspan="4"/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_purchase_extended_notification_commande_tree" model="ir.ui.view">
+            <field name="name">purchase.extended.notification.commande.tree</field>
+            <field name="model">purchase.extended.notification.commande</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <tree string="Notifications bon de commande">
+                        <field name="type" />
+                        <field name="subject" />
+                        <field name="is_mail_active" />
+                        <field name="is_req_active" />
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="view_purchase_extended_notification_demande_form" model="ir.ui.view">
+            <field name="name">purchase.extended.notification.demande.form</field>
+            <field name="model">purchase.extended.notification.demande</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Notifications demande d'achats">
+                        <field name="type" />
+                        <field name="subject" />
+                        <field name="is_mail_active" />
+                        <field name="is_req_active" />
+                        <field name="body"  colspan="4"/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_purchase_extended_notification_demande_tree" model="ir.ui.view">
+            <field name="name">purchase.extended.notification.demande.tree</field>
+            <field name="model">purchase.extended.notification.demande</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <tree string="Notifications demande d'achats">
+                        <field name="type" />
+                        <field name="subject" />
+                        <field name="is_mail_active" />
+                        <field name="is_req_active" />
+                </tree>
+            </field>
+        </record>
+        <menuitem 
+            id="menu_notification_purchase" 
+            name="Notifications" 
+            parent="purchase.menu_purchase_config_purchase"
+            action="purchase_extended_notification_action"
+            sequence="100" />
+
+        </data>
+</openerp>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <template id="sa_expense_report_document">
+            <t t-call="sports_athletic.sa_external_layout">
+                <div class="page">
+
+                    <table class="info1_exp_table">
+                        <tr>
+                            <td>Note de Frais <span t-field="o.name"/></td>
+                        </tr>
+                        <tr>
+                            <td><span t-field="o.applicant.name"/></td>
+                        </tr>
+                    </table>
+
+                    <table class="rubric_exp_table">
+                        <tr>
+                            <td>Objet</td>
+                            <td>Date Départ</td>
+                            <td>Date Retour</td>
+                            <td>Destination</td>
+                            <td>M. Transport</td>
+                            <td>Repas</td>
+                            <td>Indém. Km</td>
+                            <td>Tickets</td>
+                            <td>Nuitée</td>
+                            <td>Divers</td>
+                            <td>Total</td>
+                        </tr>
+                        <tr t-foreach="o.expense_line" t-as="line">
+                            <td><span t-field="line.object"/></td>
+                            <td><span t-field="line.start_date"/></td>
+                            <td><span t-field="line.end_date"/></td>
+                            <td><span t-field="line.destination"/></td>
+                            <td><span t-field="line.means_of_transport"/></td>
+                            <td><span t-field="line.meal"/></td>
+                            <td><span t-field="line.mileage_allowance"/></td>
+                            <td><span t-field="line.ticket"/></td>
+                            <td><span t-field="line.overnight"/></td>
+                            <td><span t-field="line.various"/></td>
+                            <td><span t-field="line.amount_total"/></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+
+                    <table class="total_exp_table">
+                        <tr>
+                            <td>Total</td>
+                            <td><span t-field="o.amount_total_expense"/></td>
+                        </tr>
+                    </table>
+
+                    <table class="signature_exp_table">
+                        <tr>
+                            <td>Signature du responsable RH</td>
+                            <td></td>
+                            <td>Signature du Directeur de la FRMA</td>
+                        </tr>
+                        <tr>
+                            <td>Khaoula SOUKTANI</td>
+                            <td></td>
+                            <td>Mohamed FADILI</td>
+                        </tr>
+                    </table>
+
+                </div>
+            </t>
+        </template>
+
+        <template id="sa_expense_report">
+            <t t-call="report.html_container">
+                <t t-foreach="doc_ids" t-as="doc_id">
+                    <t t-raw="translate_doc(doc_id, doc_model, 'lang', 'sports_athletic.sa_expense_report_document')"/>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</openerp>

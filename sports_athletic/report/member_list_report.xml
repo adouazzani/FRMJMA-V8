@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <template id="member_list_report_document">
+            <t t-call="sports_athletic.sa_external_layout">
+                <div class="page">
+
+                    <div class="ml_saison">
+                        <span t-field="o.saison_id.name"/>
+                    </div>
+
+                    <t t-foreach="o._get_club_ml()" t-as="club">
+                        <div class="ml_club">Club : <span t-field="club.name"/></div>
+
+                        <t t-foreach="o._get_age_category()" t-as="category">
+
+                            <t t-if="o._get_athletes_list(club,category)">
+                                <div class="ml_category">Catégorie : <span t-field="category.name"/></div>
+                                <table class="ml_table">
+                                    <tr>
+                                        <th>N° Licence</th>
+                                        <th>Nom et Prénom</th>
+                                        <th>Date Naissance</th>
+                                        <th>Valider</th>
+                                    </tr>
+                                    <tr t-foreach="o._get_athletes_list(club,category)" t-as="athlete">
+                                        <td><span t-field="athlete.name"/></td>
+                                        <td><span t-field="athlete.name_at"/> <span t-field="athlete.prenom"/></td>
+                                        <td><span t-field="athlete.datenaissance"/></td>
+                                        <td><div class="carre"></div></td>
+                                    </tr>
+                                </table>
+                            </t>
+
+                        </t>
+
+                        <p style="page-break-after:always;"></p>
+                    </t>
+
+                </div>
+            </t>
+        </template>
+
+        <template id="member_list_report">
+            <t t-call="report.html_container">
+                <t t-foreach="doc_ids" t-as="doc_id">
+                    <t t-raw="translate_doc(doc_id, doc_model, 'lang', 'sports_athletic.member_list_report_document')"/>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</openerp>

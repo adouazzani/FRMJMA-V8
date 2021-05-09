@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <record id="view_employee_sa_form" model="ir.ui.view">
+            <field name="name">hr.employee.sa.form</field>
+            <field name="model">hr.employee</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='otherid']" position="before">
+                    <field name="cnss"/>
+                </xpath>
+                <xpath expr="//page[@string='Personal Information']" position="after">
+                    <page string="Notes de frais">
+                        <group>
+                            <field name="mileage_allowance"/>
+                        </group>
+                        <group>
+                            <field name="sa_expenses" nolabel="1" radonly="True">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="start_date"/>
+                                    <field name="end_date"/>
+                                    <field name="reason"/>
+                                    <field name="state"/>
+                                    <field name="amount_total_expense"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </page>
+                </xpath>
+                <xpath expr="//field[@name='address_home_id']" position="replace">
+                    <field name="address"/>
+                    <field name="city"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_partner_bank_sa_form" model="ir.ui.view">
+            <field name="name">res.partner.bank.sa.form</field>
+            <field name="model">res.partner.bank</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="base.view_partner_bank_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='bank_bic']" position="before">
+                    <field name="agency"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="hr_contract_type_view_sa_form" model="ir.ui.view">
+            <field name="name">hr.contract.type.view.sa.form</field>
+            <field name="model">hr.contract.type</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_type_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@col='4']" position="replace">
+                    <group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <group col="4">
+                            <field name="note"/>
+                        </group>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="hr_contract_view_sa_form" model="ir.ui.view">
+            <field name="name">hr.contract.view.sa.form</field>
+            <field name="model">hr.contract</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='type_id']" position="after">
+                    <field name="note" readonly="True"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>

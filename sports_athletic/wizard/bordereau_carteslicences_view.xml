@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+    <!--   Product Price List -->
+
+        <record id="view_athletic_athlete_bordereau_carteslicences_form" model="ir.ui.view">
+              <field name="name">athletic.bordereau.carteslicences.form</field>
+              <field name="model">athletic.bordereau.carteslicences</field>
+              <field name="type">form</field>
+              <field name="arch" type="xml">
+                <form string="  Edition des Cartes Licences">
+                    
+                    <group  colspan="4" col='6'>
+                
+                       <field  name='sportif_interne' />
+                       <field  name='sportif_mre' />
+                        <field  name='sportif_etranger' />
+                   
+                         <field  name='entraineur' />
+                         <field  name='dirigeant' />
+                         <field  name='officiel' />
+                    </group>
+
+                
+                <group colspan='2' col='4'>
+                         <button icon="gtk-cancel" special="cancel" string="Fermer"/>
+                         <button name="imprimer_carteslicences" string="Valider"  type="object"  icon="gtk-print" />
+                        
+                </group>
+     
+
+
+                </form>
+              </field>
+        </record>
+
+        <record id="action_athletic_athlete_bordereau_carteslicences" model="ir.actions.act_window">
+            <field name="name">  Edition des Cartes Licences</field>
+            <field name="res_model">athletic.bordereau.carteslicences</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+           <field name="target">new</field>
+        </record>
+
+<menuitem action="action_athletic_athlete_bordereau_carteslicences"
+            id="menu_action_athletic_athlete_bordereau_carteslicences" parent="base.menu_edition"
+            sequence="10" />
+
+</data>
+</openerp>

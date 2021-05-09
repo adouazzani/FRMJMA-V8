@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+
+        <record id="seq_type_affiliation" model="ir.sequence.type">
+            <field name="name">affiliation</field>
+            <field name="code">sports.affiliation</field>
+        </record>
+
+        <record id="seq_affiliation" model="ir.sequence">
+            <field name="name">affiliation</field>
+            <field name="code">sports.affiliation</field>
+            <field name="prefix">AFF-</field>
+            <field name="padding">3</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+
+
+
+        <!-- Sequences for renouvellement -->
+
+
+        <record id="seq_type_renouvellement" model="ir.sequence.type">
+            <field name="name">renouvellement</field>
+            <field name="code">sports.renouvellement</field>
+        </record>
+
+        <record id="seq_renouvellement" model="ir.sequence">
+            <field name="name">affiliation</field>
+            <field name="code">sports.renouvellement</field>
+            <field name="prefix">RNN-</field>
+            <field name="padding">3</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+
+        <!-- Sequences for reaffiliation -->
+
+
+        <record id="seq_type_reaffiliation" model="ir.sequence.type">
+            <field name="name">reaffiliation</field>
+            <field name="code">sports.reaffiliation</field>
+        </record>
+
+        <record id="seq_reaffiliation" model="ir.sequence">
+            <field name="name">reaffiliation</field>
+            <field name="code">sports.reaffiliation</field>
+            <field name="prefix">REAF-</field>
+            <field name="padding">3</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+
+
+
+        <!-- Sequences for  athletes reaffiliation -->
+
+
+
+        <record id="seq_type_reaffiliationathletes" model="ir.sequence.type">
+            <field name="name">reaffiliation</field>
+            <field name="code">sports.athletes.reaffiliation</field>
+        </record>
+
+        <record id="seq_reaffiliationathletes" model="ir.sequence">
+            <field name="name">reaffiliation</field>
+            <field name="code">sports.athletes.reaffiliation</field>
+            <field name="prefix">REAF-</field>
+            <field name="padding">3</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Sequences for  athletes reaffiliation -->
+
+        <record id="seq_type_internal_athletes" model="ir.sequence.type">
+            <field name="name">Internal Sports Athletes</field>
+            <field name="code">internal.sports.athletes</field>
+        </record>
+
+        <record id="seq_internal_sports_athletes" model="ir.sequence">
+            <field name="name">Internal Sports Athletes</field>
+            <field name="code">internal.sports.athletes</field>
+            <field name="padding">7</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_type_mre_athletes" model="ir.sequence.type">
+            <field name="name">MRE Sports Athletes</field>
+            <field name="code">mre.sports.athletes</field>
+        </record>
+
+        <record id="seq_mre_athletes" model="ir.sequence">
+            <field name="name">MRE Sports Athletes</field>
+            <field name="code">mre.sports.athletes</field>
+            <field name="padding">7</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_type_foreign_athletes" model="ir.sequence.type">
+            <field name="name">Foreign Sports Athletes</field>
+            <field name="code">foreign.sports.athletes</field>
+        </record>
+
+        <record id="seq_foreign_athletes" model="ir.sequence">
+            <field name="name">Foreign Sports Athletes</field>
+            <field name="code">foreign.sports.athletes</field>
+            <field name="padding">7</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_type_coach" model="ir.sequence.type">
+            <field name="name">Sports Coach</field>
+            <field name="code">sports.coach</field>
+        </record>
+
+        <record id="seq_coach" model="ir.sequence">
+            <field name="name">Sports Coach</field>
+            <field name="code">sports.coach</field>
+            <field name="padding">7</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_type_leader" model="ir.sequence.type">
+            <field name="name">Sports leader</field>
+            <field name="code">sports.leader</field>
+        </record>
+
+        <record id="seq_leader" model="ir.sequence">
+            <field name="name">Sports Leader</field>
+            <field name="code">sports.leader</field>
+            <field name="padding">7</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_type_official" model="ir.sequence.type">
+            <field name="name">Sports Official</field>
+            <field name="code">sports.official</field>
+        </record>
+
+        <record id="seq_official" model="ir.sequence">
+            <field name="name">Sports Official</field>
+            <field name="code">sports.official</field>
+            <field name="padding">7</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+
+        <!-- Sequences for  athletes sanctions -->
+
+        <record id="sports_sequence_sanctions_type" model="ir.sequence.type">
+            <field name="name">sports sanctions</field>
+            <field name="code">sports.sanctions</field>
+        </record>
+        <record id="sports_sequence_sanctions" model="ir.sequence">
+            <field name="name">sports sanctions</field>
+            <field name="code">sports.sanctions</field>
+            <field name="prefix">SAN-</field>
+            <field name="padding">5</field>
+        </record>
+
+        <!-- Sequences for  athletes mutations -->
+
+
+        <record id="seq_type_mutations" model="ir.sequence.type">
+            <field name="name">mutations</field>
+            <field name="code">sports.mutations</field>
+        </record>
+
+        <record id="seq_sanctions" model="ir.sequence">
+            <field name="name">mutations</field>
+            <field name="code">sports.mutations</field>
+            <field name="prefix">MUT-</field>
+            <field name="padding">3</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+
+
+        <!-- Sequences for  sports.edition.carteslicences -->
+
+
+        <record id="seq_type_carteslicences" model="ir.sequence.type">
+            <field name="name">sports.edition.carteslicences</field>
+            <field name="code">sports.edition.carteslicences</field>
+        </record>
+
+        <record id="seq_carteslicences" model="ir.sequence">
+            <field name="name">sports.edition.carteslicences</field>
+            <field name="code">sports.edition.carteslicences</field>
+            <field name="prefix">ECL-</field>
+            <field name="padding">3</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+
+
+
+        <!-- Sequences for  sports.epreuve -->
+
+
+        <record id="seq_type_epreuve" model="ir.sequence.type">
+            <field name="name">sports.epreuve</field>
+            <field name="code">sports.epreuve</field>
+        </record>
+
+        <record id="seq_epreuve" model="ir.sequence">
+            <field name="name">sports.epreuve</field>
+            <field name="code">sports.epreuve</field>
+            <field name="prefix">EP</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+
+
+        <!-- Sequences for  sports.competition -->
+
+
+        <record id="seq_type_competition" model="ir.sequence.type">
+            <field name="name">sports.competition</field>
+            <field name="code">sports.competition</field>
+        </record>
+
+        <record id="seq_competition" model="ir.sequence">
+            <field name="name">sports.competition</field>
+            <field name="code">sports.competition</field>
+            <field name="prefix">C</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+
+
+        <!-- Sequences for  sports.competition -->
+
+
+        <record id="seq_type_achatdemande" model="ir.sequence.type">
+            <field name="name">achat.demande</field>
+            <field name="code">achat.demande</field>
+        </record>
+
+        <record id="seq_achatdemande" model="ir.sequence">
+            <field name="name">achat.demande</field>
+            <field name="code">achat.demande</field>
+            <field name="prefix">DA/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_type_mission_order" model="ir.sequence.type">
+            <field name="name">sa.mission.order</field>
+            <field name="code">sa.mission.order</field>
+        </record>
+
+        <record id="seq_mission_order" model="ir.sequence">
+            <field name="name">sa.mission.order</field>
+            <field name="code">sa.mission.order</field>
+            <field name="prefix">DOM</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_type_sa_expense" model="ir.sequence.type">
+            <field name="name">sa.expense</field>
+            <field name="code">sa.expense</field>
+        </record>
+
+        <record id="seq_sa_expense" model="ir.sequence">
+            <field name="name">sa.expense</field>
+            <field name="code">sa.expense</field>
+            <field name="prefix">N</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_type_sports_edition_assurances" model="ir.sequence.type">
+            <field name="name">sports.edition.assurances</field>
+            <field name="code">sports.edition.assurances</field>
+        </record>
+
+        <record id="seq_sports_edition_assurances" model="ir.sequence">
+            <field name="name">sports.edition.assurances</field>
+            <field name="code">sports.edition.assurances</field>
+            <field name="prefix">EASS</field>
+            <field name="padding">6</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_type_sports_excel_assurances" model="ir.sequence.type">
+            <field name="name">sports.excel.assurances</field>
+            <field name="code">sports.excel.assurances</field>
+        </record>
+
+        <record id="seq_sports_excel_assurances" model="ir.sequence">
+            <field name="name">sports.excel.assurances</field>
+            <field name="code">sports.excel.assurances</field>
+            <field name="prefix">ASSEX</field>
+            <field name="padding">6</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_type_sports_passage_categorie" model="ir.sequence.type">
+            <field name="name">sports.passage.categorie</field>
+            <field name="code">sports.passage.categorie</field>
+        </record>
+
+        <record id="seq_sports_passage_categorie" model="ir.sequence">
+            <field name="name">sports.passage.categorie</field>
+            <field name="code">sports.passage.categorie</field>
+            <field name="prefix">PCAT</field>
+            <field name="padding">6</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_type_sports_anneeblanche" model="ir.sequence.type">
+            <field name="name">sports.anneeblanche</field>
+            <field name="code">sports.anneeblanche</field>
+        </record>
+
+        <record id="seq_sports_anneeblanche" model="ir.sequence">
+            <field name="name">sports.anneeblanche</field>
+            <field name="code">sports.anneeblanche</field>
+            <field name="prefix">SAN</field>
+            <field name="padding">6</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+
+        <record id="seq_type_general_assembly" model="ir.sequence.type">
+            <field name="name">general.assembly</field>
+            <field name="code">general.assembly</field>
+        </record>
+
+        <record id="seq_general_assembly" model="ir.sequence">
+            <field name="name">general.assembly</field>
+            <field name="code">general.assembly</field>
+            <field name="prefix">AG/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_type_general_assembly_member" model="ir.sequence.type">
+            <field name="name">general.assembly.member</field>
+            <field name="code">general.assembly.member</field>
+        </record>
+
+        <record id="seq_general_assembly_member" model="ir.sequence">
+            <field name="name">general.assembly.member</field>
+            <field name="code">general.assembly.member</field>
+            <field name="prefix">MC/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+    </data>
+</openerp>

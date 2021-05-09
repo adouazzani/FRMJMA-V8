@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_purchase_requisition_filter_inherited_sport" model="ir.ui.view">
+            <field name="name">purchase.requisition.filter.inherited.sport</field>
+            <field name="model">purchase.requisition</field>
+            <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="demande_id"/>
+                    <field name="object"/>
+                </xpath>
+                <xpath expr="//filter[@icon='terp-gtk-jump-to-rtl']" position="after">
+                    <filter string="Demande d'achat" domain="[]" context="{'group_by':'demande_id'}"/>
+                    <filter string="Type Demande d'achat" domain="[]" context="{'group_by':'type'}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="act_view_purchase_requisition" model="ir.actions.act_window">
+            <field name="name">Appel d'offre</field>
+            <field name="res_model">purchase.requisition</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{
+                'search_default_demande_id': [active_id],
+                'default_demande_id': active_id,
+                }</field>
+            <field name="search_view_id" ref="purchase_requisition.view_purchase_requisition_filter"/>
+        </record>
+
+        <record id="view_purchase_order_filter_inherited_sport" model="ir.ui.view">
+            <field name="name">purchase.order.filter.inherited.sport</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.view_purchase_order_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='product_id']" position="before">
+                    <field name="demande_id" />
+                </xpath>
+                <xpath expr="//filter[@icon='terp-partner']" position="after">
+                    <filter string="Demande d'achat" domain="[]" context="{'group_by':'demande_id'}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="act_view_purchase_quotation" model="ir.actions.act_window">
+            <field name="name">Bon de commande</field>
+            <field name="res_model">purchase.order</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{
+                'search_default_demande_id': [active_id],
+                'default_demande_id': active_id,
+                }</field>
+            <field name="search_view_id" ref="purchase.view_purchase_order_filter"/>
+        </record>
+
+        <record id="view_achat_demande_form" model="ir.ui.view">
+            <field name="name">achat.demande.form</field>
+            <field name="model">achat.demande</field>
+            <field name="arch" type="xml">
+                <form string="demande d'achat">
+                    <header>
+                        <button name="action_submitted_user" string="Soumettre la demande" type="object" class="oe_highlight oe_read_only" attrs="{'invisible': [('state','not in',['draft'])]}" groups="sports_athletic.user_da"/>
+                        <button name="action_user_resp_validate" string="Valider la demande" type="object" class="oe_highlight oe_read_only" attrs="{'invisible': [('state','not in',['submitted_user'])]}" groups="sports_athletic.responsible_da"/>
+                        <button name="action_logistics_manager_validate" string="Approuver Responsable Logistique" type="object" class="oe_highlight oe_read_only" states="use_resp_validate" attrs="{'invisible': [('state','not in',['user_resp_validate'])]}" groups="sports_athletic.logistic_manager"/>
+                        <button name="action_financial_director_validate" string="Approuver Directeur Financier" type="object" class="oe_highlight oe_read_only" states="logistics_manager_validate" attrs="{'invisible': [('state','not in',['logistics_manager_validate'])]}" groups="sports_athletic.financial_director"/>
+                        <button name="action_frma_director_validate" string="Approuver Directeur FRMA" type="object" class="oe_highlight oe_read_only" states="financial_director_validate" attrs="{'invisible': [('state','not in',['financial_director_validate'])]}" groups="sports_athletic.frma_director"/>
+                        <button name="action_cancel_request" string="Annuler la demande" type="object" class="oe_highlight oe_read_only" attrs="{'invisible': [('view_cancel','=',False)]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,submitted_user,user_resp_validate,logistics_manager_validate,financial_director_validate,frma_director_validate" readonly="1"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_right oe_button_box" name="buttons" attrs="{'invisible': [('state','not in',['frma_director_validate'])]}" groups="purchase.group_purchase_manager">
+                            <button class="oe_inline oe_stat_button" type="action" name="%(act_view_purchase_requisition)d" icon="fa-th-large" attrs="{'invisible': [('type','=','AO')]}">
+                                <field string="Demande de prix" name="po_count" widget="statinfo"/>
+                            </button>
+                            <button class="oe_inline oe_stat_button" type="action" name="%(act_view_purchase_requisition)d" icon="fa-th-large" attrs="{'invisible': [('type','=','BC')]}">
+                                <field string="Appel d'offre" name="pr_count" widget="statinfo"/>
+                            </button>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="responsable_id" readonly="1" string="Service utilisateur" options='{"no_open":True}'/>
+                                <field name="user_responsible" invisible="1"/>
+                                <field name="is_write" invisible="1"/>
+                                <field name="view_cancel" invisible="1"/>
+                                <field name="type"/>
+                            </group>
+                            <group>
+                                <field name="date" attrs="{'readonly': [('is_write','=',False)]}"/>
+                                <field name="logistics_manager" options='{"no_open":True}'/>
+                                <field name="financial_director" options='{"no_open":True}'/>
+                                <field name="frma_director" options='{"no_open":True}'/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="object" attrs="{'readonly': [('is_write','=',False)]}"/>
+                        </group>
+                        <notebook>
+                            <page string="Lignes demande d'achat">
+                                <field name="demande_line_ids">
+                                    <tree string="Lignes demande d'achat" editable="bottom">
+                                        <field name="product"/>
+                                        <field name="description"/>
+                                        <field name="product_qty"/>
+                                        <field name="product_uom"/>
+                                        <field name="price_unit"/>
+                                        <field name="date_planned"/>
+                                        <field name="price_subtotal" sum="Total"/>
+                                    </tree>
+                                </field>
+                                <!--field name="order_line">
+                                    <tree string="Lignes demande d'achat" editable="bottom">
+                                        <field name="product_id"/>
+                                        <field name="name"/>
+                                        <field name="date_planned" invisible="1"/>
+                                        <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                                        <field name="account_analytic_id" groups="purchase.group_analytic_accounting" domain="[('type','not in',('view','template'))]" invisible="1"/>
+                                        <field name="product_qty"/>
+                                        <field name="product_uom"/>
+                                        <field name="price_unit"/>
+                                        <field name="taxes_id" widget="many2many_tags" domain="[('parent_id','=',False),('type_tax_use','!=','sale')]" invisible="1"/>
+                                        <field name="price_subtotal"/>
+                                        <field name="state" invisible="1"/>
+                                    </tree>
+                                </field-->
+                            </page>
+                            <page string="Finance">
+                                <group><field name="budget" attrs="{'readonly': [('is_write','=',False)]}"/><field name="compte_charge" attrs="{'readonly': [('is_write','=',False)]}"/> </group>
+                            </page>
+                            <page string="Commentaires">
+                                <field name="commentaires_ids" colspan="4" nolabel="1" attrs="{'readonly': [('is_write','=',False)]}">
+                                    <tree string="Commentaires" editable="bottom">
+                                        <field name="date" readonly="True"/>
+                                        <field name="responsable_id" readonly="True"/>
+                                        <field name="name"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Date des approbations">
+                                <group>
+                                    <field name="date_submitted_user" readonly="True"/>
+                                    <field name="date_user_resp_validate" readonly="True"/>
+                                    <field name="date_logistics_manager_validate" readonly="True"/>
+                                    <field name="date_financial_director_validate" readonly="True"/>
+                                    <field name="date_frma_director_validate" readonly="True"/>
+                                </group>
+                            </page>
+                            <page string="Historique des actions">
+                                <field name="history" colspan="4" nolabel="1" readonly="1">
+                                    <tree editable="bottom">
+                                        <field name="date"/>
+                                        <field name="name"/>
+                                        <field name="user"/>
+                                        <field name="operation"/>
+                                        <field name="old_value"/>
+                                        <field name="new_value"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="view_achat_demande_tree" model="ir.ui.view">
+            <field name="name">achat.demande.tree</field>
+            <field name="model">achat.demande</field>
+
+            <field name="arch" type="xml">
+                <tree string="achat_demandes" colors="blue: type=='AO'; green: type=='BC' ">
+                    <field name="name" required="1"/>
+                    <field name="responsable_id"/>
+                    <field name="date"/>
+                    <field name="budget"/>
+                    <field name="type"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_view_achat_demande_form" model="ir.actions.act_window">
+            <field name="name">Demandes d'Achat</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">achat.demande</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="base.menu_action_view_achat_demande_form"
+                  parent="purchase.menu_procurement_management"
+                  action="action_view_achat_demande_form" sequence="-1"/>
+
+
+        <record id="view_requisition_order_form_inherited" model="ir.ui.view">
+            <field name="name">purchase.requisition.form.inherited</field>
+            <field name="model">purchase.requisition</field>
+            <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='picking_type_id']" position="after">
+                    <field name="demande_id" readonly="True"/>
+                    <field name="object" readonly="True"/>
+                    <field name="type" readonly="True"/>
+                </xpath>
+                <xpath expr="//button[@name='wkf_send_rfq']" position="after">
+                    <button name="action_print_purchase_quotation" string="Imprimé" type="object" icon="gtk-print"/>
+                    <!--button name="action_print_purchase_order" string="Imprimé" type="object" icon="gtk-print"/-->
+                    <button name="open_purchase_order" string="Ouvrir" type="object" icon="gtk-jump-to"/>
+                </xpath>
+                <xpath expr="//field[@name='line_ids']/tree/field[@name='product_id']" position="after">
+                    <field name="name" required="True"/>
+                </xpath>
+                <xpath expr="//field[@name='line_ids']/tree/field[@name='product_id']" position="attributes">
+                    <attribute name="required">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='line_ids']/tree/field[@name='product_qty']" position="attributes">
+                    <attribute name="required">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='line_ids']/tree/field[@name='product_uom_id']" position="attributes">
+                    <attribute name="required">True</attribute>
+                </xpath>
+                 <xpath expr="//field[@name='date_end']" position="after">
+                    <field name="date_end2" attrs="{'readonly': [('state','not in',('draft', 'in_progress'))]}"/>
+                     <field name="date_end3" attrs="{'readonly': [('state','not in',('draft', 'in_progress'))]}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_purchase_requisition_tree_inherited_sport" model="ir.ui.view">
+            <field name="name">purchase.requisition.tree.inherited.sport</field>
+            <field name="model">purchase.requisition</field>
+            <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="demande_id"/>
+                    <field name="object"/>
+                    <field name="type"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_purchase_order_form_inherited" model="ir.ui.view">
+            <field name="name">purchase.order Inherited</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='date_order']" position="before">
+                    <field name="demande_id" readonly="True"/>
+                    <field name="object" readonly="True"/>
+                </xpath>
+                <xpath expr="//field[@name='partner_ref']" position="after">
+                    <field name="display_slip"/>
+                </xpath>
+                <!--xpath expr="//field[@name='order_line']" position="attributes">
+                    <attribute name="context">"{'display_slip' : display_slip}"</attribute>
+                </xpath-->
+                <xpath expr="//field[@name='order_line']/tree/field[@name='name']" position="after">
+                    <field name="supply"/>
+                    <field name="renting"/>
+                    <field name="pose"/>
+                    <field name="depose"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_purchase_order_line_form_inherited" model="ir.ui.view">
+            <field name="name">purchase.order.line Inherited</field>
+            <field name="model">purchase.order.line</field>
+            <field name="inherit_id" ref="purchase.purchase_order_line_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@string='Invoices and Incoming Shipments']" position="after">
+                    <page string="BP">
+                        <group>
+                            <group>
+                                <field name="supply"/>
+                                <field name="renting"/>
+                            </group>
+                            <group>
+                                <field name="pose"/>
+                                <field name="depose"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+                <xpath expr="//page[@string='Notes']" position="attributes">
+                    <attribute name="string">Description</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_purchase_order_tree_inherited_sport" model="ir.ui.view">
+            <field name="name">purchase.order.tree.inherited.sport</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="demande_id"/>
+                    <field name="object"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_achat_demande_search">
+            <field name="name">achat.demande.search.view</field>
+            <field name="model">achat.demande</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Demande d'achat">
+                    <field name="name"/>
+                    <field name="object"/>
+                    <group expand="0" string="Groupements">
+                        <filter string="Service utilisateur" domain="[]" context="{'group_by':'responsable_id'}" />
+                        <filter string="Date demande" domain="[]" context="{'group_by':'date'}" />
+                        <filter string="Status demande" domain="[]" context="{'group_by':'state'}" />
+                        <filter string="Type demande" domain="[]" context="{'group_by':'type'}" />
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_purchase_requisition_partner_inherit" model="ir.ui.view">
+            <field name="name">purchase.requisition.partner.wizard.inherited.sport</field>
+            <field name="model">purchase.requisition.partner</field>
+
+            <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_partner"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group" position="replace">
+                    <!--group>
+                        <group>
+                            <field name="multiple_supplier"/>
+                        </group>
+                        <group>
+                        </group>
+                    </group-->
+                    <group>
+                        <group>
+                            <field name="partner_id" invisible="1" required="False" context="{'default_supplier': 1, 'default_customer': 0}"/>
+                            <field name="partners" required="True" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                        </group>
+                        <group>
+                        </group>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>    

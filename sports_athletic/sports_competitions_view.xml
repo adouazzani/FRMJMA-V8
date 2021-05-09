@@ -1,0 +1,582 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+
+
+   <menuitem name="Compétitions et Résultats" id="base.menu_root_competitions" sequence="2" groups="sports_athletic.competition_user"/>
+   
+   
+   
+   <menuitem name="Compétitions et Résultats" id="base.menu_root_competition_epreuve" sequence="1"  parent="base.menu_root_competitions"/>
+   
+   <!--Epreuve-->
+
+
+        <record id="view_epreuve_form" model="ir.ui.view">
+            <field name="name">sports.epreuve.form</field>
+            <field name="model">sports.epreuve</field>
+            <field name="arch" type="xml">
+                <form string="Epreuve">
+
+                    <header>
+
+                        
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+
+                           
+                        </div>
+                        <group>
+                             <group>
+                                <field name="name" required="1"/>
+                                <field name="libelle_court" required="1"/>
+                                <field name="libelle_complet" required="1"/>
+
+                            </group>
+                            <group>
+
+
+                                <field name="familles_id"/>
+                                <field name="um"/>
+                                <field name="ordre_tri"/>
+
+                            </group>
+
+                        </group>
+                        
+                        
+                        <group>
+                            <group>
+                                <field name="category_age_id"/>
+                                
+                                <field name="participants_seuil"  />
+                                <field name="nbr_participants" attrs="{'invisible':[('participants_seuil','=',False)]}"/>
+                                <field name="obligation_minimas" />
+                                <field name="performance" attrs="{'invisible':[('obligation_minimas','=',False)]}"/>
+                                <field name="performance_temps" attrs="{'invisible':[('obligation_minimas','=',False)]}"/>
+				<field name="performance_distance" attrs="{'invisible':[('obligation_minimas','=',False)]}"/>
+                              
+
+                            </group>
+                            
+                            <group  string="Format de Résultat">
+
+                                 
+                                <field name="is_metre" attrs="{'invisible':[('um','!=','Metre')]}"/>
+				<field name="is_kilometre" attrs="{'invisible':[('um','!=','Metre')]}"/>
+				<field name="is_centimetre" attrs="{'invisible':[('um','!=','Metre')]}"/>
+				
+				<field name="is_heure" attrs="{'invisible':[('um','!=','Temps')]}"/>
+				<field name="is_minute" attrs="{'invisible':[('um','!=','Temps')]}"/>
+				<field name="is_seconde" attrs="{'invisible':[('um','!=','Temps')]}"/>
+				<field name="is_milliseconde" attrs="{'invisible':[('um','!=','Temps')]}"/>
+				<field name="is_centseconde" attrs="{'invisible':[('um','!=','Temps')]}"/>
+				
+				<field name="point" attrs="{'invisible':[('is_point','=',False)]}"   />
+                               
+                            </group>
+                        </group>
+                        
+                      
+                      
+                       <group colspan="4" attrs="{'invisible':[('obligation_minimas','=',False)]}" string="Performance">
+                       
+				<field name="is_point" attrs="{'invisible':[('obligation_minimas','=',False)]}"/>
+				<field name="kilometre" attrs="{'invisible':[('is_kilometre','=',False)]}"   />
+				<field name="metre" attrs="{'invisible':[('is_metre','=',False)]}"  />
+				<field name="centimetre" attrs="{'invisible':[('is_centimetre','=',False)]}"  />
+				<field name="heure" attrs="{'invisible':[('is_heure','=',False)]}"  />
+				<field name="minute" attrs="{'invisible':[('is_minute','=',False)]}" />
+				<field name="seconde" attrs="{'invisible':[('is_seconde','=',False)]}"  />
+				<field name="milliseconde" attrs="{'invisible':[('is_milliseconde','=',False)]}"  />
+				<field name="centseconde" attrs="{'invisible':[('is_centseconde','=',False)]}"  />
+				
+		         </group>
+                        
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="view_epreuve_tree" model="ir.ui.view">
+            <field name="name">sports.epreuve.tree</field>
+            <field name="model">sports.epreuve</field>
+
+            <field name="arch" type="xml">
+                <tree string="Epreuves">
+                    <field name="name"/>
+                    <field name="libelle_court"/>
+                    <field name="libelle_complet"/>
+                    <field name="familles_id"/>
+                    <field name="formatresultat_id"/>
+                    <field name="ordre_tri"/>
+                    <field name="nbr_participants"/>
+                    <field name="participants_seuil"/>
+                    <field name="obligation_minimas"/>
+                  
+
+
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_view_epreuve_form" model="ir.actions.act_window">
+            <field name="name">Epreuves</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sports.epreuve</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+
+        <menuitem action="action_view_epreuve_form"
+                  id="menu_action_view_epreuve_form" parent="base.menu_root_competition_epreuve"
+                  sequence="1"/>
+                  
+                  
+        
+        
+        
+        
+        
+        
+        
+        
+        <!--Compétitions-->
+
+
+        <record id="view_competition_form" model="ir.ui.view">
+            <field name="name">sports.competition.form</field>
+            <field name="model">sports.competition</field>
+            <field name="arch" type="xml">
+                <form string="Compétitions">
+
+                    <header>
+
+    <field name="state" widget="statusbar" statusbar_visible="brouillon,en_att_valid,en_att_org,att_val_pre_eng,att_val_eng,att_conf_eng,liste_eng_conf,calcul_pt_club"  statusbar_colors='{"dem_rejetee":"red"}'/>
+                        
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+
+                           
+                        </div>
+                        <group>
+                            <group>
+                                <field name="name" readonly="1"/>
+                                <field name="niveau" required="1"/>
+                                <field name="date_debut" required="1"/>
+                                 <field name="lieu" />
+                                 
+                                  
+                                <field name="type" required="1"/>
+                                
+                            </group>
+                            <group>
+
+
+                                <field name="name_competition" required="1"/>
+                                <field name="saison_id" required="1"/>
+                                <field name="date_fin" required="1"/>
+                                <field name="calendar_id" required="1"/>
+                                <field name="respect_cahier_charge" />
+                                <field name="familles_id" required="1" domain="[('type', '=', type)]" attrs="{'invisible':[('type','=', False)]}"/>
+                                <field name="timing" />
+
+                            </group>
+
+                        </group>
+                        
+                        
+                        <group>
+                            <group>
+                                <field name="organisateur"/>
+                                <field name="autre_organisateur" attrs="{'invisible':[('organisateur','!=','Autre')]}"/>
+                                <field name="club_id" attrs="{'invisible':[('organisateur','!=','Club')]}"/>
+                                <field name="ligue_id" attrs="{'invisible':[('organisateur','!=','Ligue')]}"/>
+                                <field name="objectif"  />
+                               
+                            </group>
+                            <group>
+
+                                 <field name="participation_competition"  />
+                                <field name="critere_invitation_qualification" attrs="{'invisible':[('participation_competition','not in',('Sur Invitation','Sur Qualification'))]}"/>
+                               
+                            </group>
+                            
+                            <group>
+                                <field name="prise_compte_frma_ids" widget="many2many_tags"/>
+                                
+                                  <field name="epreuves_disputees"/>
+                                 <field name="category_age_ids"  attrs="{'readonly':[('epreuves_disputees','!=','categories_age')]}" widget="many2many_tags"/>
+                                
+                            </group>
+                            <group string="Epreuves">
+                            
+                               <field name="epreuve_ids" nolabel="1">
+                                    <tree string="Epreuves">
+
+                                        <field name="name"/>
+                                        <field name="libelle_court"/>
+                                        <field name="familles_id"/>
+                                       
+                                      
+                                    </tree>
+
+
+                                </field>
+                                
+                                 
+                                
+                            </group>
+                            
+                          
+                        </group>
+                        
+                        <notebook>
+                            <page string="Epreuves Disputées">
+                            
+                                <group> 
+                                 <button name="generer_epreuve" string="Générer"  type="object"/>   
+                           
+                                 </group>
+                               
+                                <field name="epreuve_competition_ids" colspan="4" nolabel="1" readonly="1">
+                                    <tree string="Epreuves Disputées">
+
+                                        <field name="name"/>
+                                        <field name="category_age_id"/>
+                                        <field name="sexe"/>
+                                       
+                                       
+                                        <field name="um"/>
+                                      
+                                      <!--  
+                                         <field name="disputee"/>
+                                         <field name="date"/>
+                                        <field name="is_metre" />
+				        <field name="is_kilometre"/>
+				        <field name="is_centimetre"/>
+				
+					<field name="is_heure" />
+					<field name="is_minute" />
+					<field name="is_seconde"/>
+					<field name="is_milliseconde"/>
+					<field name="is_centseconde"/>-->
+                                        
+                                        
+                                    </tree>
+
+
+                                </field>
+                                
+                                
+                            </page>
+                            
+                            <page string="Participants">
+                                <group> 
+                             
+                           
+                                 <button name="%(action_view_invitation_participants)d" string="Inviter Les Participants"
+                                                type="action" icon='STOCK_MEDIA_NEXT'/>
+                                    
+                                 
+                                 
+                                 </group>
+                               
+                                
+                                
+                                <field name="participants_ids" colspan="4" nolabel="1" readonly="1">
+                                     <tree string="Participants" editable="bottom">
+					 <field name="epreuve_id"/>
+				        <field name="ligue_id" invisible="1"/>
+					<field name="club_id"/>
+				       <field name="sexe"/>
+					<field name="athletes_id"/>
+					<field name="athletes_name" invisible="1"/>
+					<field name="athletes_prenom" invisible="1"/>
+				        <field name="engage"/>
+				  
+				        <field name="classement_final" invisible="1"/>
+				        <field name="record" invisible="1"/>
+				
+				    </tree>
+
+                                </field>
+                            
+                            
+                            
+                            </page>
+                            
+                             <page string="Liste des Engagements">
+                             
+                             <group> 
+                             
+                             
+                             <group> 
+                                <button name="%(action_view_engages_participants)d" string="Engager les pré-engagés"
+                                                type="action" icon='STOCK_MEDIA_NEXT'/> 
+                                                
+                                                   <button name="action_manual_export_competition" string="Export fichier CSV" type="object" icon="gtk-execute"/>             
+
+                             </group> 
+                             
+                              <group> 
+                              
+                                <field name="data" filename="export_filename"/>
+                                 <field name="export_filename" />
+                             </group> 
+                                            
+                               
+                                 
+                               
+                          
+                         
+                       
+                                 
+                                 
+                                 </group>
+                             
+                              <field name="engagement_ids" colspan="4" nolabel="1">
+                                  <tree string="Participants" editable="bottom">
+				        <field name="epreuve_id"/>
+				        <field name="ligue_id" invisible="1"/>
+					<field name="club_id"/>
+				       <field name="sexe"/>
+					<field name="athletes_id"/>
+					<field name="athletes_name" invisible="1"/>
+					<field name="athletes_prenom" invisible="1"/>
+				        <field name="engage"/>
+				  
+				        <field name="classement_final" invisible="1"/>
+				        <field name="record" invisible="1"/>
+				    </tree>
+				    <form string="Participants">
+				    
+				    <group>
+				    
+				      <group>
+				      
+				        <field name="epreuve_id"/>
+				        <field name="ligue_id"/>
+					<field name="club_id"/>
+				        <field name="sexe"/>
+					
+				  
+				        
+				      </group>
+				      
+				       <group>
+				                 <field name="athletes_id"  />
+					<field name="athletes_name"/>
+					<field name="athletes_prenom"/>
+				        <field name="engage"/>
+				       </group>
+				      
+				    </group>
+				    
+				    
+				       
+				    </form>
+                             
+                              </field>
+                             
+                            </page>
+                            
+                            
+                            <page string="Feuille de résultat">
+                             <field name="feuille_comp_ids" colspan="4" nolabel="1">
+		                       <tree string="Participants">
+		                                <field name="epreuve_id"/>
+						<field name="ligue_id"/>
+						<field name="club_id"/>
+					       <field name="sexe"/>
+						<field name="athletes_id"  />
+						<field name="athletes_name"/>
+						<field name="athletes_prenom"/>
+				            <field name="engage"/>
+				            <field name="dossard" />
+				            <field name="serie" />
+				            <field name="position" />
+				            <field name="formatresultat_id" />
+				            <field name="performance" />
+				  
+				            <field name="classement_final"/>
+				            <field name="record"/>
+				        </tree>
+
+		                <form string="Participants">
+		                
+		                 <group>
+		                 
+		                          <group>
+		                          
+		                             <field name="competition_rel_id" />
+		                                  <field name="epreuve_id"/>
+						<field name="ligue_id"/>
+						<field name="club_id"/>
+					       <field name="sexe"/>
+						<field name="athletes_id"  />
+						<field name="athletes_name"/>
+						<field name="athletes_prenom"/>
+		                    <field name="formatresultat_id"/>
+		                   
+		                    <field name="engage"/>
+		                          </group>
+		                 
+				         <group>
+				         
+				         
+				         
+				           
+		                    <field name="pointage" />
+		                    
+		                
+		                    <field name="classement_final"/>
+		                    <field name="record"/>
+				         </group>
+		                 </group>
+		                    
+		                    
+		                  
+		                </form>
+
+                             </field>
+                            </page>
+                            
+                            
+                            
+                            
+                          <!--  <page string="Infractions">
+                            </page>
+                            
+                            <page string="Résumé">
+                            </page>-->
+                         
+                        </notebook>
+                        
+                        
+
+                        
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="view_competition_tree" model="ir.ui.view">
+            <field name="name">sports.competition.tree</field>
+            <field name="model">sports.competition</field>
+
+            <field name="arch" type="xml">
+                <tree string="Compétitions">
+                    <field name="name"/>
+                     <field name="name_competition"/>
+                    <field name="date_debut"/>
+                    <field name="date_fin"/>
+                    
+                    <field name="organisateur"/>
+                    <field name="saison_id"/>
+                  
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_view_competition_form" model="ir.actions.act_window">
+            <field name="name">Compétitions</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sports.competition</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+
+        <menuitem action="action_view_competition_form"
+                  id="menu_action_view_competition_form" parent="base.menu_root_competition_epreuve"
+                  sequence="2"/>
+          
+
+
+       <record id="view_competition_participants_tree" model="ir.ui.view">
+            <field name="name">sports.competition.participants.tree</field>
+            <field name="model">sports.competition.participants</field>
+
+ <field name="arch" type="xml">
+
+                     <tree string="Participants">
+                            <field name="athletes_id"/>
+			    <field name="epreuve_id"/>
+			    <field name="ligue_id" invisible="1"/>
+			    <field name="club_id"/>
+			   <field name="sexe"/>
+			   <field name="athletes_name" invisible="1"/>
+			   <field name="athletes_prenom" invisible="1"/>
+			    <field name="engage"/>
+			     <field name="classement_final"/>
+			    <field name="record"/>
+			    <field name="dossard"/>
+			   <field name="competition_rel_id"/>
+			   
+			   
+			   
+			</tree>
+            </field>
+        </record>
+        
+        
+       <record id="view_competition_participants_form" model="ir.ui.view">
+            <field name="name">sports.competition.participants.form</field>
+            <field name="model">sports.competition.participants</field>
+
+ <field name="arch" type="xml">
+
+                     <form string="Participants">
+                     
+                       <group>
+                       
+                            <group>
+                            
+                                <field name="athletes_id"/>
+			    <field name="epreuve_id"/>
+			    <field name="ligue_id" invisible="1"/>
+			    <field name="club_id"/>
+			   <field name="sexe"/>
+			   <field name="athletes_name" invisible="1"/>
+			   <field name="athletes_prenom" invisible="1"/>
+			    <field name="engage"/>
+                       
+                            </group>
+                            
+                             <group>
+                                  <field name="classement_final"/>
+			    <field name="record"/>
+			    <field name="dossard"/>
+			  
+                             </group>
+                       
+                       </group>
+                           
+			   
+			</form>
+            </field>
+        </record>
+        
+        
+        <record id="action_view_resultats_form" model="ir.actions.act_window">
+            <field name="name">Feuilles des résultats</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sports.competition.participants</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+
+        <menuitem action="action_view_resultats_form"
+                  id="menu_action_view_resultats_form" parent="base.menu_root_competition_epreuve"
+                  sequence="2"/>
+
+    </data>
+</openerp>

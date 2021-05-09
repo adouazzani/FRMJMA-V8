@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+<!--***************************Calendar***************************-->
+        <record id="athletic_athlete_wkf_annual_calendar_form" model="ir.ui.view">
+            <field name="name">athletic.athlete.wkf.annual.calendar.form</field>
+            <field name="model">athletic.athlete.wkf.annual.calendar</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Calendrier Annuel">
+                     <header>
+                     <button name="bt_circ_att_val" string="Valider" states="calen_cours_prep" icon="gtk-apply" type="object"/>
+                    <button name="bt_circ_att_diff" string="Valider" states="circ_att_val" icon="gtk-apply" type="object"/>
+                    <button name="bt_att_coll_cal_reg" string="Valider" states="circ_att_diff"  icon="gtk-apply" type="object"/>
+                    <button name="bt_cal_att_val" string="Valider" states="att_coll_cal_reg"  icon="gtk-apply" type="object"/>
+                    <button name="bt_cal_att_rem_fed" string="Valider" states="cal_att_val"  icon="gtk-apply" type="object" />
+                    <button name="bt_cal_att_val_bur" string="Valider" states="cal_att_rem_fed"  icon="gtk-apply" type="object"/>
+                    <button name="bt_cal_att_maj" string="Valider" states="cal_att_val_bur" icon="gtk-apply" type="object"/>
+                    <button name="bt_cal_att_pub" string="Valider" states="cal_att_maj" icon="gtk-apply" type="object"/>
+                    <button name="bt_cal_valide_pub" string="Valider" states="cal_att_pub" icon="gtk-apply" type="object"/>
+
+                    
+                    <field  name='state' colspan='4' widget="statusbar"/>    
+                    </header>
+                
+                    <sheet>
+                    
+                    <group>
+                        <group>
+                           <field name="num_calendar"/>
+                           <field name="season_id"/>
+                        </group>
+                        
+                         <group>
+                          
+                           
+                           <field name="metier"/>
+                           
+                           <field name="type"/>
+                           <field name="description"/>
+                           
+                        </group>
+                    </group>
+                    
+                    
+                    <notebook>
+                   <page string='Informations'>
+
+                    
+                     <group>
+                        <group>
+                   
+                           <field name="date_start_season"/>
+                           <field name="date_end_season"/>
+                        </group>
+                        
+                         <group>
+                            
+                            
+                           <field name="date_start_organisation"/>
+                           <field name="date_end_organisation"/>
+                            
+                        </group>
+                    </group>
+                    
+                    
+                    
+                    </page>
+                    <page string='Résumé'>
+
+                   
+                   
+                    
+                    
+                    
+
+                     <group>
+                        <group>
+                          
+                    <field name="date_calen_cours_prep"/>
+                    <field name="user_calen_cours_prep"/>
+                    <field name="date_circ_att_val"/>
+                    <field name="user_circ_att_val"/>
+                    <field name="date_circ_att_diff"/>
+                    <field name="user_circ_att_diff"/>
+                    <field name="date_att_coll_cal_reg"/>
+                    <field name="user_att_coll_cal_reg"/>
+                    <field name="date_cal_att_val"/>
+                    <field name="user_cal_att_val"/>
+                        </group>
+                        
+                         <group>
+                           <field name="date_cal_att_rem_fed"/>
+                    <field name="user_cal_att_rem_fed"/>
+                    <field name="date_cal_att_val_bur"/>
+                    <field name="user_cal_att_val_bur"/>
+                    <field name="date_cal_att_maj"/>
+                    <field name="user_cal_att_maj"/>
+                    <field name="date_cal_att_pub"/>
+                    <field name="user_cal_att_pub"/>
+                        </group>
+                    </group>
+                    </page>
+                    </notebook>
+
+                    
+                    
+                   
+
+                    
+                   </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="athletic_athlete_wkf_annual_calendar_tree" model="ir.ui.view">
+            <field name="name">athletic.athlete.wkf.annual.calendar.tree</field>
+            <field name="model">athletic.athlete.wkf.annual.calendar</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Calendrier Annuel">
+                    <field name="num_calendar"/>
+                    <field name="season_id"/>
+                    <field name="date_start_season"/>
+                    <field name="date_end_season"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        
+         <record model="ir.ui.view" id="view_athletic_athlete_wkf_annual_calendar_search">
+        <field name="name">athletic.athlete.wkf.annual.calendar.search</field>
+        <field name="model">athletic.athlete.wkf.annual.calendar</field>
+        <field name="type">search</field>
+        <field name="arch" type="xml">
+            <search string="Calendrier Annuel des Compétitions">
+                <filter string="Saison" />
+                
+                <field name="num_calendar"/>
+                <field name="season_id"/>
+                <field name="date_start_season"/>
+                <field name="date_end_season"/>
+
+            </search>
+        </field>
+    </record>
+
+
+        <record id="athletic_athlete_wkf_annual_calendar_admin_action" model="ir.actions.act_window">
+            <field name="name">Calendriers</field>
+            <field name="res_model">athletic.athlete.wkf.annual.calendar</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        
+
+     <menuitem action="athletic_athlete_wkf_annual_calendar_admin_action"
+                  id="menu_athletic_athlete_wkf_annual_calendar_admin_action" parent="base.menu_root_competition_epreuve"
+                  sequence="3"/>
+   
+
+
+
+
+</data>
+</openerp>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <!-- type record start -->
+        <!-- tree view -->
+        <record model="ir.ui.view" id="mileage_allowance_tree_view">
+            <field name="name">mileage.allowance.tree.view</field>
+            <field name="type">tree</field>
+            <field name="model">mileage.allowance</field>
+            <field name="arch" type="xml">
+                <tree string="Note de frais">
+                    <field name="name"/>
+                    <field name="price"/>
+                </tree>
+            </field>
+        </record>
+        <!-- form view -->
+        <record model="ir.ui.view" id="mileage_allowance_form_view">
+            <field name="name">mileage.allowance.form.view</field>
+            <field name="type">form</field>
+            <field name="model">mileage.allowance</field>
+            <field name="arch" type="xml" >
+                <form string="Note de frais" version="8.0">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                            </group>
+                            <group>
+                                <field name="price"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <!-- search view -->
+        <record model="ir.ui.view" id="mileage_allowance_search_view">
+            <field name="name">mileage.allowance.search.view</field>
+            <field name="model">mileage.allowance</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Mutuelle">
+                    <field name="price"/>
+                </search>
+            </field>
+        </record>
+        <!-- action record -->
+        <record model="ir.actions.act_window" id="mileage_allowance_action">
+            <field name="name">Indémnités Kilométriques</field>
+            <field name="res_model">mileage.allowance</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="mileage_allowance_tree_view"/>
+        </record>
+        <!-- technology record end -->
+
+        <menuitem action="mileage_allowance_action" id="menu_mileage_allowance" name="Indémnités Kilométriques" parent="hr_expense.next_id_49" sequence="20"/>
+
+    </data>
+</openerp>

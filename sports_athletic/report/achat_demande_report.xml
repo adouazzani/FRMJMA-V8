@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <template id="achat_demande_report_document">
+            <t t-call="sports_athletic.sa_external_layout">
+                <div class="page">
+
+                    <table class="info1_table">
+                        <tr>
+                            <td>Formulaire de demande d'achat</td>
+                        </tr>
+                        <tr>
+                            <td>N° de la demande d'achat:    <span t-field="o.name"/></td>
+                        </tr>
+                    </table>
+
+                    <table class="info2_table">
+                        <tr>
+                            <td>Service Demandeur (SU): </td>
+                            <td><span t-field="o.responsable_id.name"/></td>
+                        </tr>
+                        <tr>
+                            <td>Objet de la DA: </td>
+                            <td><span t-field="o.object"/></td>
+                        </tr>
+                    </table>
+
+                    <table class="product_table">
+                        <tr>
+                            <td>Article</td>
+                            <td>Unité</td>
+                            <td>Quantité</td>
+                            <td>Date demandée</td>
+                            <td>Prix Unitaire</td>
+                            <td>Montant Global estimatif</td>
+                        </tr>
+                        <tr t-foreach="o.demande_line_ids" t-as="line">
+                            <td><span t-field="line.product.name_template"/></td>
+                            <td><span t-field="line.product_uom"/></td>
+                            <td><span t-field="line.product_qty"/></td>
+                            <td><span t-field="line.date_planned"/></td>
+                            <td><span t-field="line.price_unit"/></td>
+                            <td><span t-field="line.price_subtotal"/></td>
+                        </tr>
+                    </table>
+
+                    <div class="approval_circuit">Circuit d'approbation :</div>
+
+                    <table class="approval_table">
+                        <tr>
+                            <td>DA approuvée par</td>
+                            <td>Nom/Prénom</td>
+                            <td>Date</td>
+                            <td>Visa</td>
+                        </tr>
+                        <tr>
+                            <td>Utilisateur</td>
+                            <td><span t-field="o.responsable_id.name"/></td>
+                            <td><span t-field="o.date_submitted_user"/></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Responsable du Service Utilisateur</td>
+                            <td><span t-field="o.user_responsible.name"/></td>
+                            <td><span t-field="o.date_user_resp_validate"/></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Responsable Logistiques</td>
+                            <td><span t-field="o.logistics_manager.name"/></td>
+                            <td><span t-field="o.date_logistics_manager_validate"/></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Directeur Financier</td>
+                            <td><span t-field="o.frma_director.name"/></td>
+                            <td><span t-field="o.date_financial_director_validate"/></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Directeur de la FRMA</td>
+                            <td><span t-field="o.frma_director.name"/></td>
+                            <td><span t-field="o.date_frma_director_validate"/></td>
+                            <td></td>
+                        </tr>
+                    </table>
+
+                </div>
+            </t>
+        </template>
+
+        <template id="achat_demande_report">
+            <t t-call="report.html_container">
+                <t t-foreach="doc_ids" t-as="doc_id">
+                    <t t-raw="translate_doc(doc_id, doc_model, 'lang', 'sports_athletic.achat_demande_report_document')"/>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</openerp>

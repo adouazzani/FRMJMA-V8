@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_engages_participants" model="ir.ui.view">
+            <field name="name">Engager les pré-engagés</field>
+            <field name="model">sport.engages.participants</field>
+            <field name="arch" type="xml">
+                <form string="Engager les pré-engagés">
+                    <p class="oe_grey">
+                       
+                    </p>
+                    <group>
+                       <group>
+                           <field name="competition_id" invisible="1"/>
+                        </group>
+                         <group colspan="4">
+                        
+                            <field name="participants_competition_ids" domain="[('competition_id','=',competition_id)]" >
+                                     <tree string="Participants" editable="bottom">
+					<field name="epreuve_id"/>
+					<field name="ligue_id"/>
+					<field name="club_id"/>
+					<field name="sexe"/>
+					<field name="athletes_id"  />
+					<field name="athletes_name"/>
+					<field name="athletes_prenom"/>
+					<field name="engage"/>
+					<field name="classement_final"/>
+					<field name="record"/>
+					<field name="competition_id"/>
+					<field name="competition_rel_id"/>
+				
+				    </tree>
+
+                                </field>
+                            
+                        </group>
+                    </group>
+                    <footer>
+                       
+                        <button name="engages_participants" string="Engage" type="object"
+                            class="btn-primary"/>
+                        <button string="Annuler" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_view_engages_participants" model="ir.actions.act_window">
+            <field name="name">Engager les pré-engagés</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sport.engages.participants</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+
+    </data>
+</openerp>

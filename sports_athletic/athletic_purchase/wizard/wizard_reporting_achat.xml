@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+		<record id="wizard_athletic_purchase_reporting_achat_view" model="ir.ui.view">
+			<field name="name">Reporting achat</field>
+			<field name="model">wizard_athletic_purchase.reporting_achat</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string=" ">
+
+					<group  colspan="4">
+						<separator  string="Date de début :" colspan="2"/>
+						<separator  string=" Date fin :" colspan="2"/>
+
+					</group>
+					<group col="4" colspan="4">
+						<field name="date_du" nolabel="1" colspan="2" />
+						<field name="date_au" nolabel="1" colspan="2" />
+					</group>
+
+<newline/>
+
+					<group>
+						<group colspan="2" >
+						</group>
+						<group  colspan="2">
+							<button name="print_report" type="object" string="Imprimer" icon="gtk-go-forward"  groups="base_athletic.group_responsable_achats,base_athletic.group_admin_business"/>
+
+						</group>
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_wizard_athletic_purchase_reporting_achat" model="ir.actions.act_window">
+			<field name="name">Reporting achat</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">wizard_athletic_purchase.reporting_achat</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+    <menuitem action="action_wizard_athletic_purchase_reporting_achat" 
+              id="wizard_athletic_purchase_reporting_achat_menu" 
+              name="Reporting achat "
+				sequence="90"
+                groups="purchase.group_purchase_manager,purchase.group_purchase_user"
+				parent="purchase.menu_procurement_management" />
+</data>
+</openerp>

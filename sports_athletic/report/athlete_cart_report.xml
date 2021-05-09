@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <template id="minimal_layout_sports_athlete" inherit_id="report.minimal_layout" name="sports_athlete minimal_layout">
+            <xpath expr='//link[@href="/web/static/lib/bootstrap/css/bootstrap.css"]' position="before">
+                <link rel="stylesheet" href="/sports_athletic/static/src/css/style.css"/>
+            </xpath>
+        </template>
+
+
+        <template id="athlete_cart_report_document">
+            <div class="page cart_page">
+                <div class="oe_structure"/>
+
+                <img class="athlete_img" t-if="o.image" t-att-src="'data:image/png;base64,%s' % o.image"/>
+                <span class="athlete_code" t-field="o.name"/>
+                <span class="athlete_name"><span t-field="o.name_at"/> <span t-field="o.prenom"/></span>
+                <span class="club_num" t-field="o.club_id.num"/>
+                <span class="ligue_name" t-field="o.ligue_id.name"/>
+                <span class="athlete_datenaissance" t-field="o.datenaissance"/>
+                <img class="athlete_barcode" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.name, 600, 100)"/>
+                <!--table class="ac_table">
+                    <tr>
+                        <td><img class="athlete_img" t-if="o.image" t-att-src="'data:image/png;base64,%s' % o.image"/></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><span t-field="o.name"/></td>
+                        <td></td>
+                        <td><span t-field="o.name_ar"/></td>
+                    </tr>
+                    <tr>
+                        <td><span t-field="o.club_id.num"/></td>
+                        <td><span t-field="o.datenaissance"/></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><span t-field="o.ligue_id.name"/></td>
+                        <td></td>
+                        <td>CAB</td>
+                    </tr>
+                </table-->
+
+            </div>
+        </template>
+
+        <template id="athlete_cart_report">
+            <t t-call="report.html_container">
+                <t t-foreach="doc_ids" t-as="doc_id">
+                    <t t-raw="translate_doc(doc_id, doc_model, 'lang', 'sports_athletic.athlete_cart_report_document')"/>
+                </t>
+            </t>
+        </template>
+    </data>
+</openerp>

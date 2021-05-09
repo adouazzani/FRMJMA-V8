@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report auto="False" id="report_purchase_quotation_frma" 
+            model="purchase.order" 
+            name="purchase.quotation.frma" 
+            rml="athletic_purchase/report/request_quotation.rml" string="Demande de prix(frma)"/>
+
+          <report auto="False" 
+
+            id="report_purchase_requisition_frma" 
+            model="purchase.requisition" 
+            name="purchase.requisition_frma" 
+            rml="athletic_purchase/report/purchase_requisition.rml"
+            string="Comparatif prix"/>
+
+
+			<report 
+				menu="False" 
+				auto="False" 
+				id="report_reporting_achats_id"
+				model="purchase.requisition"
+				name="athletic.purchase.reporting.achat"
+                rml="athletic_purchase/report/reporting_achat.jrxml"
+				string="Reporting achat"
+        	/>
+
+
+
+    </data>
+</openerp>

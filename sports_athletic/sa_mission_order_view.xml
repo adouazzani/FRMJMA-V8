@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <!-- type record start -->
+        <!-- tree view -->
+        <record model="ir.ui.view" id="mission_order_tree_view">
+            <field name="name">mission.order.tree.view</field>
+            <field name="type">tree</field>
+            <field name="model">sa.mission.order</field>
+            <field name="arch" type="xml">
+                <tree string="Ordre de mission">
+                    <field name="name"/>
+                    <field name="applicant"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="start_hour"/>
+                    <field name="end_hour"/>
+                    <field name="destination"/>
+                    <field name="accompanist"/>
+                    <field name="means_of_transport"/>
+                    <field name="reason"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        <!-- form view -->
+        <record model="ir.ui.view" id="mission_order_form_view">
+            <field name="name">mission.order.form.view</field>
+            <field name="type">form</field>
+            <field name="model">sa.mission.order</field>
+            <field name="arch" type="xml" >
+                <form string="Ordre de mission" version="8.0">
+                    <header>
+                        <button name="action_validate" string="Valider" class="oe_highlight oe_read_only" type="object" attrs="{'invisible': [('state','not in',['draft'])]}"/>
+                        <button name="action_draft" string="Remettre en brouillon" class="oe_highlight oe_read_only" type="object" attrs="{'invisible': [('state','in',['draft'])]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,validate" />
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                            </group>
+                            <group>
+                                <field name="applicant"/>
+                                <field name="job" readonly="True"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="start_date"/>
+                                <field name="end_date"/>
+                            </group>
+                            <group>
+                                <field name="start_hour"/>
+                                <field name="end_hour"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="accompanist"/>
+                                <field name="means_of_transport"/>
+                            </group>
+                            <group>
+                                <field name="destination"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="reason"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <!-- search view -->
+        <record model="ir.ui.view" id="mission_order_search_view">
+            <field name="name">mission.order.search.view</field>
+            <field name="model">sa.mission.order</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Ordre de mission">
+                    <field name="name"/>
+                    <field name="applicant"/>
+                    <field name="destination"/>
+                    <field name="accompanist"/>
+                    <field name="means_of_transport"/>
+                    <field name="reason"/>
+                    <group expand="0" string="Groupements">
+                        <filter string="Demandeur" domain="[]" context="{'group_by':'applicant'}" />
+                        <filter string="Destination" domain="[]" context="{'group_by':'destination'}" />
+                        <filter string="Status" domain="[]" context="{'group_by':'state'}" />
+                    </group>
+                </search>
+            </field>
+        </record>
+        <!-- action record -->
+        <record model="ir.actions.act_window" id="mission_order_action">
+            <field name="name">Ordre de mission</field>
+            <field name="res_model">sa.mission.order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="mission_order_tree_view"/>
+        </record>
+        <!-- technology record end -->
+
+        <!-- menu root2 MO 31 -->
+		<menuitem id="mo_root2"
+				  name="Ordre de mission"
+				  parent="hr.menu_hr_root"
+				  sequence="14" groups="base.group_hr_manager"/>
+		<!-- menu MO list 311 -->
+		<menuitem id="mo_menu"
+				  name="Ordres de missions"
+				  parent="mo_root2"
+				  sequence="10"
+				  action="mission_order_action"/>
+
+    </data>
+</openerp>

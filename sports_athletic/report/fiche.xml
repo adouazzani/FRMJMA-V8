@@ -1,0 +1,167 @@
+<?xml version="1.0"?>
+<openerp>
+<data noupdate="1">
+
+    <record id="sports_athletes_report_id" model="ir.actions.report.xml">
+        <field name="name">Fiche athlete</field>
+        <field name="type">ir.actions.report.xml</field>
+        <field name="model">sports.athletes</field>
+        <field name="report_name">sports_report</field>
+        <field name="report_type">aeroo</field>
+        <field name="in_format">oo-odt</field>
+        
+        <field name="report_rml">sports_athletic/report/fiche.odt</field>
+        <field name="parser_loc">sports_athletic/report/parser.py</field>
+        <field name="parser_state">loc</field>
+        <field name="tml_source">file</field>
+    </record>
+
+
+    <record id="sports_attestation_athlete_report_id" model="ir.actions.report.xml">
+        <field name="name">Attestation athlete</field>
+        <field name="type">ir.actions.report.xml</field>
+        <field name="model">sports.athletes</field>
+        <field name="report_name">sports_attestation_athlete_report</field>
+        <field name="report_type">aeroo</field>
+        <field name="in_format">oo-odt</field>
+        
+        <field name="report_rml">sports_athletic/report/attestation_athlete.odt</field>
+        <field name="parser_loc">sports_athletic/report/parser.py</field>
+        <field name="parser_state">loc</field>
+        <field name="tml_source">file</field>
+    </record>
+
+
+
+
+    <record id="sports_attestation_de_bourse_report_id" model="ir.actions.report.xml">
+        <field name="name">Attestation de bourse</field>
+        <field name="type">ir.actions.report.xml</field>
+        <field name="model">sports.athletes</field>
+        <field name="report_name">sports_attestation_de_bourse_report</field>
+        <field name="report_type">aeroo</field>
+        <field name="in_format">oo-odt</field>
+        
+        <field name="report_rml">sports_athletic/report/attestation_de_bourse.odt</field>
+        <field name="parser_loc">sports_athletic/report/parser.py</field>
+        <field name="parser_state">loc</field>
+        <field name="tml_source">file</field>
+    </record>
+
+
+     <record id="sports_athletes_report_carte_id" model="ir.actions.report.xml">
+        <field name="name">Carte athlete</field>
+        <field name="type">ir.actions.report.xml</field>
+        <field name="model">sports.athletes</field>
+        <field name="report_name">carte_report</field>
+        <field name="report_type">aeroo</field>
+        <field name="in_format">oo-odt</field>
+        
+        <field name="report_rml">sports_athletic/report/cartes.odt</field>
+        <field name="parser_loc">sports_athletic/report/parser.py</field>
+        <field name="parser_state">loc</field>
+        <field name="tml_source">file</field>
+    </record>
+
+
+
+      <record id="sports_athletes_report_edition_cartes_id" model="ir.actions.report.xml">
+        <field name="name">Edition cartes athlete</field>
+        <field name="type">ir.actions.report.xml</field>
+        <field name="model">sports.edition.carteslicences</field>
+        <field name="report_name">edition_cartes_report</field>
+        <field name="report_type">aeroo</field>
+        <field name="in_format">oo-odt</field>
+        
+        <field name="report_rml">sports_athletic/report/edition_cartes.odt</field>
+        <field name="parser_loc">sports_athletic/report/parser.py</field>
+        <field name="parser_state">loc</field>
+        <field name="tml_source">file</field>
+    </record>
+
+
+    <record id="sports_athletes_assurance_ods3" model="ir.actions.report.xml">
+        <field name="name">Assurance Athletes - ODS</field>
+        <field name="type">ir.actions.report.xml</field>
+        <field name="model">sports.excel.assurances</field>
+        <field name="report_name">report_assurance_ods3</field>
+        <field name="report_type">aeroo</field>
+        <field name="in_format">oo-ods</field>
+        <field name="out_format" ref="report_aeroo.report_mimetypes_xls_odt"/>
+       <!-- <field name="out_format" ref="report_aeroo.report_mimetypes_xls_odt"/>-->
+        <field name="parser_loc">sports_athletic/report/parser_assurance.py</field>
+        <field name="report_rml">sports_athletic/report/assurance.ods</field>
+        <field name="parser_state">loc</field>
+        <field name="tml_source">file</field>
+    </record>
+
+
+
+
+   
+      <record id="sports_athletes_report_passage_categorie_id" model="ir.actions.report.xml">
+        <field name="name">adhérents avec passage de catégorie</field>
+        <field name="type">ir.actions.report.xml</field>
+        <field name="model">sports.passage.categorie</field>
+        <field name="report_name">report_passage_categorie_ods</field>
+        <field name="report_type">aeroo</field>
+        <field name="in_format">oo-odt</field>
+        
+        <field name="report_rml">sports_athletic/report/passage_categorie.odt</field>
+        <field name="parser_loc">sports_athletic/report/parser.py</field>
+        <field name="parser_state">loc</field>
+        <field name="tml_source">file</field>
+    </record>
+
+
+
+      <record id="sports_athletes_report_renouvellement_id" model="ir.actions.report.xml">
+        <field name="name">Demande Renouvellement</field>
+        <field name="type">ir.actions.report.xml</field>
+        <field name="model">sports.renouvellement</field>
+        <field name="report_name">report_renouvellement_ods</field>
+        <field name="report_type">aeroo</field>
+        <field name="in_format">oo-odt</field>
+        
+        <field name="report_rml">sports_athletic/report/bordereau_licences_renouvellement.odt</field>
+        <field name="parser_loc">sports_athletic/report/parser.py</field>
+        <field name="parser_state">loc</field>
+        <field name="tml_source">file</field>
+    </record>
+
+
+
+    
+      <record id="sports_athletes_report_affiliation_id" model="ir.actions.report.xml">
+        <field name="name">Attribution des Nouvelles Licences</field>
+        <field name="type">ir.actions.report.xml</field>
+        <field name="model">sports.affiliation</field>
+        <field name="report_name">report_affiliation_ods</field>
+        <field name="report_type">aeroo</field>
+        <field name="in_format">oo-odt</field>
+        
+        <field name="report_rml">sports_athletic/report/bordereau_licences_attribution.odt</field>
+        <field name="parser_loc">sports_athletic/report/parser.py</field>
+        <field name="parser_state">loc</field>
+        <field name="tml_source">file</field>
+    </record>
+
+
+
+    <record id="sports_athletes_report_reaffiliation_id" model="ir.actions.report.xml">
+        <field name="name">Reaffiliation des licences</field>
+        <field name="type">ir.actions.report.xml</field>
+        <field name="model">sports.reaffiliation</field>
+        <field name="report_name">report_reaffiliation_ods</field>
+        <field name="report_type">aeroo</field>
+        <field name="in_format">oo-odt</field>
+        
+        <field name="report_rml">sports_athletic/report/bordereau_licences_reaffiliation.odt</field>
+        <field name="parser_loc">sports_athletic/report/parser.py</field>
+        <field name="parser_state">loc</field>
+        <field name="tml_source">file</field>
+    </record>
+
+</data>
+</openerp>
+

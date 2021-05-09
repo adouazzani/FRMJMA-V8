@@ -1,0 +1,526 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="fiche_athlete" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="620"/>
+	<property name="ireport.callouts" value="##Wed Apr 20 09:23:31 WET 2011"/>
+	<style name="Heading 1" fontSize="16" isBold="true"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#CCCCCC"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#CCCCCC"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#CCCCCC"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#CCCCCC"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_TH" mode="Opaque" backcolor="#008000">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_CH" mode="Opaque" backcolor="#BFFFBF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_TH" mode="Opaque" backcolor="#228B22">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_CH" mode="Opaque" backcolor="#BFFFBF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="query1">
+		<parameter name="ATHLETE_IDS" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[select c.num_competition,c.name,
+c.date_start,
+coalesce(epc.nom_epreuve,'')||'-'||coalesce(epc.categorie,'')||'-'||coalesce(epc.sexe,'') as "erpeuve",
+p.performance,
+p.classement_final
+from athletic_athlete_participant_epreuve p
+join athletic_athlete a on a.id=p.athlete_id
+join athletic_athlete_epreuve_competition epc on p.epreuve_comp_id=epc.id
+join athletic_athlete_competition c on c.id=epc.competition_id
+where a.id in $P!{ATHLETE_IDS}
+order by c.date_start desc]]>
+		</queryString>
+		<field name="num_competition" class="java.lang.String"/>
+		<field name="name" class="java.lang.String"/>
+		<field name="date_start" class="java.sql.Date"/>
+		<field name="erpeuve" class="java.lang.String"/>
+		<field name="performance" class="java.lang.String"/>
+		<field name="classement_final" class="java.lang.Integer"/>
+	</subDataset>
+	<parameter name="ATHLETE_IDS" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select
+
+a.name_at as "nom",
+a.prenom as "prenom",
+a.datenaissance as "date naissance",
+COALESCE(a.adresse, '')||', '||COALESCE(a.ville, '')||' as "adresse",
+
+a.tel1 as "tel_fixe",
+a.tel2 as "tel_mobile",
+a.mail as "email",
+a.lieu_naissance as "lieux_naissance",
+a.cin as "cin",
+a.cinexpiration as "date expi cin",
+a.passeport,
+a.passeportexpiration,
+a.rib,
+a.pointure as "pointure",
+a.name,
+c.name as "club",
+l.name as "ligue",
+
+a.niveau_scolaire as "niveau_scolaire"
+
+from sports_athletes a
+left join sports_club c on a.club_id=c.id
+left join sports_ligue l on a.ligue_id=l.id
+
+where  a.id in $P!{ATHLETE_IDS} and a.type_licence in ('Sportif-Interne','Sportif-MRE','Sportif-Etranger')]]>
+	</queryString>
+	<field name="nom" class="java.lang.String"/>
+	<field name="prenom" class="java.lang.String"/>
+	<field name="date naissance" class="java.sql.Date"/>
+	<field name="adresse" class="java.lang.String"/>
+	<field name="tel_fixe" class="java.lang.String"/>
+	<field name="tel_mobile" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="lieux_naissance" class="java.lang.String"/>
+	<field name="cin" class="java.lang.String"/>
+	<field name="date expi cin" class="java.sql.Date"/>
+	<field name="num_passport" class="java.lang.String"/>
+	<field name="date_expir_passport" class="java.sql.Date"/>
+	<field name="rib" class="java.lang.String"/>
+	<field name="pointure" class="java.lang.Double"/>
+	<field name="num_licence" class="java.lang.String"/>
+	<field name="club" class="java.lang.String"/>
+	<field name="ligue" class="java.lang.String"/>
+	
+	<field name="niveau_scolaire" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="721" splitType="Stretch">
+			<rectangle radius="10">
+				<reportElement x="4" y="179" width="540" height="142" forecolor="#F0F0F0" backcolor="#F0F0F0"/>
+			</rectangle>
+			<rectangle radius="10">
+				<reportElement x="5" y="341" width="539" height="19" forecolor="#F0F0F0" backcolor="#F0F0F0"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="5" y="351" width="539" height="12" forecolor="#F0F0F0" backcolor="#F0F0F0"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="5" y="363" width="539" height="85" forecolor="#F0F0F0"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="117" y="101" width="182" height="19"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="16" isBold="true" isItalic="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[FICHE  ATHLETE ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="17" y="194" width="44" height="14"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Licence :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="245" y="194" width="32" height="14"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nom :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="63" y="194" width="83" height="14"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{num_licence}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="244" y="217" width="44" height="13"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Prénom :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="18" y="217" width="110" height="13"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date de naissance : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="18" y="241" width="102" height="13"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lieu de Naisance :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="289" y="217" width="71" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{prenom}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="278" y="194" width="66" height="14"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nom}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="193" y="341" width="167" height="19"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Informations Générales]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="369" width="47" height="13"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Adresse :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="390" width="48" height="13"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tél Fixe :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="363" y="390" width="43" height="14"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Mobile :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="63" y="390" width="61" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{tel_fixe}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="406" y="390" width="64" height="14"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{tel_mobile}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="395" y="369" width="149" height="14"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{email}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="62" y="369" width="288" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{adresse}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="363" y="369" width="32" height="14"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Email :]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="124" y="218" width="87" height="13" backcolor="#F0F0F0"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{date naissance}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="117" y="241" width="100" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{lieux_naissance}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="15" y="411" width="44" height="13"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° CIN ]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="58" y="411" width="83" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cin}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="363" y="410" width="92" height="14"/>
+				<textElement textAlignment="Left">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date Expiration]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="426" width="83" height="14"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Passeport ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="363" y="429" width="93" height="15"/>
+				<textElement textAlignment="Left">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date Expiration]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="98" y="426" width="86" height="14"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{num_passport}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="455" y="429" width="89" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{date_expir_passport}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="455" y="410" width="89" height="14"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{date expi cin}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="332" y="6" width="221" height="20"/>
+				<textElement>
+					<font fontName="DejaVu Sans Mono" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[الجامعة الملكية المغربية لألعاب]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="425" y="27" width="40" height="15"/>
+				<textElement>
+					<font fontName="DejaVu Sans Mono" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[القوى]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="61" y="27" width="100" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[d'Athlétisme]]></text>
+			</staticText>
+			
+			<staticText>
+				<reportElement x="5" y="7" width="214" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fédération Royale Marocaine ]]></text>
+			</staticText>
+			<elementGroup>
+				<rectangle radius="10">
+					<reportElement x="5" y="467" width="539" height="21" forecolor="#F0F0F0" backcolor="#F0F0F0"/>
+				</rectangle>
+				<rectangle>
+					<reportElement x="5" y="477" width="539" height="12" forecolor="#F0F0F0" backcolor="#F0F0F0"/>
+				</rectangle>
+			</elementGroup>
+			<staticText>
+				<reportElement x="185" y="468" width="196" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Synthèse des Résultats]]></text>
+			</staticText>
+			<elementGroup>
+				<elementGroup/>
+			</elementGroup>
+			<textField isBlankWhenNull="true">
+				<reportElement x="182" y="158" width="168" height="16"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{club}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="160" y="140" width="215" height="14"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ligue}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="244" y="241" width="57" height="13"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Discipline :]]></text>
+			</staticText>
+			
+			
+
+			<staticText>
+				<reportElement x="244" y="264" width="62" height="13"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Entraîneur :]]></text>
+			</staticText>
+			
+			<staticText>
+				<reportElement x="17" y="264" width="81" height="13"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Niveau Scolaire :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="98" y="264" width="100" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{niveau_scolaire}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="20" y="290" width="50" height="13"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pointure]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="70" y="290" width="100" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{pointure}]]></textFieldExpression>
+			</textField>
+			
+			
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="37" splitType="Stretch">
+			<staticText>
+				<reportElement x="347" y="16" width="83" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Imprimée Le :]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="431" y="16" width="87" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

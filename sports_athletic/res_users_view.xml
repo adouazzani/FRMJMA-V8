@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+
+
+        <!-- Update user form !-->
+        <record id="view_users_form_sport" model="ir.ui.view">
+            <field name="name">res.users.form.sport</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="mail.view_users_form_mail"/>
+            <field name="arch" type="xml">
+            <data>
+                 <xpath expr="//page[@string='Access Rights']" position='before'>
+
+                   <page string="Organisme Sportif" >
+
+                           <group>
+                               <group>
+
+                                   <field name="ligue_id"/>
+                                   <field name="club_id"/>
+                                   <field name="centre_id"/>
+                               </group>
+                               <group>
+                                   <field name="metie"/>
+                                   <field name="ligue_un"/>
+                               </group>
+                           </group>
+                      
+                    </page>
+                </xpath>
+            </data>
+            </field>
+        </record>
+
+    </data>
+</openerp>

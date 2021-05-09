@@ -1,0 +1,3505 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+
+        <!--Athléte / Entraineur / Dirigeant / Officiel -->
+
+
+        <record id="view_athletes_form" model="ir.ui.view">
+            <field name="name">sports.athletes.form</field>
+            <field name="model">sports.athletes</field>
+            <field name="arch" type="xml">
+                <form string="Licence" create="false">
+
+                    <header>
+
+                        <!--<button name="action_category_age" string="Catégorie d'age" type="object" class="oe_highlight"/>-->
+
+                        <button name="generate_report" string="Fiche Athléte" type="object" class="oe_highlight"
+                                attrs="{'invisible':[('licence','!=','Athlete')]}"/>
+
+                        <button name="generate_carte_report" string="Carte Athléte" type="object" class="oe_highlight"
+                                attrs="{'invisible':[('licence','!=','Athlete')]}"/>
+
+
+                        <!--button name="generate_carte_report_duplicata" string="Carte Athléte (Duplicata)" type="object" class="oe_highlight"
+                                attrs="{'invisible':[('licence','!=','Athlete')]}"/-->
+
+
+                        <button name="generate_attestation_athlete_report" string="Attestation d'athlète" type="object"
+                                class="oe_highlight" attrs="{'invisible':[('licence','!=','Athlete')]}"/>
+
+                        <button name="generate_attestation_bourse_athlete_report" string="Attestation de bourse"
+                                type="object" class="oe_highlight" attrs="{'invisible':[('licence','!=','Athlete')]}"/>
+
+
+                        <field name="state" widget="statusbar" statusbar_visible="actif"
+                               statusbar_colors='{"renouvellement":"red","Sanctionne":"red","Rejete":"red","inactif":"red","renouvellement":"blue"}'/>
+                    </header>
+
+
+                    <sheet>
+
+                        <field name="image" widget='image' class="oe_left oe_avatar" options='{"size": [120, 120]}'/>
+
+                        <div class="oe_title">
+
+                            <h1>
+                                <field name="name" default_focus="1" placeholder="N° licence" readonly="1"
+                                       required="1"/>
+                            </h1>
+
+                        </div>
+
+
+                        <div class="oe_right oe_button_box" name="button_box">
+
+
+                            <button name="action_view_reaffiliations"
+                                    type="object"
+                                    class="oe_stat_button"
+                                    icon="fa-pencil-square-o"
+                                    string="Réaffiliations"
+                            >
+
+                            </button>
+
+                            <button name="action_view_mutations"
+                                    type="object"
+                                    class="oe_stat_button"
+                                    icon="fa-pencil-square-o"
+                                    string="Mutations"
+                            >
+
+                            </button>
+
+                            <button name="action_view_anneeblanche"
+                                    type="object"
+                                    class="oe_stat_button"
+                                    icon="fa-pencil-square-o"
+                                    string="Années Blanches"
+                            >
+
+                            </button>
+
+                            <button name="action_view_sanctions"
+                                    type="object"
+                                    class="oe_stat_button"
+                                    icon="fa-pencil-square-o"
+                                    string="Sanctions"
+                            >
+
+                            </button>
+
+
+                            <!--
+                            <button name="action_view_tests"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-pencil-square-o"
+                                string="Tests"
+                                >
+
+                            </button>
+
+                            <button name="action_view_resultats"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-pencil-square-o"
+                                string="Résultats"
+                                >
+
+                            </button>
+
+                             <button name="action_view_admissionscentres"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-pencil-square-o"
+                                string="Admissions aux centres"
+                                >
+
+                            </button>-->
+
+
+                        </div>
+
+
+                        <group>
+                            <group>
+                                <field name="name_at" required="1"/>
+                                <field name="prenom" required="1"/>
+                                <field name="name_ar"/>
+                                <field name="saison_id" readonly="1" options='{"no_open": True, "no_create": True}'/>
+
+                                <field name="report_xml_id" invisible="1"/>
+
+                            </group>
+                            <group>
+                                <!--<field name="file" widget='image' class="oe_avatar"/>-->
+
+                                <field name="url" readonly="1" invisible="1"/>
+                                <field name="name2" invisible="1"/>
+                                <field name="licence"/>
+
+                                <field name="type_athletes"
+                                       attrs="{'invisible':[('licence','!=','Athlete')],'required':[('licence','=','Athlete')]}"/>
+                                <field name="affiliation_id" readonly="1"
+                                       options='{"no_open": True, "no_create": True}'/>
+                                <field name="club_id" options='{"no_open": True, "no_create": True}'/>
+                                <field name="ligue_id" options='{"no_open": True, "no_create": True}'/>
+
+
+                                <field name="raison" invisible="1"/>
+                                <field name="renouvele" invisible="1"/>
+
+                            </group>
+                        </group>
+
+                        <notebook>
+                            <page string="Informations">
+
+                                <group col="6" colspan="4">
+
+                                    <group string="Informations générale" col="4">
+
+                                        <field name="datenaissance" required="1"/>
+                                        <field name="age"/>
+                                        ans
+                                        <field name="lieu_naissance" required="1"/>
+                                        <field name="sexe" required="1"/>
+
+                                        <field name="cin"
+                                               attrs="{'invisible':[('licence','!=','Athlete')],'required':[('age','&gt;',16),('licence','=','Athlete')]}"/>
+                                        <field name="cinexpiration" attrs="{'invisible':[('age','&lt;',16)]}"/>
+
+                                        <field name="category_age_id" attrs="{'invisible':[('licence','!=','Athlete')]}"
+                                               options='{"no_open": True, "no_create": True}'/>
+
+                                        <field name="category_age_birth_certificate" invisible="1"/>
+                                        <field name="category_age_medical_certificate" invisible="1"/>
+                                        <field name="category_age_cin" invisible="1"/>
+                                        <field name="category_age_parental_authorization" invisible="1"/>
+                                        <field name="category_age_residence_permit" invisible="1"/>
+                                        <field name="category_age_foreign_authorization" invisible="1"/>
+                                        <field name="category_age_school_certificate" invisible="1"/>
+                                        <field name="category_age_school_att" invisible="1"/>
+
+                                        <field name="category_age_change" invisible="1"/>
+
+                                        <field name="cin" invisible="1"/>
+                                        <field name="niveau_scolaire"/>
+                                    </group>
+                                    <group string="Discipline" col="2">
+
+                                        <field name="discipline_id" nolabel="0"/>
+
+
+                                    </group>
+
+
+                                </group>
+
+
+                                <group col="6" colspan="4">
+
+
+                                    <group string="Addresses et Communication" col="4">
+
+                                        <field name="adresse" required="1"/>
+                                        <field name="ville" required="1"/>
+                                        <field name="code_postal"/>
+                                        <field name="tel1"/>
+                                        <field name="tel2"/>
+                                        <field name="mail"/>
+                                    </group>
+
+
+                                </group>
+
+
+                                <group string="FAR" col="6" colspan="4">
+
+                                    <group>
+                                        <field name="far"/>
+                                    </group>
+                                    <group>
+
+                                        <field name="order_mission" attrs="{'invisible':[('far','=',False)]}"/>
+                                        <field name="date" attrs="{'invisible':[('far','=',False)]}"/>
+                                        <field name="date_exp" attrs="{'invisible':[('far','=',False)]}"/>
+                                    </group>
+                                </group>
+
+
+                                <group col="6" colspan="4">
+
+                                    <group string="Piéces d'identité" col="4">
+
+                                        <field name="passeport"/>
+                                        <field name="passeportexpiration"/>
+                                        <field name="visaobtenu"/>
+                                        <field name="visaobtenuexpiration"/>
+                                        <field name="sejour"/>
+                                        <field name="sejourexpiration"/>
+
+
+                                    </group>
+
+                                    <group string="Informations Parentales" col="2">
+
+                                        <field name="name_mere" attrs="{'invisible':[('licence','!=','Athlete')]}"/>
+                                        <field name="name_pere" attrs="{'invisible':[('licence','!=','Athlete')]}"/>
+                                        <field name="adresse_adresse"
+                                               attrs="{'invisible':[('licence','!=','Athlete')]}"/>
+                                        <field name="code_postal2" attrs="{'invisible':[('licence','!=','Athlete')]}"/>
+                                        <field name="telparent" attrs="{'invisible':[('licence','!=','Athlete')]}"/>
+
+
+                                    </group>
+
+
+                                </group>
+
+
+                                <group col="6" colspan="4">
+
+                                    <group string="Etat et suivi" col="4" invisible="1">
+
+
+                                        <field name="dateaffiliation"/>
+                                        <field name="inactif"/>
+                                        <field name="daterenouvellement"/>
+                                        <field name="assure"/>
+                                        <field name="dateassurance"/>
+                                    </group>
+
+                                    <group string="Assurance" col="4">
+
+
+                                        <field name="numassurance"/>
+                                        <field name="numassuranceexpiration"/>
+                                    </group>
+
+                                    <group col="2">
+                                    </group>
+
+                                </group>
+
+
+                                <group col="6" colspan="4">
+
+                                    <group string="Agence Bancaire" col="4">
+
+                                        <field name="banque_id"/>
+                                        <field name="telbanque"/>
+                                        <field name="ruebanque"/>
+                                        <field name="rib"/>
+
+                                    </group>
+                                    <group string="Notes" col="2">
+                                        <field name="note" nolabel="1"/>
+                                    </group>
+                                </group>
+
+                                <group col="6" colspan="4">
+
+                                    <group string="Vestimentaire" col="4">
+                                        <field name="pointure"/>
+                                        <field name="taille"/>
+                                        <field name="grade"/>
+                                    </group>
+                                    <group string="Attestations" col="2">
+                                        <field name="montantbourse"/>
+                                    </group>
+                                </group>
+
+
+                                <group col="6" colspan="4">
+
+                                    <group string="Surclassements" col="4">
+
+                                        <header>
+
+                                            <button name="action_surclasse" string="Surclasser" class="btn-primary"
+                                                    type="object"/>
+                                            <button name="action_non_surclasse" string="Déclasser" class="btn-primary"
+                                                    type="object"/>
+
+                                            <field name="surclassement" widget="statusbar"
+                                                   statusbar_visible="non_surclasse,surclasse"/>
+                                        </header>
+
+
+                                    </group>
+                                    <group string="Impression et Assurance" col="2">
+
+
+                                        <field name="assure"/>
+                                        <field name="date_assure"/>
+                                        <field name="impression"/>
+                                        <field name="date_impression"/>
+                                        <field name="impression_duplicata" readonly="1"/>
+                                    </group>
+
+
+                                </group>
+
+
+                            </page>
+
+
+                            <page string="Pièce jointe" attrs="{'invisible':[('licence','!=','Athlete')]}">
+
+                                <group>
+
+                                    <group string="Extrait d\'acte de Naissance">
+
+                                        <!--<field name="actenaissance_filename" invisible="0" nolabel="1" colspan="4" attrs="{'invisible':[('licence','!=','Athlete')],'required':[('age','&lt;',17),('licence','=','Athlete')]}"/>-->
+
+                                        <!--zoubida: actenaissance non obligatoire-->
+                                        <field name="actenaissance" nolabel="1" required="0"
+                                               attrs="{'invisible':[('licence','!=','Athlete')],'required':[('category_age_birth_certificate','=',True)]}"
+                                               widget='image' class="oe_avatar" options='{ "size": [200, 200]}'/>
+
+
+                                    </group>
+
+                                    <group string="CIN pour les Séniors et Juniors">
+
+                                        <!--  <field name="cinjuniorsseniors_filename" invisible="0" nolabel="1" colspan="4" attrs="{'required':[('age','&gt;',16)]}"/>-->
+                                        <field name="cinjuniorsseniors_filename" invisible="1"/>
+                                        <field name="cinjuniorsseniors"
+                                               attrs="{'invisible':[('licence','!=','Athlete')],'required':[('category_age_cin','=',True)]}"
+                                               nolabel="1" widget='image' class="oe_avatar"
+                                               options='{"size": [200, 200]}'/>
+
+
+                                    </group>
+                                    <group string="Cértificat  Médical">
+
+                                        <!--   <field name="certificatmedical_filename" invisible="0" nolabel="1" colspan="4"/>
+
+-->
+                                        <!--zoubida: certificatmedicale obligatoire-->
+                                        <field name="certificatmedical"
+                                               filename="certificatmedical_filename"
+                                               attrs="{'invisible':[('licence','!=','Athlete')],'required':[('category_age_medical_certificate','=',True)]}"
+                                               nolabel="1" widget='image' class="oe_avatar"
+                                               options='{"size": [200, 200]}'/>
+
+
+                                    </group>
+
+
+                                    <group string="Autorisation des Parents">
+
+                                        <!--<field name="autorisationparents_filename" invisible="0" nolabel="1" colspan="4"  attrs="{'invisible':[('licence','!=','Athlete')],'required':[('age','&lt;',17),('licence','=','Athlete')]}"/>-->
+                                        <field name="autorisationparents" nolabel="1"
+                                               attrs="{'invisible':[('licence','!=','Athlete')],'required':[('category_age_parental_authorization','=',True)]}"
+                                               widget='image' class="oe_avatar" options='{"size": [200, 200]}'/>
+
+
+                                    </group>
+                                    <group string="Carte Séjour">
+
+                                        <!--<field name="cartesejour_filename" invisible="0" nolabel="1" colspan="4"/>-->
+                                        <field name="cartesejour" nolabel="1" widget='image' class="oe_avatar"
+                                               attrs="{'required':[('category_age_residence_permit','=',True)]}"
+                                               options='{"size": [200, 200]}'/>
+
+
+                                    </group>
+
+
+                                    <group string="Autorisation étrangère">
+
+                                        <!--<field name="autorisationetrangere_filename" invisible="0" nolabel="1" colspan="4"/>-->
+                                        <field name="autorisationetrangere" nolabel="1" widget='image' class="oe_avatar"
+                                               attrs="{'required':[('category_age_foreign_authorization','=',True)]}"
+                                               options='{"size": [200, 200]}'/>
+
+
+                                    </group>
+
+
+                                    <group string="Cértificat de Scolarité">
+
+                                        <!--  <field name="autorisationparents_filename" invisible="0" nolabel="1" colspan="4"/>-->
+                                        <field name="certificatscolarite" nolabel="1" widget='image' class="oe_avatar"
+                                               attrs="{'required':[('category_age_school_certificate','=',True)]}"
+                                               options='{"size": [200, 200]}'/>
+
+
+                                    </group>
+
+
+                                    <group string="Attestation de Scolarité">
+
+                                        <!--<field name="attestationscolarite_filename" invisible="0" nolabel="1" colspan="4" attrs="{'required':[('age','&lt;',17)]}"/>-->
+                                        <field name="attestationscolarite" nolabel="1"
+                                               attrs="{'invisible':[('licence','!=','Athlete')],'required':[('category_age_school_att','=',True)]}"
+                                               widget='image' class="oe_avatar" options='{"size": [200, 200]}'/>
+
+
+                                    </group>
+
+
+                                </group>
+
+                            </page>
+
+                            <page string="Historique des PJ">
+                                <group col="4">
+                                    <field colspan="4" name="attachment_history" widget="image_multi" nolabel="1">
+                                        <tree editable="bottom">
+                                            <field name="date"/>
+                                            <field name="attachment" filename="attachment_filename"/>
+                                            <field name="attachment_filename" invisible="1"/>
+                                            <field name="type"/>
+                                            <field name="club"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                            </page>
+
+                            <!--zoubida: les image visible selon groupe-->
+
+                            <page string="Hstorique Photos" invisible="0">
+                                <group>
+                                    <group>
+                                        <field name="image1" widget='image' class="oe_avatar"
+                                               options='{"size": [120, 120]}'/>
+                                    </group>
+                                    <group>
+                                        <field name="image2" widget='image' class="oe_avatar"
+                                               options='{"size": [120, 120]}'/>
+                                    </group>
+                                    <group>
+                                        <field name="image3" widget='image' class="oe_avatar"
+                                               options='{"size": [120, 120]}'/>
+                                    </group>
+                                    <group>
+                                        <field name="image4" widget='image' class="oe_avatar"
+                                               options='{"size": [120, 120]}'/>
+                                    </group>
+
+                                </group>
+                            </page>
+
+
+                        </notebook>
+
+
+                    </sheet>
+
+                </form>
+
+            </field>
+        </record>
+
+
+        <record id="view_athletes_tree" model="ir.ui.view">
+            <field name="name">sports.athletes.tree</field>
+            <field name="model">sports.athletes</field>
+
+            <field name="arch" type="xml">
+                <!-- <tree string="Athlétes'" create="false">-->
+                <tree string="Athlétes">
+
+                    <field name="name"/>
+                    <field name="name2" invisible="1"/>
+                    <field name="name_at"/>
+                    <field name="prenom"/>
+                    <field name="type_athletes"/>
+                    <field name="club_id"/>
+                    <field name="category_age_id"/>
+
+                    <field name="state"/>
+
+
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="athletes_search_view" model="ir.ui.view">
+            <field name="name">sports.athletes.search</field>
+            <field name="model">sports.athletes</field>
+            <field name="arch" type="xml">
+                <search string="Athlétes">
+                    <field name="name"
+                           filter_domain="['|','|','|',('name','ilike',self),('name_at','ilike',self),('prenom','ilike',self),('club_id','ilike',self)]"/>
+                    <field name="name2"/>
+                    <field name="name_at"/>
+                    <field name="prenom"/>
+                    <field name="type_athletes"/>
+                    <field name="club_id"/>
+                    <field name="category_age_id"/>
+                    <!--zoubida: ajout de fields de recherche-->
+                    <field name="licence"/>
+
+
+
+                    <field name="state"/>
+                    <group expand='0' string='Group by...'>
+                        <filter string='Catégorie d-âge' domain="[]" context="{'group_by' : 'category_age_id'}"/>
+                        <filter string='Club' icon="terp-mrp" domain="[]" context="{'group_by' : 'club_id'}"/>
+                        <filter string='Ligue' icon="terp-mrp" domain="[]" context="{'group_by' : 'ligue_id'}"/>
+                        <filter string='Etat' icon="terp-stock_symbol-selection" domain="[]"
+                                context="{'group_by' : 'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+        <!-- sports.athletes Kanban View  -->
+
+
+        <record id="athletes_kanban_view" model="ir.ui.view">
+            <field name="name">sports.athletes.kanban</field>
+            <field name="model">sports.athletes</field>
+            <field name="arch" type="xml">
+                <kanban create="false">
+                    <field name="name"/>
+                    <field name="name2"/>
+                    <field name="name_at"/>
+                    <field name="prenom"/>
+                    <field name="type_athletes"/>
+                    <field name="club_id"/>
+                    <field name="category_age_id"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_vignette oe_semantic_html_override">
+                                <a type="open">
+                                    <img t-att-src="kanban_image('sports.athletes', 'image', record.id.value)"
+                                         class="oe_kanban_image"/>
+                                </a>
+                                <div class="oe_kanban_details">
+                                    <h4>
+                                        <a type="open">
+                                            <span t-if="record.name.value">
+                                                [<field name="name"/>]
+                                            </span>
+                                            <field name="name_at"/>
+                                            <field name="prenom"/>
+                                        </a>
+                                    </h4>
+
+                                    <div name="tags"/>
+                                    <ul>
+                                        <li>Club :
+                                            <field name="club_id"/>
+                                        </li>
+                                        <li>Etat :
+                                            <field name="state"/>
+                                        </li>
+                                        <li t-if="record.category_age_id.raw_value">Catégorie d'âge:
+                                            <field name="category_age_id"/>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+
+        <!--Athléte  -->
+        <!--Zouida: replacer pour pouvoir installer en locale -->
+
+        <record id="action_view_athletes_form" model="ir.actions.act_window">
+            <field name="name">Athlétes</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sports.athletes</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="view_id" ref="athletes_kanban_view"/>
+            <field name="domain">[('licence','=','Athlete'),('state','!=','draft')]</field>
+            <field name="context">{'licence':'Athlete','default_licence':'Athlete'}</field>
+
+        </record>
+
+
+        <menuitem name="Athlètes et Licences" id="base.menu_root_licences" sequence="1" groups="sports_athletic.athlete_user"/>
+
+
+        <menuitem name="Licences" id="base.menu_licences" sequence="10" parent="base.menu_root_licences"/>
+        <menuitem name="Demandes" id="base.menu_demandes" sequence="30" parent="base.menu_root_licences"/>
+        <menuitem name="Editions" id="base.menu_edition" sequence="40" parent="base.menu_root_licences"/>
+
+        <menuitem name="Statistiques" id="base.menu_statistiques" sequence="50" parent="base.menu_root_licences"/>
+
+        <menuitem action="action_view_athletes_form"
+                  id="menu_action_view_athletes_form" parent="base.menu_licences"
+                  sequence="2"/>
+
+
+        <!-- Entraineur -->
+
+        <record id="action_view_entraineur_form" model="ir.actions.act_window">
+            <field name="name">Entraineurs</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sports.athletes</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="athletes_kanban_view"/>
+            <field name="domain">[('licence','=','Entraineur')]</field>
+            <field name="context">{'licence':'Entraineur','default_licence':'Entraineur'}</field>
+
+        </record>
+
+        <menuitem action="action_view_entraineur_form"
+                  id="menu_action_view_entraineur_form" parent="base.menu_licences"
+                  sequence="2"/>
+
+
+        <!-- Dirigeant -->
+        <record id="action_view_dirigeant_form" model="ir.actions.act_window">
+            <field name="name">Dirigeants</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sports.athletes</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="athletes_kanban_view"/>
+            <field name="domain">[('licence','=','Dirigeant')]</field>
+            <field name="context">{'licence':'Dirigeant','default_licence':'Dirigeant'}</field>
+
+        </record>
+
+        <menuitem action="action_view_dirigeant_form"
+                  id="menu_action_view_dirigeant_form" parent="base.menu_licences"
+                  sequence="2"/>
+
+
+
+        <!--Officiel -->
+        <record id="action_view_officiel_form" model="ir.actions.act_window">
+            <field name="name">Officiels</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sports.athletes</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="athletes_kanban_view"/>
+            <field name="domain">[('licence','=','Officiel')]</field>
+            <field name="context">{'licence':'Officiel','default_licence':'Officiel'}</field>
+
+        </record>
+
+        <menuitem action="action_view_officiel_form"
+                  id="menu_action_view_officiel_form" parent="base.menu_licences"
+                  sequence="2"/>
+
+
+        <!--Edition des Assurances -->
+
+        <record id="view_editionassurances_form" model="ir.ui.view">
+            <field name="name">sports.edition.assurances.form</field>
+            <field name="model">sports.edition.assurances</field>
+            <field name="arch" type="xml">
+                <form string="Edition des Assurances ">
+
+                    <header>
+
+
+                        <!--Zoubida: Replacer verification-->
+                        <button name="action_verification" string="Chercher les athlétes" states="draft"
+                                class="btn-primary" type="object" colspan="1"/>
+
+                        <button name="action_valider" string="Valider" states="en_cours"
+                                class="btn-primary" type="object" colspan="1"/>
+
+                        <button name="action_annuler" string="Annuler" states="valide"
+                                class="btn-primary" type="object" colspan="1"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,en_cours,valide"/>
+
+
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+
+                        </div>
+                        <group>
+                            <group>
+                                <field name="date" required="1"/>
+                                <field name="nombre_attribution" required="1"/>
+                                <field name="nombre_renouvellement" required="1"/>
+                                <field name="nombre_reaffiliation" required="1"/>
+                            </group>
+                            <group>
+
+
+                                <field name="saison_id" readonly="1" domain="[('state','=','active')]"/>
+                                <field name="responsable_id" readonly="1"/>
+                                <!--zoubida-->
+                                <field name="is_assure" readonly="1"/>
+
+
+                            </group>
+
+                        </group>
+
+                        <notebook>
+                            <page string="Athlétes"> <!--Zoubida: 3 one2many athletes-->
+
+                                <h2>Athlétes en attribution</h2>
+
+
+                                <field name="athletes3_att_ids" colspan="4">
+                                    <tree string="Athlétes en attribution">
+
+                                        <field name="sequence"/>
+                                        <field name="athletes_id"/>
+                                        <field name="nom"/>
+                                        <field name="prenom"/>
+                                        <field name="ligue_id"/>
+                                        <field name="club_id"/>
+                                        <field name="situation_etat"/>
+                                    </tree>
+
+
+                                </field>
+                                <h2>Athlétes en renouvellement</h2>
+
+                                <field name="athletes3_ren_ids" colspan="4">
+                                    <tree string="Athlétes en renouvellement">
+
+                                        <field name="sequence"/>
+                                        <field name="athletes_id"/>
+                                        <field name="nom"/>
+                                        <field name="prenom"/>
+                                        <field name="ligue_id"/>
+                                        <field name="club_id"/>
+                                        <field name="situation_etat"/>
+                                    </tree>
+
+
+                                </field>
+                                <h2>Athlétes en réaffiliation</h2>
+
+                                <field name="athletes3_reaf_ids" colspan="4">
+                                    <tree string="Athlétes en réaffiliation">
+
+                                        <field name="sequence"/>
+                                        <field name="athletes_id"/>
+                                        <field name="nom"/>
+                                        <field name="prenom"/>
+                                        <field name="ligue_id"/>
+                                        <field name="club_id"/>
+                                        <field name="situation_etat"/>
+                                    </tree>
+
+
+                                </field>
+
+
+                            </page>
+
+
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="view_editionassurances_tree" model="ir.ui.view">
+            <field name="name">sports.edition.assurances.tree</field>
+            <field name="model">sports.edition.assurances</field>
+
+            <field name="arch" type="xml">
+                <tree string="Edition des Assurances">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="saison_id"/>
+                    <field name="responsable_id"/>
+                    <!--<field name="format_imp" />-->
+                    <field name="state"/>
+
+
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_view_editionassurances_form" model="ir.actions.act_window">
+            <field name="name">Edition des Assurances</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sports.edition.assurances</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+
+        <menuitem action="action_view_editionassurances_form"
+                  id="menu_action_view_editionassurances_form" parent="base.menu_edition"
+                  sequence="1"/>
+
+
+        <!--Edition des Assurances Excel -->
+
+
+        <record id="view_excelassurances_form" model="ir.ui.view">
+            <field name="name">sports.excel.assurances.form</field>
+            <field name="model">sports.excel.assurances</field>
+            <field name="arch" type="xml">
+                <form string="Assurances (Excel)">
+
+                    <header>
+
+                        <button name="generate_carte_report" string="Imprimer" type="object" class="oe_highlight"/>
+                        <field name="state" widget="statusbar" statusbar_visible="en_cours,valide"/>
+
+
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+
+                        </div>
+                        <group>
+                            <group>
+                                <field name="recherche" required="1"/>
+                                <field name="date_start" attrs="{'invisible':[('recherche','=','tous')], 'required':[('recherche','=','date')]}"/>
+                                <field name="date_end" attrs="{'invisible':[('recherche','=','tous')], 'required':[('recherche','=','date')]}"/>
+                            </group>
+                            <group>
+
+
+                                <field name="saison_id" readonly="1" domain="[('state','=','active')]"/>
+
+
+                                <button name="action_verification" string="Vérification" states="en_cours"
+                                        class="btn-primary" type="object" colspan="1"/>
+
+                            </group>
+
+                        </group>
+
+                        <notebook>
+                            <page string="Athlétes">
+
+
+                                <field name="assurances_ids" colspan="4" readonly="1">
+                                    <tree string="Athlétes ">
+                                        <field name="athletes_id"/>
+                                        <field name="date"/>
+
+                                        <field name="assurances_id"/>
+                                        <field name="nom"/>
+                                        <field name="prenom"/>
+                                        <field name="ligue_id"/>
+                                        <field name="club_id"/>
+
+                                    </tree>
+
+
+                                </field>
+
+
+                            </page>
+
+
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="view_excelassurances_tree" model="ir.ui.view">
+            <field name="name">sports.excel.assurances.tree</field>
+            <field name="model">sports.excel.assurances</field>
+
+            <field name="arch" type="xml">
+                <tree string="Assurances (Excel)">
+                    <field name="name"/>
+                    <field name="recherche"/>
+                    <field name="date_start"/>
+                    <field name="date_end"/>
+                    <field name="saison_id"/>
+                    <field name="state"/>
+
+
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_view_excelassurances_form" model="ir.actions.act_window">
+            <field name="name">Assurances (Excel)</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sports.excel.assurances</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+
+        <menuitem action="action_view_excelassurances_form"
+                  id="menu_action_view_excelassurances_form" parent="base.menu_edition"
+                  sequence="2"/>
+
+
+        <!--Edition des Cartes Licences -->
+
+
+        <record id="view_editioncarteslicences_form" model="ir.ui.view">
+            <field name="name">sports.edition.carteslicences.form</field>
+            <field name="model">sports.edition.carteslicences</field>
+            <field name="arch" type="xml">
+                <form string="Edition des Cartes Licences ">
+
+                    <header>
+
+
+                        <!--Zoubida: Replacer verification-->
+                        <button name="action_verification" string="Chercher les athlétes" states="draft"
+                                class="btn-primary" type="object" colspan="1"/>
+
+                        <button name="action_valider" string="Valider" states="en_cours"
+                                class="btn-primary" type="object" colspan="1"/>
+
+                        <button name="action_annuler" string="Annuler" states="valide"
+                                class="btn-primary" type="object" colspan="1"/>
+
+                        <button name="generate_carte_report" string="Carte" states="draft,en_cours,valide" type="object"
+                                class="oe_highlight"/>
+
+                        <field name="state" widget="statusbar" statusbar_visible="draft,en_cours,valide"/>
+
+
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+
+                        </div>
+                        <group>
+                            <group>
+                                <field name="date" required="1"/>
+                                <field name="nombre_attribution" required="1"/>
+                                <field name="nombre_renouvellement" required="1"/>
+                                <field name="nombre_reaffiliation" required="1"/>
+                                <!--Zoubida Ajout de boolean impression-->
+                                <field name="is_imprime" readonly="1"/>
+                            </group>
+                            <group>
+
+
+                                <field name="saison_id" readonly="1" domain="[('state','=','active')]"/>
+
+                                <field name="responsable_id" readonly="1"/>
+                            </group>
+
+                            <group>
+
+                                <!--Zoubida:Ajout de filtres-->
+
+
+                                <group string="Licences">
+
+                                    <field name="licence_athlete"
+                                           attrs="{'readonly':[('category_age_change','=',True)]}"/>
+                                    <field name="licence_entraineur"
+                                           attrs="{'readonly':[('category_age_change','=',True)]}"/>
+                                    <field name="licence_dirigeant"
+                                           attrs="{'readonly':[('category_age_change','=',True)]}"/>
+                                    <field name="licence_officiel"
+                                           attrs="{'readonly':[('category_age_change','=',True)]}"/>
+                                </group>
+
+
+                                <group string="Types">
+
+                                    <field name="type_sportif_interne"
+                                           attrs="{'invisible':[('licence_athlete','=',False)],'readonly':['|',('type_sportif_etranger','=',True),('type_sportif_mre','=',True)]}"/>
+                                    <field name="type_sportif_etranger"
+                                           attrs="{'invisible':[('licence_athlete','=',False)],'readonly':['|',('type_sportif_interne','=',True),('type_sportif_mre','=',True)]}"/>
+                                    <field name="type_sportif_mre"
+                                           attrs="{'invisible':[('licence_athlete','=',False)],'readonly':['|',('type_sportif_etranger','=',True),('type_sportif_interne','=',True)]}"/>
+                                </group>
+
+                                <group string="Catégorie">
+
+                                    <field name="category_age_change"
+                                           attrs="{'readonly':['|','|','|','|','|','|',('licence_athlete','=',True),('licence_entraineur','=',True),('licence_dirigeant','=',True),('licence_officiel','=',True),('type_sportif_interne','=',True),('type_sportif_etranger','=',True),('type_sportif_mre','=',True)]}"/>
+                                </group>
+
+                            </group>
+
+                        </group>
+
+                        <notebook>
+
+                            <!--<field name="athletes3_ids" colspan="4" readonly="1" >-->
+                            <!--<tree string="Athlétes " >-->
+                            <!---->
+                            <!--<field name="sequence"/>-->
+                            <!--<field name="athletes_id"/>-->
+                            <!--<field name="nom"/>-->
+                            <!--<field name="prenom"/>-->
+                            <!--<field name="ligue_id"/>-->
+                            <!--<field name="club_id"/>-->
+
+                            <!--</tree>-->
+
+
+                            <!---->
+                            <!--</field>-->
+
+
+                            <!--Zoubida: 3 one2many athletes-->
+
+                            <page string="Athlétes">
+
+
+                                <h2>Athlétes en attribution</h2>
+
+
+                                <field name="athletes3_att_ids" colspan="4">
+                                    <tree string="Athlétes en attribution">
+
+                                        <field name="sequence"/>
+                                        <field name="athletes_id"/>
+                                        <field name="nom"/>
+                                        <field name="prenom"/>
+                                        <field name="ligue_id"/>
+                                        <field name="club_id"/>
+                                        <field name="situation_etat"/>
+                                    </tree>
+
+
+                                </field>
+                                <h2>Athlétes en renouvellement</h2>
+
+                                <field name="athletes3_ren_ids" colspan="4">
+                                    <tree string="Athlétes en renouvellement">
+
+                                        <field name="sequence"/>
+                                        <field name="athletes_id"/>
+                                        <field name="nom"/>
+                                        <field name="prenom"/>
+                                        <field name="ligue_id"/>
+                                        <field name="club_id"/>
+                                        <field name="situation_etat"/>
+                                    </tree>
+
+
+                                </field>
+                                <h2>Athlétes en réaffiliation</h2>
+
+                                <field name="athletes3_reaf_ids" colspan="4">
+                                    <tree string="Athlétes en réaffiliation">
+
+                                        <field name="sequence"/>
+                                        <field name="athletes_id"/>
+                                        <field name="nom"/>
+                                        <field name="prenom"/>
+                                        <field name="ligue_id"/>
+                                        <field name="club_id"/>
+                                        <field name="situation_etat"/>
+                                    </tree>
+
+
+                                </field>
+
+
+                            </page>
+
+
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="view_editioncarteslicences_tree" model="ir.ui.view">
+            <field name="name">sports.edition.carteslicences.tree</field>
+            <field name="model">sports.edition.carteslicences</field>
+
+            <field name="arch" type="xml">
+                <tree string="Edition des Cartes Licences">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="saison_id"/>
+                    <field name="responsable_id"/>
+
+                    <field name="state"/>
+
+
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_view_editioncarteslicences_form" model="ir.actions.act_window">
+            <field name="name">Edition des Cartes Licences</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sports.edition.carteslicences</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+
+        <menuitem action="action_view_editioncarteslicences_form"
+                  id="menu_action_view_editioncarteslicences_form" parent="base.menu_edition"
+                  sequence="3"/>
+
+
+        <!--Liste des adhérents-->
+
+
+        <record id="view_passagecategorie_form" model="ir.ui.view">
+            <field name="name">sports.passage.categorie.form</field>
+            <field name="model">sports.passage.categorie</field>
+            <field name="arch" type="xml">
+                <form string="Liste des adhérents ">
+
+                    <header>
+
+                        <button name="generate_report" string="Imprimer" type="object" class="oe_highlight"/>
+
+                        <field name="state" widget="statusbar" statusbar_visible="en_cours,valide"/>
+
+
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+
+                        </div>
+                        <group>
+                            <group>
+                                <field name="date" invisible="1"/>
+                                <field name="type_" required="1"/>
+
+
+                            </group>
+
+                            <group>
+
+
+                                <field name="saison_id" domain="[('state','=','active')]" readonly="1"/>
+
+
+                                <button name="action_verification" string="Vérification" states="en_cours"
+                                        class="btn-primary" type="object" colspan="1"/>
+                            </group>
+
+                            <group colspan="4">
+                                <!--field name="club_ids" required="1"/-->
+                                <field name="club_ids" required="1">
+                                </field>
+                            </group>
+
+                        </group>
+
+                        <notebook>
+                            <page string="Athlétes">
+
+
+                                <field name="passage_ids" colspan="4" readonly="1">
+                                    <tree string="Athlétes ">
+
+                                        <field name="athletes_id"/>
+                                        <field name="nom"/>
+                                        <field name="prenom"/>
+                                        <field name="club_id"/>
+                                        <field name="date"/>
+                                        <field name="category_age_id"/>
+                                        <field name="afficher_button"/>
+                                        <field name="afficher_club"/>
+                                    </tree>
+
+
+                                </field>
+
+
+                            </page>
+
+
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="view_passagecategorie_tree" model="ir.ui.view">
+            <field name="name">sports.passage.categorie.tree</field>
+            <field name="model">sports.passage.categorie</field>
+
+            <field name="arch" type="xml">
+                <tree string="Liste des adhérents">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="saison_id"/>
+
+                    <field name="state"/>
+
+
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_view_passagecategorie_form" model="ir.actions.act_window">
+            <field name="name">Liste des adhérents</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sports.passage.categorie</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+
+        <menuitem action="action_view_passagecategorie_form"
+                  id="menu_action_view_passagecategorie_form" parent="base.menu_edition"
+                  sequence="4"/>
+
+
+        <record id="view_doublon_tree" model="ir.ui.view">
+            <field name="name">sports.doublon.tree</field>
+            <field name="model">sports.doublon</field>
+
+            <field name="arch" type="xml">
+                <tree string="doublon">
+                    <field name="name_at"/>
+                    <field name="prenom"/>
+                    <field name="name_ar"/>
+                    <field name="name_pere"/>
+                    <field name="name_mere"/>
+                    <field name="datenaissance"/>
+                    <field name="name" string="N°Licence"/>
+                    <field name="state"/>
+
+
+                </tree>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="kanban_view_doublon">
+            <field name="name">Doublon Kanban</field>
+            <field name="model">sports.doublon</field>
+            <field name="priority">10</field>
+            <field name="arch" type="xml">
+                <kanban class="o_sports_doublon_kanban">
+                    <field name="name_at"/>
+                    <field name="prenom"/>
+                    <field name="name_at"/>
+                    <field name="name_pere"/>
+                    <field name="name_mere"/>
+                    <field name="name_ar"/>
+                    <field name="datenaissance"/>
+
+                    <field name="state"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click">
+                                <div class="o_kanban_image">
+                                    <img t-att-src="kanban_image('sports.doublon', 'image_medium', record.id.value)"/>
+
+                                </div>
+                                <div class="oe_kanban_details">
+                                    <strong>
+
+                                        <ul>
+
+                                            <li>Nom :
+                                                <field name="name_at"/>
+                                            </li>
+                                            <li>Prénom :
+                                                <field name="prenom"/>
+                                            </li>
+                                            <li>
+                                                الاسم الكامل :
+                                                <field name="name_ar"/>
+                                            </li>
+                                            <li>N°Licence :
+                                                <field name="name"/>
+                                            </li>
+                                        </ul>
+                                    </strong>
+                                    <ul>
+                                        <li id="name_at"/>
+                                        <li t-if="record.name_pere.raw_value">Nom père:
+                                            <field name="name_pere"/>
+                                        </li>
+                                        <li t-if="record.name_mere.raw_value">Nom mère:
+                                            <field name="name_mere"/>
+                                        </li>
+                                        <li t-if="record.datenaissance.raw_value">Date de naissance:
+                                            <field name="datenaissance"/>
+                                        </li>
+                                        <li t-if="record.state.raw_value">Etat:
+                                            <field name="state"/>
+                                        </li>
+
+
+                                    </ul>
+
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+
+            </field>
+        </record>
+
+
+        <record id="action_doublon_form" model="ir.actions.act_window">
+            <field name="name">Doublons</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sports.doublon</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban,tree</field>
+            <!--field name="domain">[('affiliation_id','=',context.get('affiliation_id',False))]</field-->
+
+        </record>
+
+
+        <!--Demande d’affiliation -->
+
+
+        <!--<menuitem name="Athlètes et Licences" id="base.menu_root_licences" sequence="1"/>-->
+
+        <!---->
+        <!--<menuitem name="Licences" id="base.menu_licences" sequence="1"  parent="base.menu_root_licences"/>-->
+        <!--<menuitem name="Demandes" id="base.menu_demandes" sequence="2"  parent="base.menu_root_licences"/>-->
+        <!--<menuitem name="Editions" id="base.menu_edition" sequence="3"  parent="base.menu_root_licences"/>-->
+
+        <!--<menuitem name="Statistiques" id="base.menu_statistiques" sequence="4"  parent="base.menu_root_licences"/>-->
+
+
+        <record id="view_affiliation_form" model="ir.ui.view">
+            <field name="name">sports.affiliation.form</field>
+            <field name="model">sports.affiliation</field>
+            <field name="arch" type="xml">
+                <form string="Attribution des Nouvelles Licences">
+
+                    <header>
+
+                        <button name="action_envoyer" string="Envoyer" states="bord_attente_envoi" class="btn-primary"
+                                type="object" colspan="1"/>
+
+
+                        <button name="action_verification" string="Vérification" states="dem_attente_verif"
+                                class="btn-primary" type="object" colspan="1"/>
+
+                        <button name="action_creation" string="Création" states="ath_attente_crea" class="btn-primary"
+                                type="object" colspan="1"/>
+
+
+                        <!--<button name="action_edition" string="Edition de licence" states="edition_licence_assu" class="btn-primary" type="object" colspan="1"/>-->
+
+                        <button name="action_licence_attente_dispo_club" string="Mise à disposition" states="edition"
+                                class="btn-primary" type="object" colspan="1" invisible="1"/>
+
+
+                        <button name="action_licence_attente_recup" string="A Récupérer (Club)"
+                                states="licence_attente_dispo_club" class="btn-primary" type="object" colspan="1"
+                                invisible="1"/>
+
+
+                        <button name="action_licence_recuperees" string="Récupérer(Club)" states="licence_attente_recup"
+                                class="btn-primary" type="object" colspan="1" invisible="1"/>
+
+
+                        <button name="action_affiliation_rejetee" string="Rejeter"
+                                states="bord_attente_envoi,dem_attente_verif,ath_attente_crea,edition_licence_assu,edition,licence_attente_dispo_club,licence_attente_recup"
+                                class="btn-primary" type="object" colspan="1"/>
+
+
+                        <button name="generate_report" string="Bordereau des Licences" type="object"
+                                class="oe_highlight"/>
+
+
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="bord_attente_envoi,dem_attente_verif,ath_attente_crea,edition_licence_assu,edition"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+
+                            <h1>
+                                <field name="name" default_focus="1" placeholder="N° de demande" required="1"/>
+                            </h1>
+
+                        </div>
+                        <group>
+                            <group>
+                                <field name="club_id" required="1" options="{'no_create': True}"/>
+
+                                <field name="ligue_id" required="1" options="{'no_create': True}"/>
+
+                                <field name="responsable_id" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="saison_id" required="1" domain="[('state','=','active')]"
+                                       options="{'no_create': True}"/>
+                                <field name="licence" invisible="1"/>
+                                <field name="date_create" readonly="1"/>
+                            </group>
+
+                            <group colspan="4">
+                                <!--zoubida-->
+                                <field name="is_assure" readonly="1"/>
+                                <field name="is_imprime" readonly="1"/>
+                                <field name="mode_creation_ath" invisible="1"/>
+                            </group>
+                        </group>
+
+                        <notebook>
+                            <page string="Demandes">
+
+
+                                <field name="athletes_ids" widget="one2many_list" colspan="4" nolabel="1"
+                                       context="{'default_ligue_id': ligue_id,'default_club_id':club_id,'default_saison_id':saison_id,'affiliation_id':id}">
+
+                                    <tree string="Affiliations">
+                                        <!--field name="saison_id"/-->
+                                        <field name="name_at"/>
+                                        <field name="prenom"/>
+                                        <field name="name"/>
+                                        <!--field name="name_ar"/-->
+                                        <!--field name="sexe"/-->
+                                        <field name="licence"/>
+                                        <field name="state"/>
+                                        <field name="doublon" invisible="1"/>
+                                        <field name="assure" readonly="1" string="Assuré?"/>
+                                        <field name="double" readonly="1" string="Doublon?"/>
+                                        <field name="force" readonly="1" string="Forcé?"/>
+                                        <button name="action_force" string="Forcer Doublon" type="object"
+                                                icon='STOCK_PASTE' states="draft,attente_activation"
+                                                attrs="{'invisible':[('double','=',False)]}"/>
+                                        <button name="action_nonconforme" string="Non conforme" type="object"
+                                                states="draft,attente_activation" icon='STOCK_STOP'/>
+                                        <!--button
+                                                name="%(action_doublon_form)d"
+                                                type="action"
+                                                class="oe_stat_button"
+                                                icon="STOCK_DND_MULTIPLE"
+                                                string="Liste des Doublonss"
+                                                states="draft,attente_activation"
+                                                attrs="{'invisible':[('double','=',False)]}"
+                                        /-->
+                                        <button
+                                                name="view_athlete_doublon"
+                                                type="object"
+                                                class="oe_stat_button"
+                                                icon="STOCK_DND_MULTIPLE"
+                                                string="Liste des Doublons"
+                                                states="draft,attente_activation"
+                                                attrs="{'invisible':[('double','=',False)]}"
+                                        />
+                                        <button name="%(action_view_reaffiliation_inv)d" string="Réaffiliation"
+                                                type="action" icon='STOCK_MEDIA_NEXT'
+                                                attrs="{'invisible':[('state','not in',('draft','attente_activation'))]}"/>
+                                        <field name="raison"
+                                               attrs="{'readonly':[('state','!=','nonConforme')],'required':[('state','=','nonConforme')]}"/>
+                                        <field name="renouvele" attrs="{'invisible':[('state','!=','actif')]}"
+                                               invisible="1"/>
+                                    </tree>
+
+
+                                    <form string="Licence">
+
+                                        <header>
+
+
+                                            <field name="state" widget="statusbar"
+                                                   statusbar_visible="draft,attente_activation,actif,renouvellement"/>
+                                        </header>
+
+
+                                        <sheet>
+
+                                            <field name="image" widget='image' class="oe_avatar"
+                                                   options='{"preview_image": "image_medium", "size": [120, 120]}'/>
+
+                                            <div class="oe_title">
+
+                                                <h1>
+                                                    <field name="name" default_focus="1" placeholder="N° licence"
+                                                           required="1" readonly="1"/>
+                                                </h1>
+
+                                            </div>
+
+                                            <div class="oe_right oe_button_box" name="button_box">
+
+
+                                                <!--
+                                                        <button name="action_view_reaffiliations"
+                                                            type="object"
+                                                            class="oe_stat_button"
+                                                            icon="fa-pencil-square-o"
+                                                            string="Réaffiliations"
+                                                            >
+
+                                                        </button>
+
+                                                        <button name="action_view_mutations"
+                                                            type="object"
+                                                            class="oe_stat_button"
+                                                            icon="fa-pencil-square-o"
+                                                            string="Mutations"
+                                                            >
+
+                                                        </button>
+
+                                                        <button name="action_view_sanctions"
+                                                            type="object"
+                                                            class="oe_stat_button"
+                                                            icon="fa-pencil-square-o"
+                                                            string="Sanctions"
+                                                            >
+
+                                                        </button>
+
+                                                        <button name="action_view_anneesblanches"
+                                                            type="object"
+                                                            class="oe_stat_button"
+                                                            icon="fa-pencil-square-o"
+                                                            string="Années Blanches"
+                                                            >
+
+                                                        </button>
+
+                                                        <button name="action_view_tests"
+                                                            type="object"
+                                                            class="oe_stat_button"
+                                                            icon="fa-pencil-square-o"
+                                                            string="Tests"
+                                                            >
+
+                                                        </button>
+
+                                                        <button name="action_view_resultats"
+                                                            type="object"
+                                                            class="oe_stat_button"
+                                                            icon="fa-pencil-square-o"
+                                                            string="Résultats"
+                                                            >
+
+                                                        </button>
+
+                                                         <button name="action_view_admissionscentres"
+                                                            type="object"
+                                                            class="oe_stat_button"
+                                                            icon="fa-pencil-square-o"
+                                                            string="Admissions aux centres"
+                                                            >
+
+                                                        </button>-->
+
+
+                                            </div>
+
+
+                                            <group>
+                                                <group>
+                                                    <field name="name_at" required="1"/>
+                                                    <field name="prenom" required="1"/>
+                                                    <field name="name_ar"/>
+                                                    <field name="raison" string="Raison non conforme?"
+                                                           attrs="{'invisible':[('state','!=','nonConforme')],'required':[('state','=','nonConforme')]}"/>
+
+                                                </group>
+                                                <group>
+                                                    <field name="licence" required="1"/>
+                                                    <field name="name2" invisible="1"/>
+                                                    <field name="type_athletes"
+                                                           attrs="{'invisible':[('licence','!=','Athlete')],'required':[('licence','=','Athlete')]}"/>
+
+                                                    <field name="entraineur_id" domain="[('licence','=','Entraineur')]"
+                                                           options='{"no_open": True, "no_create": True}'/>
+                                                    <field name="affiliation_id" readonly="0"
+                                                           options='{"no_open": True, "no_create": True}'
+                                                           invisible='1'/>
+                                                    <field name="club_id" readonly="0"
+                                                           options='{"no_open": True, "no_create": True}'
+                                                           invisible='1'/>
+                                                    <field name="ligue_id" readonly="0"
+                                                           options='{"no_open": True, "no_create": True}'
+                                                           invisible='1'/>
+                                                    <field name="saison_id" readonly="0"
+                                                           options='{"no_open": True, "no_create": True}'
+                                                           invisible='1'/>
+                                                </group>
+                                            </group>
+
+                                            <notebook>
+                                                <page string="Informations">
+
+                                                    <group col="6" colspan="4">
+
+                                                        <group string="Informations générale" col="4">
+
+                                                            <field name="datenaissance" required="1"/>
+                                                            <field name="age"/>
+                                                            ans
+                                                            <field name="lieu_naissance" required="1"/>
+                                                            <field name="sexe" required="1"/>
+
+                                                            <field name="cin"
+                                                                   attrs="{'invisible':[('licence','!=','Athlete')],'required':[('age','&gt;',16),('licence','=','Athlete')]}"/>
+                                                            <field name="cinexpiration"
+                                                                   attrs="{'invisible':[('age','&lt;',16)]}"/>
+
+
+                                                            <field name="category_age_id"
+                                                                   attrs="{'invisible':[('licence','!=','Athlete')]}"
+                                                                   options='{"no_open": True, "no_create": True}'/>
+                                                            <field name="category_age_birth_certificate" invisible="1"/>
+                                                            <field name="category_age_medical_certificate" invisible="1"/>
+                                                            <field name="category_age_cin" invisible="1"/>
+                                                            <field name="category_age_parental_authorization" invisible="1"/>
+                                                            <field name="category_age_residence_permit" invisible="1"/>
+                                                            <field name="category_age_foreign_authorization" invisible="1"/>
+                                                            <field name="category_age_school_certificate" invisible="1"/>
+                                                            <field name="category_age_school_att" invisible="1"/>
+                                                            <field name="niveau_scolaire"/>
+                                                        </group>
+                                                        <group string="Discipline" col="2">
+
+                                                            <field name="discipline_id" nolabel="0"/>
+
+
+                                                        </group>
+
+
+                                                    </group>
+
+
+                                                    <group col="6" colspan="4">
+
+
+                                                        <group string="Addresses et Communication" col="4">
+
+                                                            <field name="adresse" required="1"/>
+                                                            <field name="ville" required="1"/>
+                                                            <field name="code_postal"/>
+                                                            <field name="tel1"/>
+                                                            <field name="tel2"/>
+                                                            <field name="mail"/>
+                                                        </group>
+
+
+                                                    </group>
+
+
+                                                    <group string="FAR" col="6" colspan="4">
+
+                                                        <group>
+                                                            <field name="far"/>
+                                                        </group>
+                                                        <group>
+
+                                                            <field name="order_mission"
+                                                                   attrs="{'invisible':[('far','=',False)]}"/>
+                                                            <field name="date"
+                                                                   attrs="{'invisible':[('far','=',False)]}"/>
+                                                            <field name="date_exp"
+                                                                   attrs="{'invisible':[('far','=',False)]}"/>
+                                                        </group>
+                                                    </group>
+
+
+                                                    <group col="6" colspan="4">
+
+                                                        <group string="Piéces d'identité" col="4">
+
+                                                            <field name="passeport"/>
+                                                            <field name="passeportexpiration"/>
+                                                            <field name="visaobtenu"/>
+                                                            <field name="visaobtenuexpiration"/>
+                                                            <field name="sejour"/>
+                                                            <field name="sejourexpiration"/>
+
+
+                                                        </group>
+
+                                                        <group string="Informations Parentales" col="2">
+
+                                                            <field name="name_mere"
+                                                                   attrs="{'invisible':[('licence','!=','Athlete')],'required':[('licence','=','Athlete')]}"/>
+                                                            <field name="name_pere"
+                                                                   attrs="{'invisible':[('licence','!=','Athlete')],'required':[('licence','=','Athlete')]}"/>
+                                                            <field name="code_postal2"
+                                                                   attrs="{'invisible':[('licence','!=','Athlete')]}"/>
+                                                            <field name="telparent"
+                                                                   attrs="{'invisible':[('licence','!=','Athlete')]}"/>
+
+                                                        </group>
+
+
+                                                    </group>
+
+
+                                                    <group col="6" colspan="4">
+
+                                                        <group string="Etat et suivi" col="4" invisible="1">
+
+
+                                                            <field name="dateaffiliation"/>
+                                                            <field name="inactif"/>
+                                                            <field name="daterenouvellement"/>
+                                                            <field name="assure"/>
+                                                            <field name="dateassurance"/>
+                                                        </group>
+
+                                                        <group string="Assurance" col="4" invisible="1">
+
+
+                                                            <field name="numassurance"/>
+                                                            <field name="numassuranceexpiration"/>
+                                                        </group>
+
+                                                        <group col="2">
+                                                        </group>
+
+                                                    </group>
+
+
+                                                    <group col="6" colspan="4">
+
+                                                        <group string="Agence Bancaire" col="4" invisible="1">
+
+                                                            <field name="banque_id"/>
+                                                            <field name="telbanque"/>
+                                                            <field name="ruebanque"/>
+                                                            <field name="rib"/>
+
+                                                        </group>
+                                                        <group string="Notes" col="4">
+                                                            <field name="note" nolabel="1"/>
+                                                        </group>
+                                                    </group>
+
+                                                    <!--   <group  col="6" colspan="4">
+
+                                                           <group string="Vestimentaire"  col="4" invisible='1'>
+                                                                 <field name="pointure" />
+                                                                 <field name="taille" />
+
+                                                            </group>
+                                                             <group string="Attestations"  col="4">
+                                                                       <field name="montantbourse" />
+                                                             </group>
+                                                       </group>-->
+
+
+                                                    <!--   <group  col="6" colspan="4">
+
+                                                           <group string="Surclassements"  col="4">
+
+
+
+                                                                <field name="surclassement" widget="statusbar" statusbar_visible="non_surclasse,surclasse"/>
+                                                            </group>
+                                                             <group string=""  col="2">
+                                                                <button name="action_surclasse"  string="Surclasser" class="btn-primary" type="object"/>
+                                                    <button name="action_non_surclasse"  string="Déclasser" class="btn-primary" type="object"/>
+                                                             </group>
+                                                       </group>-->
+
+
+                                                </page>
+
+
+                                                <page string="Piéce jointe"
+                                                      attrs="{'invisible':[('licence','!=','Athlete')]}">
+
+                                                    <group>
+
+                                                        <group string="Extrait d\'acte de Naissance">
+
+                                                            <!--<field name="actenaissance_filename" invisible="0" nolabel="1" colspan="4" attrs="{'invisible':[('licence','!=','Athlete')],'required':[('age','&lt;',17),('licence','=','Athlete')]}"/>-->
+
+                                                            <!--zoubida actenaissance non obligatoire-->
+                                                            <field name="actenaissance" nolabel="1" required="0"
+                                                                   attrs="{'invisible':[('licence','!=','Athlete')],'required':[('category_age_birth_certificate','=',True)]}"
+                                                                   widget='image' class="oe_avatar"
+                                                                   options='{"size": [200, 200]}'/>
+
+
+                                                        </group>
+
+                                                        <group string="CIN pour les Séniors et Juniors">
+
+                                                            <!--  <field name="cinjuniorsseniors_filename" invisible="0" nolabel="1" colspan="4" attrs="{'required':[('age','&gt;',16)]}"/>-->
+                                                            <field name="cinjuniorsseniors_filename" invisible="1"/>
+                                                            <field name="cinjuniorsseniors"
+                                                                   attrs="{'invisible':[('licence','!=','Athlete')],'required':[('category_age_cin','=',True)]}"
+                                                                   nolabel="1" widget='image' class="oe_avatar"
+                                                                   options='{"size": [200, 200]}'/>
+
+
+                                                        </group>
+                                                        <group string="Cértificat  Médical">
+
+                                                            <!--   <field name="certificatmedical_filename" invisible="0" nolabel="1" colspan="4"/>
+
+             -->
+                                                            <!--zoubida: certificatmedical obligatoire-->
+                                                            <field name="certificatmedical"
+                                                                   attrs="{'invisible':[('licence','!=','Athlete')], 'required':[('category_age_medical_certificate','=',True)]}"
+                                                                   filename="certificatmedical_filename" nolabel="1"
+                                                                   widget='image' class="oe_avatar"
+                                                                   options='{"size": [200, 200]}'/>
+
+
+                                                        </group>
+
+
+                                                        <group string="Autorisation des Parents">
+
+                                                            <!--<field name="autorisationparents_filename" invisible="0" nolabel="1" colspan="4"  attrs="{'invisible':[('licence','!=','Athlete')],'required':[('age','&lt;',17),('licence','=','Athlete')]}"/>-->
+                                                            <field name="autorisationparents" nolabel="1"
+                                                                   attrs="{'invisible':[('licence','!=','Athlete')],'required':[('category_age_parental_authorization','=',True)]}"
+                                                                   widget='image' class="oe_avatar"
+                                                                   options='{"size": [200, 200]}'/>
+
+
+                                                        </group>
+                                                        <group string="Carte Séjour">
+
+                                                            <!--<field name="cartesejour_filename" invisible="0" nolabel="1" colspan="4"/>-->
+                                                            <field name="cartesejour" nolabel="1" widget='image'
+                                                                   attrs="{'required':[('category_age_residence_permit','=',True)]}"
+                                                                   class="oe_avatar" options='{ "size": [200, 200]}'/>
+
+
+                                                        </group>
+
+
+                                                        <group string="Autorisation étrangère">
+
+                                                            <!--<field name="autorisationetrangere_filename" invisible="0" nolabel="1" colspan="4"/>-->
+                                                            <field name="autorisationetrangere" nolabel="1"
+                                                                   widget='image' class="oe_avatar"
+                                                                   attrs="{'required':[('category_age_foreign_authorization','=',True)]}"
+                                                                   options='{"size": [200, 200]}'/>
+
+
+                                                        </group>
+
+
+                                                        <group string="Cértificat de Scolarité">
+
+                                                            <!--  <field name="autorisationparents_filename" invisible="0" nolabel="1" colspan="4"/>-->
+                                                            <field name="certificatscolarite" nolabel="1" widget='image'
+                                                                   attrs="{'required':[('category_age_school_certificate','=',True)]}"
+                                                                   class="oe_avatar" options='{ "size": [200, 200]}'/>
+
+
+                                                        </group>
+
+
+                                                        <group string="Attestation de Scolarité">
+
+                                                            <!--<field name="attestationscolarite_filename" invisible="0" nolabel="1" colspan="4" attrs="{'required':[('age','&lt;',17)]}"/>-->
+                                                            <field name="attestationscolarite" nolabel="1"
+                                                                   attrs="{'invisible':[('licence','!=','Athlete')],'required':[('category_age_school_att','=',True)]}"
+                                                                   widget='image' class="oe_avatar"
+                                                                   options='{"size": [200, 200]}'/>
+
+
+                                                        </group>
+
+
+                                                    </group>
+
+                                                </page>
+
+
+                                            </notebook>
+
+
+                                        </sheet>
+
+                                    </form>
+
+
+                                </field>
+
+
+                            </page>
+
+                            <page string="Résumé">
+
+                                <group>
+                                    <group>
+                                        <field name="date_init_bord_attente_envoi"/>
+                                        <field name="date_bord_attente_envoi"/>
+                                        <field name="date_dem_attente_verif"/>
+                                        <field name="date_ath_attente_crea"/>
+                                        <field name="date_edition_licence_assu"/>
+                                        <field name="date_licence_attente_dispo_club"/>
+                                        <field name="date_licence_attente_recup"/>
+                                        <field name="date_affiliation_rejetee"/>
+                                    </group>
+                                    <group>
+
+
+                                        <field name="user_init_bord_attente_envoi"/>
+                                        <field name="user_bord_attente_envoi"/>
+                                        <field name="user_dem_attente_verif"/>
+                                        <field name="user_ath_attente_crea"/>
+                                        <field name="user_edition_licence_assu"/>
+                                        <field name="user_licence_attente_dispo_club"/>
+                                        <field name="user_licence_attente_recup"/>
+                                        <field name="user_affiliation_rejetee"/>
+                                    </group>
+                                </group>
+
+                            </page>
+
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="view_affiliation_tree" model="ir.ui.view">
+            <field name="name">sports.affiliation.tree</field>
+            <field name="model">sports.affiliation</field>
+
+            <field name="arch" type="xml">
+                <tree string="Attribution des Nouvelles Licences"
+                      colors="red:state in ['affiliation_rejetee'];blue:state in ['dem_attente_verif','licence_attente_recup'];green:state in ['ath_attente_crea'];orange:state in ['edition_licence_assu'];gray:state in ['licence_attente_dispo_club']">
+
+                    <field name="name"/>
+                    <field name="date_create"/>
+                    <field name="responsable_id"/>
+                    <field name="club_id"/>
+                    <field name="ligue_id"/>
+                    <field name="saison_id"/>
+                    <field name="state"/>
+
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_view_affiliation_form" model="ir.actions.act_window">
+            <field name="name">Attribution des Nouvelles Licences</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sports.affiliation</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+
+        <menuitem action="action_view_affiliation_form"
+                  id="menu_action_view_affiliation_form" parent="base.menu_demandes"
+                  sequence="1"/>
+
+
+        <!--Demande de Renouvellement -->
+
+
+        <record id="view_renouvellement_form" model="ir.ui.view">
+            <field name="name">sports.renouvellement".form</field>
+            <field name="model">sports.renouvellement</field>
+            <field name="arch" type="xml">
+                <form string="Renouvellement des Licences">
+
+                    <header>
+                        <button name="action_att_ren_lic" string="Validation" states="dem_att_verif" class="btn-primary"
+                                type="object" colspan="1"/>
+                        <button name="generate_report" string="Bordereau des Licences" type="object"
+                                class="oe_highlight"/>
+
+                        <button name="action_edition_licence_assu" string="Renouvellement"
+                                states="edition_licence_attente" class="btn-primary" type="object" colspan="1"/>
+
+
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="att_ren_lic,edition_licence_attente,edition_licence_assu"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+
+                            <h1>
+                                <field name="name" default_focus="1" placeholder="N° de demande" required="1"/>
+                            </h1>
+
+                        </div>
+                        <group>
+                            <group>
+                                <field name="club_id" required="1"/>
+                                <field name="ligue_id" required="1"/>
+
+                                <field name="responsable_id" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="saison_id" required="1" domain="[('state','=','active')]"/>
+                                <field name="licence" invisible="1"/>
+                                <field name="date_create" readonly="1"/>
+                            </group>
+                            <group>
+                                <!--zoubida-->
+                                <field name="is_assure" readonly="1"/>
+                                <field name="is_imprime" readonly="1"/>
+
+                            </group>
+
+                        </group>
+
+                        <notebook>
+                            <page string="Demandes">
+
+
+                                <field name="athletes2_ids" colspan="4"
+                                       domain="[('state','=','renouvellement'),('club_id','=',club_id)]">
+                                    <tree string="Renouvellement ">
+
+
+                                        <field name="saison_id"/>
+                                        <field name="name"/>
+                                        <field name="name_at"/>
+                                        <field name="prenom"/>
+                                        <field name="name_ar"/>
+                                        <field name="sexe"/>
+                                        <field name="licence"/>
+                                        <field name="category_age_id"/>
+                                        <field name="category_age_change"/>
+
+                                        <field name="state"/>
+
+                                        <button name="%(action_renouvellement_category_age_change)d"
+                                                string="Renouvellement" type="action"/>
+
+
+                                    </tree>
+
+
+                                </field>
+
+
+                            </page>
+
+                            <page string="Résumé">
+
+                                <group>
+                                    <group>
+                                        <field name="date_dem_att_verif"/>
+
+                                        <field name="date_att_ren_lic"/>
+
+                                        <field name="date_edition_licence_assu"/>
+
+                                        <field name="date_att_dispo_club"/>
+
+                                        <field name="date_att_recup_club"/>
+
+                                        <field name="date_ren_rejete"/>
+
+                                    </group>
+                                    <group>
+
+                                        <field name="user_dem_att_verif"/>
+                                        <field name="user_att_ren_lic"/>
+                                        <field name="user_edition_licence_assu"/>
+                                        <field name="user_att_dispo_club"/>
+                                        <field name="user_att_recup_club"/>
+                                        <field name="user_ren_rejete"/>
+                                    </group>
+                                </group>
+
+                            </page>
+
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="view_renouvellement_tree" model="ir.ui.view">
+            <field name="name">sports.renouvellement.tree</field>
+            <field name="model">sports.renouvellement</field>
+
+            <field name="arch" type="xml">
+                <tree string="Renouvellement des Licences">
+                    <field name="name"/>
+                    <field name="date_create"/>
+                    <field name="responsable_id"/>
+                    <field name="saison_id"/>
+                    <field name="club_id"/>
+                    <field name="ligue_id"/>
+
+                    <field name="state"/>
+
+
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_view_renouvellement_form" model="ir.actions.act_window">
+            <field name="name">Renouvellement des Licences</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sports.renouvellement</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+
+        <menuitem action="action_view_renouvellement_form"
+                  id="menu_action_view_renouvellement_form" parent="base.menu_demandes"
+                  sequence="1"/>
+
+
+        <!--Demande de Réaffiliation -->
+
+
+        <record id="view_reaffiliation_form" model="ir.ui.view">
+            <field name="name">sports.reaffiliation.form</field>
+            <field name="model">sports.reaffiliation</field>
+            <field name="arch" type="xml">
+                <form string="Réaffiliation des athlètes">
+
+                    <header>
+
+                        <button name="action_envoyer" string="Envoyer" states="bord_attente_envoi" class="btn-primary"
+                                type="object" colspan="1"/>
+
+
+                        <button name="action_verification" string="Vérification" states="dem_attente_verif"
+                                class="btn-primary" type="object" colspan="1"/>
+
+                        <button name="action_creation" string="Création" states="ath_attente_crea" class="btn-primary"
+                                type="object" colspan="1"/>
+
+
+                        <!--<button name="action_edition" string="Edition de licence" states="edition_licence_assu" class="btn-primary" type="object" colspan="1"/>-->
+
+
+                        <button name="generate_report" string="Bordereau des Licences" type="object"
+                                class="oe_highlight"/>
+
+
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="bord_attente_envoi,dem_attente_verif,ath_attente_crea,edition_licence_assu"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+
+                            <h1>
+                                <field name="name" default_focus="1" placeholder="N° de demande" required="1"/>
+                            </h1>
+
+                        </div>
+
+                        <group>
+                            <group>
+                                <field name="club_id" required="1"/>
+                                <field name="ligue_id" required="1"/>
+                                <field name="responsable_id" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="saison_id" required="1"/>
+                                <field name="licence" invisible="1"/>
+                                <field name="licence" invisible="1"/>
+                                <field name="date_create" readonly="1"/>
+                            </group>
+                            <group>
+                                <!--zoubida-->
+                                <field name="is_assure" readonly="1"/>
+                                <field name="is_imprime" readonly="1"/>
+
+                            </group>
+
+                        </group>
+
+                        <notebook>
+                            <page string="Demande">
+
+                                <group>
+
+                                    <field name="athletes3_ids" colspan="4"
+                                           domain="[('state','=','inactif'),('club_id','=',club_id)]">
+                                        <tree string="Reaffiliation ">
+                                            <field name="saison_id"/>
+                                            <field name="name"/>
+                                            <field name="name_at"/>
+                                            <field name="prenom"/>
+                                            <field name="name_ar"/>
+                                            <field name="sexe"/>
+                                            <field name="licence"/>
+                                            <field name="category_age_id"/>
+                                            <field name="state"/>
+                                        </tree>
+
+
+                                    </field>
+
+
+                                </group>
+
+                            </page>
+                            <page string="Résumé">
+
+                                <group>
+                                    <group>
+                                        <field name="date_bord_attente_envoi"/>
+
+                                        <field name="date_dem_attente_verif"/>
+
+                                        <field name="date_ath_attente_crea"/>
+
+                                        <field name="date_edition_licence_assu"/>
+
+                                        <field name="date_comp_licence_assu"/>
+
+
+                                        <field name="date_licence_attente_dispo_club"/>
+
+                                        <field name="date_licence_attente_recup"/>
+
+                                        <field name="date_affiliation_rejetee"/>
+
+
+                                    </group>
+                                    <group>
+
+                                        <field name="user_bord_attente_envoi"/>
+                                        <field name="user_dem_attente_verif"/>
+                                        <field name="user_ath_attente_crea"/>
+                                        <field name="user_edition_licence_assu"/>
+                                        <field name="user_comp_licence_assu"/>
+                                        <field name="user_licence_attente_dispo_club"/>
+                                        <field name="user_licence_attente_recup"/>
+                                        <field name="user_affiliation_rejetee"/>
+
+                                    </group>
+                                </group>
+
+                            </page>
+
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="view_reaffiliation_tree" model="ir.ui.view">
+            <field name="name">sports.reaffiliation.tree</field>
+            <field name="model">sports.reaffiliation</field>
+
+            <field name="arch" type="xml">
+                <tree string="Réaffiliation des athlètes">
+                    <field name="name"/>
+                    <field name="date_create" readonly="1"/>
+                    <field name="ligue_id"/>
+                    <field name="club_id"/>
+
+                    <field name="licence" invisible="1"/>
+
+
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_view_reaffiliation_form" model="ir.actions.act_window">
+            <field name="name">Réaffiliation des athlètes</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sports.reaffiliation</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+
+        <menuitem action="action_view_reaffiliation_form"
+                  id="menu_action_view_reaffiliation_form" parent="base.menu_demandes"
+                  sequence="1"/>
+
+
+        <record id="view_reaffiliationathletes_tree" model="ir.ui.view">
+            <field name="name">sports.athletes.reaffiliation.tree</field>
+            <field name="model">sports.athletes.reaffiliation</field>
+
+            <field name="arch" type="xml">
+                <tree string="Demande de Réaffiliation (athletes)">
+                    <field name="name"/>
+                    <field name="athletes_id"/>
+                    <field name="reaffiliation_id"/>
+
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_reaffiliationathletes_form" model="ir.ui.view">
+            <field name="name">sports.athletes.reaffiliation.form</field>
+            <field name="model">sports.athletes.reaffiliation</field>
+
+            <field name="arch" type="xml">
+                <form string="Demande de Réaffiliation (athletes)">
+                    <group>
+                        <field name="name"/>
+                        <field name="athletes_id"/>
+                        <field name="reaffiliation_id"/>
+                    </group>
+
+                </form>
+            </field>
+        </record>
+
+        <record id="action_view_reaffiliationathletes_form" model="ir.actions.act_window">
+            <field name="name">Demande de Réaffiliation</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sports.reaffiliation</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+
+
+        <!--  Sanctions -->
+
+
+        <record id="view_sanctions_form" model="ir.ui.view">
+            <field name="name">sports.sanctions.form</field>
+            <field name="model">sports.sanctions</field>
+            <field name="arch" type="xml">
+                <form string="Sanctions ">
+                    <header>
+                        <button name="action_sanctions_validate" string="Envoyer la demande" states="attente_envoi_demande"
+                                class="btn-primary oe_highlight" type="object" colspan="1"/>
+                        <button name="action_sanctions_validate_csrl" string="Valider CSRL" states="attente_verif_csrl"
+                                class="btn-primary oe_highlight" type="object" colspan="1"/>
+                        <button name="action_sanctions_validate_commission" string="Valider Commission disciplinaire" states="attente_decision_comm"
+                                class="btn-primary oe_highlight" type="object" colspan="1"/>
+                        <!--button name="action_sanctions_effectuee" string="Confirmation" states="dem_attente_val"
+                                class="btn-primary" type="object" colspan="1"/-->
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="attente_envoi_demande,attente_verif_csrl,attente_decision_comm,athlete_sanctionne"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+
+                            <h1>
+                                <field name="name" default_focus="1" placeholder="N° de sanctions"/>
+                            </h1>
+
+                        </div>
+
+                        <group>
+                            <group>
+                                <field name="athletes_id"/>
+                                <field name="saison_id" required="1"/>
+                                <field name="type_sanction"/>
+                                <field name="date_create" readonly="1"/>
+                                <field name="responsable_id" readonly="1"/>
+                                <field name="motif"/>
+                            </group>
+                            <group>
+
+                                <field name="ligue_id" required="1"/>
+                                <field name="club_id" required="1"/>
+                                <field name="date_dec_sanction" readonly="1"/>
+                                <group string="Demande Sanction Format Electronique" colspan="4">
+                                    <field name="sanction_filename" invisible="0" nolabel="1"/>
+                                    <field widget="binary" height="64" name="sanction" filename="sanction_filename"
+                                           nolabel="1"/>
+                                </group>
+                            </group>
+
+                        </group>
+
+                        <notebook>
+                            <page string="Décision de la CSRL">
+
+                                <group>
+
+                                    <group>
+                                        <field name="decision_csrl"/>
+                                        <field name="comment_csrl"/>
+
+
+                                    </group>
+
+                                    <group>
+                                        <field name="duration_csrl"/>
+                                        <field name="unite_csrl"/>
+                                        <field name="date_start_sanction_csrl"/>
+                                        <field name="date_end_sanction_csrl"/>
+                                        <group string="Sanction Format Electronique" colspan="4">
+                                            <field name="sanction2_filename" invisible="0" nolabel="1"/>
+                                            <field widget="binary" height="64" name="sanction2"
+                                                   filename="sanction2_filename" nolabel="1"/>
+                                        </group>
+                                    </group>
+
+                                    <group>
+                                        <field name="duration_csrl"/>
+                                        <field name="unite_csrl"/>
+                                        <field name="date_start_sanction_csrl"/>
+                                        <field name="date_end_sanction_csrl"/>
+
+
+                                    </group>
+
+
+                                </group>
+
+                            </page>
+                            <page string="Commission Disciplinaire">
+
+                                <group>
+                                    <group>
+                                        <field name="decision_comm"/>
+                                        <field name="comment_comm"/>
+
+
+                                    </group>
+                                    <group>
+
+                                        <field name="duration_comm"/>
+                                        <field name="unite_comm"/>
+                                        <field name="date_start_sanction_comm"/>
+                                        <field name="date_end_sanction_comm"/>
+
+                                    </group>
+                                </group>
+
+                            </page>
+
+
+                            <page string="Résumé">
+
+                                <group>
+
+
+                                    <group>
+
+                                        <field name="user_attente_envoi_demande"/>
+                                        <field name="user_attente_verif_csrl"/>
+                                        <field name="user_attente_decision_comm"/>
+                                    </group>
+
+
+                                    <group>
+
+                                        <field name="date_attente_envoi_demande"/>
+
+                                        <field name="date_attente_verif_csrl"/>
+
+                                        <field name="date_attente_decision_comm"/>
+
+
+                                    </group>
+                                </group>
+
+                            </page>
+
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="view_sanctions_tree" model="ir.ui.view">
+            <field name="name">sports.sanctions.tree</field>
+            <field name="model">sports.sanctions</field>
+
+            <field name="arch" type="xml">
+                <tree string="sanctions">
+                    <field name="name"/>
+                    <field name="athletes_id"/>
+                    <field name="ligue_id"/>
+                    <field name="club_id"/>
+                    <field name="date_create" readonly="1"/>
+                    <field name="responsable_id" readonly="1"/>
+                    <field name="date_dec_sanction"/>
+                    <field name="type_sanction"/>
+
+                    <field name="saison_id"/>
+                    <field name="state"/>
+
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_view_sanctions_form" model="ir.actions.act_window">
+            <field name="name">Sanctions</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sports.sanctions</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+
+
+        <menuitem id="base.menu_sanctions_root" parent="base.menu_root_licences" name="Sanctions" sequence="11"/>
+        <menuitem action="action_view_sanctions_form" sequence="10" id="base.menu_sanctions" name="Sanctions" parent="base.menu_sanctions_root"/>
+
+
+        <!--  Mutations -->
+
+
+        <record id="view_mutations_form" model="ir.ui.view">
+            <field name="name">sports.mutations.form</field>
+            <field name="model">sports.mutations</field>
+            <field name="arch" type="xml">
+                <form string="Mutations ">
+
+                    <header>
+
+
+                        <button name="action_dem_attente_val" string="Validation VAL" states="dem_attente_envoi"
+                                class="btn-primary" type="object" colspan="1"/>
+                        <button name="action_mutation_effectuee" string="Confirmation" states="dem_attente_val"
+                                class="btn-primary" type="object" colspan="1"/>
+
+                        <button name="create_reaffiliation" string="Réaffiliation" states="mutation_effectuee"
+                                class="btn-primary" type="object" colspan="1"/>
+
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="dem_attente_envoi,dem_attente_val,mutation_effectuee"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+
+                            <h1>
+                                <field name="name" default_focus="1" placeholder="N° de Mutation" required="1"/>
+                            </h1>
+
+                        </div>
+
+                        <group>
+                            <group>
+                                <field name="athletes_id" required="1"/>
+                                <!--zoubida fields nom et prenom-->
+                                <field name="name_at"/>
+                                <field name="prenom"/>
+                                <field name="saison_id" readonly="1" options='{"no_open": True, "no_create": True}'/>
+                                <field name="statut_mutation"/>
+                                <field name="reaffiliation_id"/>
+                                <!--zoubida: enlever le motif-->
+                                <field name="motif" invisible="1"/>
+                            </group>
+                            <group>
+
+                                <field name="ligue_id" required="1" options='{"no_open": True, "no_create": True}'/>
+                                <field name="club_giving_id" required="1"
+                                       options='{"no_open": True, "no_create": True}'/>
+                                <field name="club_receiving_id" required="1"
+                                       options='{"no_open": True, "no_create": True}'/>
+                                <field name="date_dec_mutation" readonly="1"/>
+                                <group string="Demande Mutation Format Electronique" colspan="4">
+                                    <field name="mutation_filename" invisible="0" nolabel="1"/>
+                                    <field widget="binary" height="64" name="mutation" filename="mutation_filename"
+                                           nolabel="1"/>
+                                </group>
+                            </group>
+
+                        </group>
+
+                        <notebook>
+                            <page string="Décision">
+
+                                <group>
+
+                                    <field name="condition_ids" colspan="4" nolabel="1">
+                                        <tree string="Conditions" editable="bottom">
+                                            <field name="valide"/>
+                                            <field name="libelle_condition"/>
+                                            <field name="condition_id"/>
+                                        </tree>
+
+                                    </field>
+
+
+                                </group>
+
+                                <group>
+
+
+                                    <group string="Mutation Format Electronique" colspan="4">
+                                        <field name="mutation2_filename" invisible="0" nolabel="1"/>
+                                        <field widget="binary" height="64" name="mutation2"
+                                               filename="mutation2_filename" nolabel="1"/>
+                                    </group>
+
+
+                                    <group>
+                                        <field name="decision_commission"/>
+
+
+                                    </group>
+
+
+                                </group>
+
+
+                            </page>
+
+
+                            <page string="Résumé">
+
+                                <group>
+
+
+                                    <group>
+
+                                        <field name="user_dem_attente_envoi"/>
+                                        <field name="user_dem_attente_val"/>
+
+                                    </group>
+
+
+                                    <group>
+
+                                        <field name="date_dem_attente_envoi"/>
+
+                                        <field name="date_dem_attente_val"/>
+
+
+                                    </group>
+                                </group>
+
+                            </page>
+
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="view_mutations_tree" model="ir.ui.view">
+            <field name="name">sports.mutations.tree</field>
+            <field name="model">sports.mutations</field>
+
+            <field name="arch" type="xml">
+                <tree string="Mutations">
+                    <field name="name"/>
+                    <field name="athletes_id"/>
+                    <field name="saison_id"/>
+                    <field name="statut_mutation"/>
+
+                    <field name="ligue_id"/>
+                    <field name="club_giving_id"/>
+                    <field name="club_receiving_id"/>
+                    <field name="date_dec_mutation"/>
+
+                    <field name="reaffiliation_id"/>
+                    <field name="state"/>
+
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_view_mutations_form" model="ir.actions.act_window">
+            <field name="name">Mutations</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sports.mutations</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+
+
+        <menuitem id="base.menu_mutations_root" parent="base.menu_root_licences" name="Mutations" sequence="12"/>
+        <menuitem action="action_view_mutations_form" sequence="10" id="base.menu_mutations" name="Mutations" parent="base.menu_mutations_root"/>
+
+
+        <!--  Année blanche -->
+
+
+        <record id="view_anneeblanche_form" model="ir.ui.view">
+            <field name="name">sports.anneeblanche.form</field>
+            <field name="model">sports.anneeblanche</field>
+            <field name="arch" type="xml">
+                <form string="Année blanche ">
+                    <header>
+                        <button name="action_anneeblanche_validate" string="Envoyer la demande" states="attente_envoi_demande"
+                                class="btn-primary oe_highlight" type="object" colspan="1"/>
+                        <button name="action_anneeblanche_validate_csrl" string="Valider CSRL" states="attente_verif_csrl"
+                                class="btn-primary oe_highlight" type="object" colspan="1"/>
+                        <button name="action_anneeblanche_validate_commission" string="Valider Commission disciplinaire" states="attente_decision_comm"
+                                class="btn-primary oe_highlight" type="object" colspan="1"/>
+                        <button name="action_anneeblanche_effectuee" string="Confirmation" states="dem_attente_val"
+                                class="btn-primary" type="object" colspan="1"/>
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="attente_envoi_demande,attente_verif_csrl,attente_decision_comm,athlete_sanctionne"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+
+                            <h1>
+                                <field name="name" default_focus="1" placeholder="N° de sanctions" required="1"/>
+                            </h1>
+
+                        </div>
+
+                        <group>
+                            <group>
+                                <field name="athletes_id"/>
+                                <field name="saison_id" required="1"/>
+
+                                <field name="date_create" readonly="1"/>
+                                <field name="responsable_id" readonly="1"/>
+                                <field name="motif"/>
+                            </group>
+                            <group>
+
+                                <field name="ligue_id" required="1"/>
+                                <field name="club_id" required="1"/>
+                                <field name="date_dec_sanction" readonly="1"/>
+
+                            </group>
+
+                        </group>
+
+                        <notebook>
+                            <page string="Décision de la CSRL">
+
+                                <group>
+
+                                    <group>
+                                        <field name="decision_csrl"/>
+                                        <field name="comment_csrl"/>
+
+
+                                    </group>
+
+                                    <group>
+
+                                        <group string="Format Electronique" colspan="4">
+                                            <field name="sanction2_filename" invisible="0" nolabel="1"/>
+                                            <field widget="binary" height="64" name="sanction2"
+                                                   filename="sanction2_filename" nolabel="1"/>
+                                        </group>
+                                    </group>
+
+                                    <group>
+
+                                        <field name="date_start_sanction_csrl"/>
+                                        <field name="date_end_sanction_csrl"/>
+
+
+                                    </group>
+
+
+                                </group>
+
+                            </page>
+                            <page string="Commission Disciplinaire">
+
+                                <group>
+                                    <group>
+                                        <field name="decision_comm"/>
+                                        <field name="comment_comm"/>
+
+
+                                    </group>
+                                    <group>
+
+
+                                        <field name="date_start_sanction_comm"/>
+                                        <field name="date_end_sanction_comm"/>
+
+                                    </group>
+                                </group>
+
+                            </page>
+
+
+                            <page string="Résumé">
+
+                                <group>
+
+
+                                    <group>
+
+                                        <field name="user_attente_envoi_demande"/>
+                                        <field name="user_attente_verif_csrl"/>
+                                        <field name="user_attente_decision_comm"/>
+                                    </group>
+
+
+                                    <group>
+
+                                        <field name="date_attente_envoi_demande"/>
+
+                                        <field name="date_attente_verif_csrl"/>
+
+                                        <field name="date_attente_decision_comm"/>
+
+
+                                    </group>
+                                </group>
+
+                            </page>
+
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="view_anneeblanche_tree" model="ir.ui.view">
+            <field name="name">sports.anneeblanche.tree</field>
+            <field name="model">sports.anneeblanche</field>
+
+            <field name="arch" type="xml">
+                <tree string="Année blanche">
+                    <field name="name"/>
+                    <field name="athletes_id"/>
+                    <field name="ligue_id"/>
+                    <field name="club_id"/>
+                    <field name="date_create" readonly="1"/>
+                    <field name="responsable_id" readonly="1"/>
+                    <field name="date_dec_sanction"/>
+
+
+                    <field name="saison_id"/>
+                    <field name="state"/>
+
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_view_anneeblanche_form" model="ir.actions.act_window">
+            <field name="name">Année blanche</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sports.anneeblanche</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+
+
+        <menuitem id="base.menu_anneeblanche_root" parent="base.menu_root_licences" name="Année blanche" sequence="13"/>
+        <menuitem id="base.menu_anneeblanche" sequence="10" name="Année blanche" parent="base.menu_anneeblanche_root" action="action_view_anneeblanche_form"/>
+
+
+        <!---Statistiques-->
+
+
+        <record model="ir.ui.view" id="view_athletes_graph">
+            <field name="name">sports.athletes.graph</field>
+            <field name="model">sports.athletes</field>
+            <field name="arch" type="xml">
+                <graph string="Athlétes" type='pivot'>
+                    <field name="ligue_id" type='row'/>
+                    <field name="category_age_id" type='col'/>
+                </graph>
+            </field>
+        </record>
+
+
+        <record id="action_view_athletes_graph" model="ir.actions.act_window">
+            <field name="name">Ligues par Catégorie d’âge</field>
+            <field name="res_model">sports.athletes</field>
+            <field name="view_mode">graph</field>
+            <field name="view_id" ref="view_athletes_graph"/>
+            <field name="domain">[('state','!=','draft')]</field>
+        </record>
+
+
+        <menuitem action="action_view_athletes_graph"
+                  id="menu_action_view_athletes_graph" parent="base.menu_statistiques"
+                  sequence="1"/>
+
+
+        <record model="ir.ui.view" id="view_athletes_club_graph">
+            <field name="name">sports.athletes.graph</field>
+            <field name="model">sports.athletes</field>
+            <field name="arch" type="xml">
+                <graph string="Athlétes" type='pivot'>
+                    <field name="club_id" type='row'/>
+                    <field name="category_age_id" type='col'/>
+                </graph>
+            </field>
+        </record>
+
+
+        <record id="action_view_athletes_club_graph" model="ir.actions.act_window">
+            <field name="name">Clubes par Catégorie d’âge</field>
+            <field name="res_model">sports.athletes</field>
+            <field name="view_mode">graph</field>
+            <field name="view_id" ref="view_athletes_club_graph"/>
+            <field name="domain">[('state','!=','draft')]</field>
+        </record>
+
+
+        <menuitem action="action_view_athletes_club_graph"
+                  id="menu_action_view_athletes_club_graph" parent="base.menu_statistiques"
+                  sequence="1"/>
+
+        <record id="club_general_assembly_form_view" model="ir.ui.view">
+            <field name="name">club.general.assembly.form.view</field>
+            <field name="model">club.general.assembly</field>
+            <field name="arch" type="xml">
+                <form string="Assemblée Générale club">
+                    <header>
+                        <button name="action_waiting_approval" string="Valider" states="waiting_planning"
+                                class="btn-primary oe_highlight" type="object" colspan="1"/>
+
+                        <button name="action_waiting_report_frma" string="Valider" states="waiting_approval"
+                                class="btn-primary oe_highlight" type="object" colspan="1"/>
+
+                        <button name="action_waiting_admin_record" string="Valider" states="waiting_report_frma"
+                                class="btn-primary oe_highlight" type="object" colspan="1"/>
+
+                        <button name="action_waiting_admin_record_paper" string="Valider" states="waiting_admin_record"
+                                class="btn-primary oe_highlight" type="object" colspan="1"/>
+
+                        <button name="action_waiting_fin_report" string="Valider" states="waiting_admin_record_paper"
+                                class="btn-primary oe_highlight" type="object" colspan="1"/>
+
+                        <button name="action_waiting_admin_record_study" string="Valider" states="waiting_fin_report"
+                                class="btn-primary oe_highlight" type="object" colspan="1"/>
+
+                        <button name="action_admin_status_updated" string="Valider" states="waiting_admin_record_study"
+                                class="btn-primary oe_highlight" type="object" colspan="1"/>
+
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="waiting_planning,waiting_approval,waiting_report_frma,waiting_admin_record,waiting_admin_record_paper,waiting_fin_report,waiting_admin_record_study,admin_status_updated"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="club_id"/>
+                                <field name="deadline"/>
+                                <!--field name="ligue_id"/-->
+                            </group>
+                            <group>
+                                <field name="saison_id"/>
+                                <field name="start_date"/>
+                                <field name="end_date"/>
+                                <field name="assembly_nature"/>
+                                <field name="assembly_place"/>
+                                <field name="assembly_date"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="agenda"/>
+                        </group>
+                        <group>
+                            <field name="league_representative"/>
+                        </group>
+                        <notebook>
+                            <page string="Fiche signalétique">
+                                <separator string="Rapport Représentant Ligue (تقرير العصبة)" style="font-size:13px;"/>
+                                <group>
+                                    <group>
+                                        <field name="league_representative_report" filename="league_representative_report_filename"/>
+                                        <field name="league_representative_report_filename" invisible="1"/>
+                                        <field name="league_representative_report_reception"/>
+                                        <field name="league_representative_report_reception_date"/>
+                                    </group>
+                                    <group>
+                                        <field name="league_representative_report_note"/>
+                                    </group>
+                                </group>
+
+                                <separator string="Procès Verbal (التقرير)" style="font-size:13px;"/>
+                                <group>
+                                    <group>
+                                        <field name="minutes" filename="minutes_filename"/>
+                                        <field name="minutes_filename" invisible="1"/>
+                                        <field name="minutes_reception"/>
+                                        <field name="minutes_reception_date"/>
+                                    </group>
+                                    <group>
+                                        <field name="minutes_note"/>
+                                    </group>
+                                </group>
+
+                                <separator string="Liste de Présence (قائمة الحضور)" style="font-size:13px;"/>
+                                <group>
+                                    <group>
+                                        <field name="attendance_list" filename="attendance_list_filename"/>
+                                        <field name="attendance_list_filename" invisible="1"/>
+                                        <field name="attendance_list_reception"/>
+                                        <field name="attendance_list_reception_date"/>
+                                    </group>
+                                    <group>
+                                        <field name="attendance_list_note"/>
+                                    </group>
+                                </group>
+
+                                <separator string="Rapport Financier (التقرير المالي)" style="font-size:13px;"/>
+                                <group>
+                                    <group>
+                                        <field name="financial_report" filename="financial_report_filename"/>
+                                        <field name="financial_report_filename" invisible="1"/>
+                                        <field name="financial_report_reception"/>
+                                        <field name="financial_report_reception_date"/>
+                                    </group>
+                                    <group>
+                                        <field name="financial_report_note"/>
+                                    </group>
+                                </group>
+
+                                <separator string="Rapport technique (التقرير الأدبي)" style="font-size:13px;"/>
+                                <group>
+                                    <group>
+                                        <field name="technical_report" filename="technical_report_filename"/>
+                                        <field name="technical_report_filename" invisible="1"/>
+                                        <field name="technical_report_reception"/>
+                                        <field name="technical_report_reception_date"/>
+                                    </group>
+                                    <group>
+                                        <field name="technical_report_note"/>
+                                    </group>
+                                </group>
+
+                                <separator string="Spécimen Signature (عينة التوقيع)" style="font-size:13px;"/>
+                                <group>
+                                    <group>
+                                        <field name="signature_specimen" filename="signature_specimen_filename"/>
+                                        <field name="signature_specimen_filename" invisible="1"/>
+                                        <field name="signature_specimen_reception"/>
+                                        <field name="signature_specimen_reception_date"/>
+                                    </group>
+                                    <group>
+                                        <field name="signature_specimen_note"/>
+                                    </group>
+                                </group>
+
+                                <separator string="Récipicé Dépôt (وصل الإيداع)" style="font-size:13px;"/>
+                                <group>
+                                    <group>
+                                        <field name="recipe_deposit" filename="recipe_deposit_filename"/>
+                                        <field name="recipe_deposit_filename" invisible="1"/>
+                                        <field name="recipe_deposit_reception"/>
+                                        <field name="recipe_deposit_reception_date"/>
+                                    </group>
+                                    <group>
+                                        <field name="recipe_deposit_note"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Membres">
+                                <group>
+                                    <field name="members" colspan="4" nolabel="1">
+                                        <tree string="Conditions" editable="bottom">
+                                            <field name="fname"/>
+                                            <field name="lname"/>
+                                            <field name="cin"/>
+                                            <field name="job"/>
+                                            <field name="role"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                            </page>
+                            <page string="Décision">
+                                <group>
+                                    <group>
+                                        <field name="financial_report_view"/>
+                                    </group>
+                                    <group>
+                                        <field name="financial_report_view_comment"/>
+                                    </group>
+                                </group>
+                                <group>
+                                    <group>
+                                        <field name="commission_decision"/>
+                                    </group>
+                                    <group>
+                                        <field name="commission_decision_comment"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Résumé">
+                                <group>
+                                    <group>
+                                        <field name="planned_time"/>
+                                        <field name="approved_time"/>
+                                        <field name="reported_time"/>
+                                        <field name="loaded_num_time"/>
+                                        <field name="loaded_paper_time"/>
+                                        <field name="validated_time"/>
+                                        <field name="decided_time"/>
+                                    </group>
+                                    <group>
+                                        <field name="planned_user_id"/>
+                                        <field name="approved_user_id"/>
+                                        <field name="reported_user_id"/>
+                                        <field name="loaded_num_user_id"/>
+                                        <field name="loaded_paper_user_id"/>
+                                        <field name="validated_user_id"/>
+                                        <field name="decided_user_id"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="club_general_assembly_tree_view" model="ir.ui.view">
+            <field name="name">club.general.assembly.tree.view</field>
+            <field name="model">club.general.assembly</field>
+            <field name="arch" type="xml">
+                <tree string="Assemblée Générale">
+                    <field name="name"/>
+                    <field name="assembly_date"/>
+                    <field name="club_id"/>
+                    <field name="ligue_id"/>
+                    <field name="assembly_place"/>
+                    <field name="assembly_nature"/>
+                    <field name="financial_report_view"/>
+                    <field name="financial_report_view_comment"/>
+                    <field name="commission_decision_comment"/>
+                    <field name="state"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="club_general_assembly_action" model="ir.actions.act_window">
+            <field name="name">Assemblée Générale Club</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">club.general.assembly</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="ligue_general_assembly_form_view" model="ir.ui.view">
+            <field name="name">ligue.general.assembly.form.view</field>
+            <field name="model">ligue.general.assembly</field>
+            <field name="arch" type="xml">
+                <form string="Assemblée Générale ligue">
+                    <header>
+                        <button name="action_waiting_approval" string="Valider" states="waiting_planning"
+                                class="btn-primary oe_highlight" type="object" colspan="1"/>
+
+                        <button name="action_waiting_report_frma" string="Valider" states="waiting_approval"
+                                class="btn-primary oe_highlight" type="object" colspan="1"/>
+
+                        <button name="action_waiting_admin_record" string="Valider" states="waiting_report_frma"
+                                class="btn-primary oe_highlight" type="object" colspan="1"/>
+
+                        <button name="action_waiting_admin_record_paper" string="Valider" states="waiting_admin_record"
+                                class="btn-primary oe_highlight" type="object" colspan="1"/>
+
+                        <button name="action_waiting_fin_report" string="Valider" states="waiting_admin_record_paper"
+                                class="btn-primary oe_highlight" type="object" colspan="1"/>
+
+                        <button name="action_waiting_admin_record_study" string="Valider" states="waiting_fin_report"
+                                class="btn-primary oe_highlight" type="object" colspan="1"/>
+
+                        <button name="action_admin_status_updated" string="Valider" states="waiting_admin_record_study"
+                                class="btn-primary oe_highlight" type="object" colspan="1"/>
+
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="waiting_planning,waiting_approval,waiting_report_frma,waiting_admin_record,waiting_admin_record_paper,waiting_fin_report,waiting_admin_record_study,admin_status_updated"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="ligue_id"/>
+                                <field name="deadline"/>
+                                <!-- name="ligue_id"/-->
+                            </group>
+                            <group>
+                                <field name="saison_id"/>
+                                <field name="start_date"/>
+                                <field name="end_date"/>
+                                <field name="assembly_nature"/>
+                                <field name="assembly_place"/>
+                                <field name="assembly_date"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="agenda"/>
+                        </group>
+                        <group>
+                            <field name="league_representative"/>
+                        </group>
+                        <notebook>
+                            <page string="Fiche signalétique">
+                                <separator string="Rapport Représentant Ligue (تقرير العصبة)" style="font-size:13px;"/>
+                                <group>
+                                    <group>
+                                        <field name="league_representative_report" filename="league_representative_report_filename"/>
+                                        <field name="league_representative_report_filename" invisible="1"/>
+                                        <field name="league_representative_report_reception"/>
+                                        <field name="league_representative_report_reception_date"/>
+                                    </group>
+                                    <group>
+                                        <field name="league_representative_report_note"/>
+                                    </group>
+                                </group>
+
+                                <separator string="Procès Verbal (التقرير)" style="font-size:13px;"/>
+                                <group>
+                                    <group>
+                                        <field name="minutes" filename="minutes_filename"/>
+                                        <field name="minutes_filename" invisible="1"/>
+                                        <field name="minutes_reception"/>
+                                        <field name="minutes_reception_date"/>
+                                    </group>
+                                    <group>
+                                        <field name="minutes_note"/>
+                                    </group>
+                                </group>
+
+                                <separator string="Liste de Présence (قائمة الحضور)" style="font-size:13px;"/>
+                                <group>
+                                    <group>
+                                        <field name="attendance_list" filename="attendance_list_filename"/>
+                                        <field name="attendance_list_filename" invisible="1"/>
+                                        <field name="attendance_list_reception"/>
+                                        <field name="attendance_list_reception_date"/>
+                                    </group>
+                                    <group>
+                                        <field name="attendance_list_note"/>
+                                    </group>
+                                </group>
+
+                                <separator string="Rapport Financier (التقرير المالي)" style="font-size:13px;"/>
+                                <group>
+                                    <group>
+                                        <field name="financial_report" filename="financial_report_filename"/>
+                                        <field name="financial_report_filename" invisible="1"/>
+                                        <field name="financial_report_reception"/>
+                                        <field name="financial_report_reception_date"/>
+                                    </group>
+                                    <group>
+                                        <field name="financial_report_note"/>
+                                    </group>
+                                </group>
+
+                                <separator string="Rapport technique (التقرير الأدبي)" style="font-size:13px;"/>
+                                <group>
+                                    <group>
+                                        <field name="technical_report" filename="technical_report_filename"/>
+                                        <field name="technical_report_filename" invisible="1"/>
+                                        <field name="technical_report_reception"/>
+                                        <field name="technical_report_reception_date"/>
+                                    </group>
+                                    <group>
+                                        <field name="technical_report_note"/>
+                                    </group>
+                                </group>
+
+                                <separator string="Spécimen Signature (عينة التوقيع)" style="font-size:13px;"/>
+                                <group>
+                                    <group>
+                                        <field name="signature_specimen" filename="signature_specimen_filename"/>
+                                        <field name="signature_specimen_filename" invisible="1"/>
+                                        <field name="signature_specimen_reception"/>
+                                        <field name="signature_specimen_reception_date"/>
+                                    </group>
+                                    <group>
+                                        <field name="signature_specimen_note"/>
+                                    </group>
+                                </group>
+
+                                <separator string="Récipicé Dépôt (وصل الإيداع)" style="font-size:13px;"/>
+                                <group>
+                                    <group>
+                                        <field name="recipe_deposit" filename="recipe_deposit_filename"/>
+                                        <field name="recipe_deposit_filename" invisible="1"/>
+                                        <field name="recipe_deposit_reception"/>
+                                        <field name="recipe_deposit_reception_date"/>
+                                    </group>
+                                    <group>
+                                        <field name="recipe_deposit_note"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Membres">
+                                <group>
+                                    <field name="members" colspan="4" nolabel="1">
+                                        <tree string="Conditions" editable="bottom">
+                                            <field name="fname"/>
+                                            <field name="lname"/>
+                                            <field name="cin"/>
+                                            <field name="job"/>
+                                            <field name="role"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                            </page>
+                            <page string="Décision">
+                                <group>
+                                    <group>
+                                        <field name="financial_report_view"/>
+                                    </group>
+                                    <group>
+                                        <field name="financial_report_view_comment"/>
+                                    </group>
+                                </group>
+                                <group>
+                                    <group>
+                                        <field name="commission_decision"/>
+                                    </group>
+                                    <group>
+                                        <field name="commission_decision_comment"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Résumé">
+                                <group>
+                                    <group>
+                                        <field name="planned_time"/>
+                                        <field name="approved_time"/>
+                                        <field name="reported_time"/>
+                                        <field name="loaded_num_time"/>
+                                        <field name="loaded_paper_time"/>
+                                        <field name="validated_time"/>
+                                        <field name="decided_time"/>
+                                    </group>
+                                    <group>
+                                        <field name="planned_user_id"/>
+                                        <field name="approved_user_id"/>
+                                        <field name="reported_user_id"/>
+                                        <field name="loaded_num_user_id"/>
+                                        <field name="loaded_paper_user_id"/>
+                                        <field name="validated_user_id"/>
+                                        <field name="decided_user_id"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="ligue_general_assembly_tree_view" model="ir.ui.view">
+            <field name="name">ligue.general.assembly.tree.view</field>
+            <field name="model">ligue.general.assembly</field>
+            <field name="arch" type="xml">
+                <tree string="Assemblée Générale">
+                    <field name="name"/>
+                    <field name="assembly_date"/>
+                    <field name="club_id"/>
+                    <field name="ligue_id"/>
+                    <field name="assembly_place"/>
+                    <field name="assembly_nature"/>
+                    <field name="financial_report_view"/>
+                    <field name="financial_report_view_comment"/>
+                    <field name="commission_decision_comment"/>
+                    <field name="state"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="ligue_general_assembly_action" model="ir.actions.act_window">
+            <field name="name">Assemblée Générale Ligue</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ligue.general.assembly</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem
+                id="general_assembly_root" parent="base.menu_root_licences" name="Assemblée Générale"
+                sequence="20"/>
+
+        <menuitem action="club_general_assembly_action"
+                  id="club_general_assembly_menu" name="Assemblée Générale club" parent="general_assembly_root"
+                  sequence="10"/>
+
+        <menuitem action="ligue_general_assembly_action"
+                  id="ligue_general_assembly_menu" name="Assemblée Générale ligue" parent="general_assembly_root"
+                  sequence="20"/>
+
+        <record id="general_assembly_member_form_view" model="ir.ui.view">
+            <field name="name">general.assembly.member.form.view</field>
+            <field name="model">general.assembly.member</field>
+            <field name="arch" type="xml">
+                <form string="Membres Assemblée Générale">
+                    <header>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="reference"/>
+                                <field name="fname"/>
+                                <field name="cin"/>
+                                <field name="sex"/>
+                                <field name="city"/>
+                                <field name="mobile"/>
+                                <field name="mail"/>
+                                <field name="principal_contact"/>
+                            </group>
+                            <group>
+                                <field name="lname"/>
+                                <field name="dob"/>
+                                <field name="job"/>
+                                <field name="marital_status"/>
+                                <field name="children_nbr"/>
+                                <field name="role"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="address"/>
+                        </group>
+                        <separator string="Informations Parentales" style="font-size:13px;"/>
+                        <group>
+                            <group>
+                                <field name="father_fname"/>
+                                <field name="mother_fname"/>
+                            </group>
+                            <group>
+                                <field name="father_lname"/>
+                                <field name="mother_lname"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="general_assembly_member_tree_view" model="ir.ui.view">
+            <field name="name">general.assembly.member.tree.view</field>
+            <field name="model">general.assembly.member</field>
+            <field name="arch" type="xml">
+                <tree string="Membres Assemblée Générale">
+                    <field name="reference"/>
+                    <field name="fname"/>
+                    <field name="lname"/>
+                    <field name="cin"/>
+                    <field name="job"/>
+                    <field name="role"/>
+                    <field name="marital_status"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="general_assembly_member_action" model="ir.actions.act_window">
+            <field name="name">Membre Assemblée Générale</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">general.assembly.member</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!--menuitem action="general_assembly_member_action"
+                  id="general_assembly_member_menu" name="Membres" parent="general_assembly_root"
+                  sequence="20"/-->
+
+    </data>
+</openerp>

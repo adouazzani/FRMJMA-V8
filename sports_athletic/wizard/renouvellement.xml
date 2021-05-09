@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_renouvellement_category_age_change" model="ir.ui.view">
+            <field name="name">Renouvellement category age change</field>
+            <field name="model">sport.renouvellement.category_age_change</field>
+            <field name="arch" type="xml">
+                <form string="Renouvellement category age change">
+                   
+                    <group>
+                       <group>    
+                        <field name="image"  widget='image' class="oe_avatar" options='{ "size": [70, 70]}'/>
+                       </group>
+                       <group>
+                         <field name="cin"/>
+                       </group>
+                        
+                        
+                    </group> 
+                    <notebook>
+                    <page string="Piéce jointe">
+
+                           <group>
+        
+                            <group>
+                                <field  name="actenaissance"   widget='image' class="oe_avatar" options='{ "size": [70, 70]}'/>
+			        <field name="cinjuniorsseniors"  widget='image' class="oe_avatar" options='{"size": [70, 70]}'/>
+			        <field name="certificatmedical"  widget='image' class="oe_avatar" options='{"size": [70, 70]}'/>
+			        <field name="autorisationparents"  widget='image' class="oe_avatar" options='{"size": [70, 70]}'/>
+                            </group>
+                            <group>
+
+                            <field  name="cartesejour" widget='image' class="oe_avatar" options='{"size": [70, 70]}'/>
+			    <field  name="autorisationetrangere" widget='image' class="oe_avatar" options='{"size": [70, 70]}'/>
+			    <field  name="autorisationparents"  widget='image' class="oe_avatar" options='{"size": [70, 70]}'/>
+			    <field  name="attestationscolarite"  widget='image' class="oe_avatar" options='{"size": [70, 70]}'/>
+				    
+                            </group>
+                            
+			                   
+				            
+
+
+                              </group>
+
+                      </page>
+
+                     
+                      </notebook>
+
+                    <footer>
+                        <button name="make_renouvellement" string="Valider" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+               </form>
+            </field>
+        </record>
+
+        <record id="action_renouvellement_category_age_change" model="ir.actions.act_window">
+            <field name="name">Renouvellement</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sport.renouvellement.category_age_change</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_renouvellement_category_age_change"/>
+            <field name="target">new</field>
+            <field name="multi">True</field>
+        </record>
+
+    </data>
+</openerp>

@@ -1,0 +1,1495 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+
+
+
+        <menuitem name="Paramétre" id="base.menu_parametre_root" sequence="1"/>
+
+
+        <menuitem name="Athlètes et Licences" id="base.menu_parametre2" sequence="1"  parent="base.menu_parametre_root" groups="sports_athletic.athlete_user"/>
+
+
+
+
+
+        <!--Saison sportive' -->
+
+
+
+        <record id="view_saison_tree" model="ir.ui.view">
+            <field name="name">sports.saison.tree</field>
+            <field name="model">sports.saison</field>
+
+            <field name="arch" type="xml">
+                <tree string="Saison sportive'">
+                    <field name="name"/>
+                    <field name="date_start"/>
+                    <field name="date_end"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="view_saison_form" model="ir.ui.view">
+            <field name="name">sports.saison.form</field>
+            <field name="model">sports.saison</field>
+            <field name="arch" type="xml">
+                <form string="Saison sportive'">
+                    <header>
+                        <button name="action_active" string="Activer" type="object" states="future" class="btn-primary"/>
+                        <button name="action_cloturee" string="Clôturer" type="object" states="active" class="btn-primary"/>
+                        <button name="action_make_club_compliant" string="Rendre tous les clubs conforme" type="object" states="active" class="oe_highlight"/>
+                        <field name="state" widget="statusbar" statusbar_visible="future,active,cloturee"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="date_start" required="1"/>
+                                <field name="date_end" required="1"/>
+                            </group>
+                            <group>
+                                <field name="name" required="1" attrs="{'readonly': [('state', 'in', ('active','cloturee'))]}"/>
+                                <field name="make_club_non_compliant"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="action_saison" model="ir.actions.act_window">
+            <field name="name">Saison sportive</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sports.saison</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+
+        <menuitem action="action_saison"
+                  id="menu_action_saison" parent="base.menu_parametre2"
+                  sequence="1" />
+
+
+
+
+
+
+        <!--Ligue-->
+
+
+        <record id="ligue_search_view" model="ir.ui.view">
+            <field name="name">sports.ligue.search</field>
+            <field name="model">sports.ligue</field>
+            <field name="arch" type="xml">
+                <search string="Ligue">
+                    <field name="name"/>
+                    <field name="name_ar"/>
+                    <field name="num"/>
+
+                    <field name="situation_admin" />
+                    <field name="date"/>
+
+                    <group  expand='0' string='Group by...'>
+                        <filter string='Situation' domain="[]" context="{'group_by' : 'situation_admin'}"/>
+
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+        <record id="view_ligue_tree" model="ir.ui.view">
+            <field name="name">sports.ligue.tree</field>
+            <field name="model">sports.ligue</field>
+            <field name="priority">2</field>
+            <field name="arch" type="xml">
+                <tree string="Ligue" >
+                    <field name="name"/>
+                    <field name="name_ar"/>
+                    <field name="num"/>
+                    <!--<field name="saison_id"/>-->
+                    <field name="zone_id"/>
+                    <field name="situation_admin" />
+                    <field name="date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_ligue_form" model="ir.ui.view">
+            <field name="name">sports.ligue.form</field>
+            <field name="model">sports.ligue</field>
+            <field name="priority">2</field>
+            <field name="arch" type="xml">
+                <form string="Ligue">
+                    <sheet>
+
+                        <field name="image" widget='image' class="oe_avatar" options='{"preview_image": "image_medium", "size": [90, 90]}'/>
+
+                        <group>
+                            <group>
+                                <field name="name" required="1"/>
+
+                                <field name="num" required="1"/>
+                                <field name="date" required="1"/>
+                            </group>
+                            <group>
+                                <field name="name_ar" required="1"/>
+                                <field name="saison_id" invisible="1"/>
+                                <field name="zone_id"/>
+                                <field name="situation_admin" readonly="1" required="1"/>
+
+                            </group>
+                        </group>
+                        <group>
+
+                            <group>
+                                <field name="adresse"/>
+
+
+                            </group>
+                            <group>
+                                <field name="mail"/>
+                                <field name="tel"/>
+                                <field name="fax"/>
+                                <!--field name="id_old"/-->
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_ligue" model="ir.actions.act_window">
+            <field name="name">Ligue</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sports.ligue</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <menuitem action="action_ligue"
+                  id="menu_action_ligue" parent="base.menu_parametre2"
+                  sequence="2" />
+
+
+
+        <!--club-->
+
+
+
+        <record id="club_search_view" model="ir.ui.view">
+            <field name="name">sports.club.search</field>
+            <field name="model">sports.club</field>
+            <field name="arch" type="xml">
+                <search string="Club">
+                    <field name="name"/>
+                    <field name="name_ar"/>
+                    <field name="num"/>
+                    <field name="ligue_id"/>
+                    <field name="situation_admin" />
+
+                    <group  expand='0' string='Group by...'>
+                        <filter string='Situation' domain="[]" context="{'group_by' : 'situation_admin'}"/>
+                        <filter string='Ligue' icon="terp-mrp" domain="[]" context="{'group_by' : 'ligue_id'}"/>
+
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+        <record id="view_club_tree" model="ir.ui.view">
+            <field name="name">sports.club.tree</field>
+            <field name="model">sports.club</field>
+
+            <field name="arch" type="xml">
+                <tree string="club">
+                    <field name="name"/>
+                    <field name="name_ar"/>
+                    <field name="num"/>
+                    <field name="saison_id" invisible="1"/>
+                    <field name="ligue_id"/>
+                    <field name="situation_admin" />
+
+                </tree>
+            </field>
+        </record>
+
+
+
+        <record id="view_club_form" model="ir.ui.view">
+            <field name="name">sports.club.form</field>
+            <field name="model">sports.club</field>
+
+            <field name="arch" type="xml">
+                <form string="Ligue">
+                    <sheet>
+
+                        <field name="image" widget='image' class="oe_avatar" options='{"preview_image": "image_medium", "size": [90, 90]}'/>
+
+                        <group>
+                            <group>
+                                <field name="name" required="1"/>
+                                <field name="num" required="1"/>
+                                <field name="code" required="1"/>
+                                <field name="date" required="0"/>
+                            </group>
+                            <group>
+                                <field name="name_ar" required="1"/>
+
+
+                                <field name="saison_id" invisible="1"/>
+
+                                <field name="ligue_id" required="1"/>
+                                <field name="zone_id" invisible="1"/>
+                                <field name="situation_admin" readonly="1" required="1"/>
+
+                            </group>
+                        </group>
+                        <group>
+
+                            <group>
+                                <field name="region" />
+                                <field name="commune" />
+                                <field name="adresse"/>
+                                <!--field name="id_old"/-->
+
+                            </group>
+                            <group>
+                                <field name="contact"/>
+                                <field name="mail"/>
+                                <field name="tel"/>
+                                <field name="gsm"/>
+                                <field name="fax"/>
+
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="action_club" model="ir.actions.act_window">
+            <field name="name">Club</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sports.club</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+
+        <menuitem action="action_club"
+                  id="menu_action_club" parent="base.menu_parametre2"
+                  sequence="2" />
+
+
+
+
+
+        <!--Catégories d’âges -->
+        <record id="category_age_search_view" model="ir.ui.view">
+            <field name="name">sports.category_age.search</field>
+            <field name="model">sports.category_age</field>
+            <field name="arch" type="xml">
+                <search string="Catégories d’âges ">
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="age_debut"/>
+                    <field name="age_fin"/>
+
+
+                </search>
+            </field>
+        </record>
+
+
+        <record id="view_category_age_tree" model="ir.ui.view">
+            <field name="name">sports.category_age.tree</field>
+            <field name="model">sports.category_age</field>
+
+            <field name="arch" type="xml">
+                <tree string="Catégories d’âges">
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="age_debut"/>
+                    <field name="age_fin"/>
+                    <field name="order" invisible="1"/>
+
+                </tree>
+            </field>
+        </record>
+
+
+
+        <record id="view_category_age_form" model="ir.ui.view">
+            <field name="name">sports.category_age.form</field>
+            <field name="model">sports.category_age</field>
+
+            <field name="arch" type="xml">
+                <form string="Catégories d’âges">
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                            <field name="description"/>
+                        </group>
+                        <group>
+                            <field name="age_debut" required="1"/>
+                            <field name="age_fin" required="1"/>
+                            <field name="order" />
+
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Paramétrage des Pièces jointes">
+                            <group>
+                                <group>
+                                    <field name="birth_certificate"/>
+                                    <field name="medical_certificate"/>
+                                    <field name="cin"/>
+                                    <field name="parental_authorization"/>
+                                </group>
+                                <group>
+                                    <field name="residence_permit"/>
+                                    <field name="foreign_authorization"/>
+                                    <field name="school_certificate"/>
+                                    <field name="school_att"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="action_category_age" model="ir.actions.act_window">
+            <field name="name">Catégories d’âges</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sports.category_age</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+
+        <menuitem action="action_category_age"
+                  id="menu_action_category_age" parent="base.menu_parametre2"
+                  sequence="3" />
+
+
+
+
+
+
+        <!--Type licence
+
+
+
+            <record id="view_licence_tree" model="ir.ui.view">
+                <field name="name">sports.licence.tree</field>
+                <field name="model">sports.licence</field>
+
+                <field name="arch" type="xml">
+                    <tree string="Type licence">
+                        <field name="name"/>
+
+
+                    </tree>
+                </field>
+            </record>
+
+
+
+            <record id="view_licence_form" model="ir.ui.view">
+                <field name="name">sports.licence.form</field>
+                <field name="model">sports.licence</field>
+
+                <field name="arch" type="xml">
+                    <form string="Type licence">
+                      <group>
+                      <group>
+                        <field name="name"/>
+
+
+
+                      </group>
+                      <group>
+
+
+                       </group>
+                     </group>
+
+
+
+
+                    </form>
+                </field>
+            </record>
+
+
+            <record id="action_licence" model="ir.actions.act_window">
+                <field name="name">Type licence</field>
+                <field name="type">ir.actions.act_window</field>
+                <field name="res_model">sports.licence</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+
+            </record>
+
+           <menuitem action="action_licence"
+                id="menu_action_licence" parent="base.menu_parametre2"
+                sequence="4" />
+
+
+     -->
+
+
+
+
+
+
+
+        <!--Zone-->
+
+
+
+        <record id="view_zone_tree" model="ir.ui.view">
+            <field name="name">sports.zone.tree</field>
+            <field name="model">sports.zone</field>
+
+            <field name="arch" type="xml">
+                <tree string="Zone">
+                    <field name="name"/>
+
+
+                </tree>
+            </field>
+        </record>
+
+
+
+        <record id="view_zone_form" model="ir.ui.view">
+            <field name="name">sports.zone.form</field>
+            <field name="model">sports.zone</field>
+
+            <field name="arch" type="xml">
+                <form string="Zone">
+                    <group>
+                        <group>
+                            <field name="name"/>
+
+
+
+                        </group>
+                        <group>
+
+
+                        </group>
+                    </group>
+
+
+
+
+                </form>
+            </field>
+        </record>
+
+
+        <record id="action_zone" model="ir.actions.act_window">
+            <field name="name">Zone</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sports.zone</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+
+        <menuitem action="action_zone"
+                  id="menu_action_zone" parent="base.menu_parametre2"
+                  sequence="4" />
+
+
+
+
+
+        <!--objectif -->
+
+
+
+        <record id="view_objectif_tree" model="ir.ui.view">
+            <field name="name">sports.objectif.tree</field>
+            <field name="model">sports.objectif</field>
+
+            <field name="arch" type="xml">
+                <tree string="Objectifs">
+                    <field name="name"/>
+
+
+                </tree>
+            </field>
+        </record>
+
+
+
+        <record id="view_objectif_form" model="ir.ui.view">
+            <field name="name">sports.objectif.form</field>
+            <field name="model">sports.objectif</field>
+
+            <field name="arch" type="xml">
+                <form string="Objectif">
+                    <group>
+                        <group>
+                            <field name="name"/>
+
+
+
+                        </group>
+                        <group>
+
+
+                        </group>
+                    </group>
+
+
+
+
+                </form>
+            </field>
+        </record>
+
+
+        <record id="action_objectif" model="ir.actions.act_window">
+            <field name="name">Objectifs</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sports.objectif</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+
+        <menuitem action="action_objectif"
+                  id="menu_action_objectif" parent="base.menu_parametre2"
+                  sequence="4" />
+
+
+
+
+
+
+
+        <!--Discipline -->
+
+
+
+        <record id="view_discipline_tree" model="ir.ui.view">
+            <field name="name">sports.discipline.tree</field>
+            <field name="model">sports.discipline</field>
+
+            <field name="arch" type="xml">
+                <tree string="Discipline">
+                    <field name="name"/>
+
+
+                </tree>
+            </field>
+        </record>
+
+
+
+        <record id="view_discipline_form" model="ir.ui.view">
+            <field name="name">sports.discipline.form</field>
+            <field name="model">sports.discipline</field>
+
+            <field name="arch" type="xml">
+                <form string="Discipline">
+                    <group>
+                        <group>
+                            <field name="name"/>
+
+
+
+                        </group>
+                        <group>
+
+
+                        </group>
+                    </group>
+
+
+
+
+                </form>
+            </field>
+        </record>
+
+
+        <record id="action_discipline" model="ir.actions.act_window">
+            <field name="name">Discipline</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sports.discipline</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+
+        <menuitem action="action_discipline"
+                  id="menu_action_discipline" parent="base.menu_parametre2"
+                  sequence="4" />
+
+
+
+
+
+        <!--theme -->
+
+
+
+        <record id="view_theme_tree" model="ir.ui.view">
+            <field name="name">sports.theme.tree</field>
+            <field name="model">sports.theme</field>
+
+            <field name="arch" type="xml">
+                <tree string="Théme">
+                    <field name="name"/>
+
+
+                </tree>
+            </field>
+        </record>
+
+
+
+        <record id="view_theme_form" model="ir.ui.view">
+            <field name="name">sports.theme.form</field>
+            <field name="model">sports.theme</field>
+
+            <field name="arch" type="xml">
+                <form string="Théme">
+                    <group>
+                        <group>
+                            <field name="name"/>
+
+
+
+                        </group>
+                        <group>
+
+
+                        </group>
+                    </group>
+
+
+
+
+                </form>
+            </field>
+        </record>
+
+
+        <record id="action_theme" model="ir.actions.act_window">
+            <field name="name">Théme</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sports.theme</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+
+        <menuitem action="action_theme"
+                  id="menu_action_theme" parent="base.menu_parametre2"
+                  sequence="4" />
+
+
+
+
+        <!--Degré de similitude -->
+
+
+
+        <record id="view_degresimilitude_tree" model="ir.ui.view">
+            <field name="name">sports.degresimilitude.tree</field>
+            <field name="model">sports.degresimilitude</field>
+
+            <field name="arch" type="xml">
+                <tree string="Degré de similitude">
+                    <field name="name"/>
+
+
+                </tree>
+            </field>
+        </record>
+
+
+
+        <record id="view_degresimilitude_form" model="ir.ui.view">
+            <field name="name">sports.degresimilitude.form</field>
+            <field name="model">sports.degresimilitude</field>
+
+            <field name="arch" type="xml">
+                <form string="Degré de similitude">
+                    <group>
+                        <group>
+                            <field name="name"/>
+
+
+
+                        </group>
+                        <group>
+
+
+                        </group>
+                    </group>
+
+
+
+
+                </form>
+            </field>
+        </record>
+
+
+        <record id="action_degresimilitude" model="ir.actions.act_window">
+            <field name="name">Degré de similitude</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sports.degresimilitude</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+
+        <menuitem action="action_degresimilitude"
+                  id="menu_action_degresimilitude" parent="base.menu_parametre2"
+                  sequence="4" />
+
+
+
+
+        <!--Niveau scolaire -->
+
+
+
+        <record id="view_niveauscolaire_tree" model="ir.ui.view">
+            <field name="name">sports.niveauscolaire.tree</field>
+            <field name="model">sports.niveauscolaire</field>
+
+            <field name="arch" type="xml">
+                <tree string="Niveau scolaire">
+                    <field name="name"/>
+
+
+                </tree>
+            </field>
+        </record>
+
+
+
+        <record id="view_niveauscolaire_form" model="ir.ui.view">
+            <field name="name">sports.niveauscolaire.form</field>
+            <field name="model">sports.niveauscolaire</field>
+
+            <field name="arch" type="xml">
+                <form string="Niveau scolaire">
+                    <group>
+                        <group>
+                            <field name="name"/>
+
+
+
+                        </group>
+                        <group>
+
+
+                        </group>
+                    </group>
+
+
+
+
+                </form>
+            </field>
+        </record>
+
+
+        <record id="action_niveauscolaire" model="ir.actions.act_window">
+            <field name="name">Niveau scolaire</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sports.niveauscolaire</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+
+        <menuitem action="action_niveauscolaire"
+                  id="menu_action_niveauscolaire" parent="base.menu_parametre2"
+                  sequence="4" />
+
+
+
+
+
+
+        <!--Banque -->
+
+
+
+        <record id="view_banque_tree" model="ir.ui.view">
+            <field name="name">sports.banque.tree</field>
+            <field name="model">sports.banque</field>
+
+            <field name="arch" type="xml">
+                <tree string="Banque">
+                    <field name="name"/>
+
+
+                </tree>
+            </field>
+        </record>
+
+
+
+        <record id="view_banque_form" model="ir.ui.view">
+            <field name="name">sports.banque.form</field>
+            <field name="model">sports.banque</field>
+
+            <field name="arch" type="xml">
+                <form string="Banque">
+                    <group>
+                        <group>
+                            <field name="name"/>
+
+
+
+                        </group>
+                        <group>
+
+
+                        </group>
+                    </group>
+
+
+
+
+                </form>
+            </field>
+        </record>
+
+
+        <record id="action_banque" model="ir.actions.act_window">
+            <field name="name">Banque</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sports.banque</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+
+        <menuitem action="action_banque"
+                  id="menu_action_banque" parent="base.menu_parametre2"
+                  sequence="4" />
+
+
+
+
+
+
+        <!--Impression des assurances-->
+
+
+
+        <record id="view_print_assurance_tree" model="ir.ui.view">
+            <field name="name">sports.print_assurance.tree</field>
+            <field name="model">sports.print_assurance</field>
+
+            <field name="arch" type="xml">
+                <tree string="Impression des assurances">
+                    <field name="name"/>
+                    <field name="renouvellement"/>
+                    <field name="reaffiliation"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+
+
+
+        <record id="view_print_assurance_form" model="ir.ui.view">
+            <field name="name">sports.print_assurance.form</field>
+            <field name="model">sports.print_assurance</field>
+
+            <field name="arch" type="xml">
+                <form string="Impression des assurances">
+                    <group>
+                        <group>
+                            <field name="active"/>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="renouvellement"/>
+                            <field name="reaffiliation"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="action_print_assurance" model="ir.actions.act_window">
+            <field name="name">Impression des assurances</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sports.print_assurance</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+
+        <menuitem action="action_print_assurance"
+                  id="menu_action_print_assurance" parent="base.menu_parametre2"
+                  sequence="4" />
+
+
+
+        <!--Impression des cartes Licences-->
+
+
+
+        <record id="view_print_carte_tree" model="ir.ui.view">
+            <field name="name">sports.print_carte.tree</field>
+            <field name="model">sports.print_carte</field>
+
+            <field name="arch" type="xml">
+                <tree string="Impression des cartes Licences">
+                    <field name="name"/>
+                    <field name="renouvellement"/>
+                    <field name="reaffiliation"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+
+
+
+        <record id="view_print_carte_form" model="ir.ui.view">
+            <field name="name">sports.print_carte.form</field>
+            <field name="model">sports.print_carte</field>
+
+            <field name="arch" type="xml">
+                <form string="Impression des cartes Licences">
+                    <group>
+                        <group>
+                            <field name="active"/>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="renouvellement"/>
+                            <field name="reaffiliation"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="action_print_carte" model="ir.actions.act_window">
+            <field name="name">Impression des cartes Licences</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sports.print_carte</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+
+        <menuitem action="action_print_carte"
+                  id="menu_action_print_carte" parent="base.menu_parametre2"
+                  sequence="4" />
+
+
+
+
+
+
+        <!--Statut licence athléte -->
+
+
+
+        <record id="view_statutlicence_tree" model="ir.ui.view">
+            <field name="name">sports.statutlicence.tree</field>
+            <field name="model">sports.statutlicence</field>
+
+            <field name="arch" type="xml">
+                <tree string="Statut licence athléte">
+                    <field name="name"/>
+
+
+                </tree>
+            </field>
+        </record>
+
+
+
+        <record id="view_statutlicence_form" model="ir.ui.view">
+            <field name="name">sports.statutlicence.form</field>
+            <field name="model">sports.statutlicence</field>
+
+            <field name="arch" type="xml">
+                <form string="Statut licence athléte">
+                    <group>
+                        <group>
+                            <field name="name"/>
+
+
+
+                        </group>
+                        <group>
+
+
+                        </group>
+                    </group>
+
+
+
+
+                </form>
+            </field>
+        </record>
+
+
+        <record id="action_statutlicence" model="ir.actions.act_window">
+            <field name="name">Statut licence athléte</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sports.statutlicence</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+
+        <!--<menuitem action="action_statutlicence"
+             id="menu_action_statutlicence" parent="base.menu_parametre2"
+             sequence="4" />-->
+
+
+
+        <!--Centre-->
+
+
+
+        <record id="view_centres_tree" model="ir.ui.view">
+            <field name="name">sports.centres.tree</field>
+            <field name="model">sports.centres</field>
+
+            <field name="arch" type="xml">
+                <tree string="Centres'">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="name_ar"/>
+                    <field name="adresse"/>
+                </tree>
+            </field>
+        </record>
+
+
+
+        <record id="view_centres_form" model="ir.ui.view">
+            <field name="name">sports.centres.form</field>
+            <field name="model">sports.centres</field>
+
+            <field name="arch" type="xml">
+                <form string="Centre">
+                    <header>
+
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+
+                                <field name="name" required="1"/>
+                                <field name="name_ar" required="1"/>
+
+                            </group>
+                            <group>
+
+
+                                <field name="code" />
+                                <field name="adresse" />
+                                <!--field name="id_old" /-->
+
+
+                            </group>
+                        </group>
+
+
+                    </sheet>
+
+                </form>
+            </field>
+        </record>
+
+
+        <record id="action_centres" model="ir.actions.act_window">
+            <field name="name">Centres</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sports.centres</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+
+        <menuitem action="action_centres"
+                  id="menu_action_centres" parent="base.menu_parametre2"
+        />
+
+
+
+
+
+        <menuitem name="Compétitions et Résultats" id="base.menu_parametre3" sequence="2"  parent="base.menu_parametre_root" groups="sports_athletic.competition_user"/>
+
+
+
+
+
+        <record id="view_category_age_tree" model="ir.ui.view">
+            <field name="name">sports.category_age.sexe.tree</field>
+            <field name="model">sports.category_age.sexe</field>
+
+            <field name="arch" type="xml">
+                <tree string="Catégories d'ages par  Sexe'">
+                    <field name="name"/>
+                    <field name="category_age_id"/>
+                    <field name="sexe"/>
+                </tree>
+            </field>
+        </record>
+
+
+
+
+
+        <record id="view_category_age_sexe_form" model="ir.ui.view">
+            <field name="name">sports.category_age.sexe.form</field>
+            <field name="model">sports.category_age.sexe</field>
+
+            <field name="arch" type="xml">
+                <form string="Categories d'ages par  Sexe">
+                    <header>
+
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+
+                                <field name="name" required="1"/>
+
+
+                            </group>
+                            <group>
+
+                                <field name="category_age_id"/>
+                                <field name="sexe"/>
+
+
+                            </group>
+                        </group>
+
+
+                    </sheet>
+
+                </form>
+            </field>
+        </record>
+
+
+        <record id="action_category_age_sexe" model="ir.actions.act_window">
+            <field name="name">Catégories d'âges sexe</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sports.category_age.sexe</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+
+        <menuitem action="action_category_age_sexe"
+                  id="menu_action_category_age_sexe" parent="base.menu_parametre3"
+        />
+
+
+
+
+
+
+
+        <record id="view_epreuve_familles_tree" model="ir.ui.view">
+            <field name="name">sports.epreuve.familles.tree</field>
+            <field name="model">sports.epreuve.familles</field>
+
+            <field name="arch" type="xml">
+                <tree string="Famille epreuve">
+                    <field name="name"/>
+                    <field name="um"/>
+
+                </tree>
+            </field>
+        </record>
+
+
+
+        <record id="view_epreuve_familles_form" model="ir.ui.view">
+            <field name="name">sports.epreuve.familles.form</field>
+            <field name="model">sports.epreuve.familles</field>
+
+            <field name="arch" type="xml">
+                <form string="Famille epreuve">
+                    <header>
+
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+
+                                <field name="name" required="1"/>
+
+
+                            </group>
+                            <group>
+
+                    <field name="um"/>
+
+
+                            </group>
+                        </group>
+
+
+                    </sheet>
+
+                </form>
+            </field>
+        </record>
+
+
+        <record id="action_epreuve_familles" model="ir.actions.act_window">
+            <field name="name">Familles epreuves</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sports.epreuve.familles</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+
+        <menuitem action="action_epreuve_familles"
+                  id="menu_action_epreuve_familles" parent="base.menu_parametre3"
+        />
+
+
+
+
+
+      <!--  <record id="view_epreuveformatresultat_tree" model="ir.ui.view">
+            <field name="name">sports.epreuve.formatresultat.tree</field>
+            <field name="model">sports.epreuve.formatresultat</field>
+
+            <field name="arch" type="xml">
+                <tree string="Format Résultat">
+                    <field name="name"/>
+
+
+                </tree>
+            </field>
+        </record>
+
+
+
+        <record id="view_epreuve_formatresultat_form" model="ir.ui.view">
+            <field name="name">sports.epreuve.formatresultat.form</field>
+            <field name="model">sports.epreuve.formatresultat</field>
+
+            <field name="arch" type="xml">
+                <form string="Format Résultat">
+                    <header>
+
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+
+                                <field name="name" required="1"/>
+
+
+                            </group>
+                            <group>
+
+
+
+
+                            </group>
+                        </group>
+
+
+                    </sheet>
+
+                </form>
+            </field>
+        </record>
+
+
+        <record id="action_epreuve_formatresultat" model="ir.actions.act_window">
+            <field name="name">Formats Résultats</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sports.epreuve.formatresultat</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+
+        <menuitem action="action_epreuve_formatresultat"
+                  id="menu_action_epreuve_formatresultat" parent="base.menu_parametre3"
+        />
+
+
+
+
+-->
+
+
+
+
+        <record id="view_competition_familles_tree" model="ir.ui.view">
+            <field name="name">sports.competition.familles.tree</field>
+            <field name="model">sports.competition.familles</field>
+
+            <field name="arch" type="xml">
+                <tree string="Famille Competition">
+                    <field name="name"/>
+                    <field name="type"/>
+
+                </tree>
+            </field>
+        </record>
+
+
+
+        <record id="view_competition_familles_form" model="ir.ui.view">
+            <field name="name">sports.competition.familles.form</field>
+            <field name="model">sports.competition.familles</field>
+
+            <field name="arch" type="xml">
+                <form string="Famille Competition">
+                    <header>
+
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+
+                                <field name="name" required="1"/>
+
+
+
+                            </group>
+                            <group>
+
+
+                                <field name="type" required="1"/>
+
+                            </group>
+                        </group>
+
+
+                    </sheet>
+
+                </form>
+            </field>
+        </record>
+
+
+        <record id="action_competition_familles" model="ir.actions.act_window">
+            <field name="name">Familles Competitions</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sports.competition.familles</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+
+        <menuitem action="action_competition_familles"
+                  id="menu_action_competition_familles" parent="base.menu_parametre3"
+        />
+
+
+
+
+
+
+
+
+        <record id="view_prise_compte_frma_tree" model="ir.ui.view">
+            <field name="name">sports.competition.prise_compte.tree</field>
+            <field name="model">sports.competition.prise_compte</field>
+
+            <field name="arch" type="xml">
+                <tree string="Prise en Compte par FRMA">
+                    <field name="name"/>
+
+
+                </tree>
+            </field>
+        </record>
+
+
+
+        <record id="view_prise_compte_frma_form" model="ir.ui.view">
+            <field name="name">sports.competition.prise_compte.form</field>
+            <field name="model">sports.competition.prise_compte</field>
+
+            <field name="arch" type="xml">
+                <form string="Prise en Compte par FRMA">
+                    <header>
+
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+
+                                <field name="name" required="1"/>
+
+
+
+                            </group>
+                            <group>
+
+
+
+
+                            </group>
+                        </group>
+
+
+                    </sheet>
+
+                </form>
+            </field>
+        </record>
+
+
+        <record id="action_prise_compte_frma_familles" model="ir.actions.act_window">
+            <field name="name">Prise en Compte</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sports.competition.prise_compte</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+
+        <menuitem action="action_prise_compte_frma_familles"
+                  id="menu_action_prise_compte_frma_familles" parent="base.menu_parametre3"
+        />
+
+
+
+
+    </data>
+</openerp>

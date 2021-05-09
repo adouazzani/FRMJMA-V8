@@ -1,0 +1,231 @@
+<?xml version="1.0"?>
+<document filename="test.pdf">
+  <template pageSize="(595.0,842.0)" title="Test" author="Martin Simon" allowSplitting="20">
+    <pageTemplate id="first">
+      <frame id="first" x1="57.0" y1="57.0" width="481" height="728"/>
+    </pageTemplate>
+  </template>
+  <stylesheet>
+    <blockTableStyle id="Standard_Outline">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Tableau1">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Tableau2">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <blockBackground colorName="#eeeeee" start="0,0" stop="0,-1"/>
+      <blockBackground colorName="#eeeeee" start="1,0" stop="1,-1"/>
+      <blockBackground colorName="#eeeeee" start="2,0" stop="2,-1"/>
+      <blockBackground colorName="#eeeeee" start="0,1" stop="0,-1"/>
+      <blockBackground colorName="#eeeeee" start="1,1" stop="1,-1"/>
+      <blockBackground colorName="#eeeeee" start="2,1" stop="2,-1"/>
+      <blockBackground colorName="#eeeeee" start="0,2" stop="0,-1"/>
+      <blockBackground colorName="#eeeeee" start="1,2" stop="1,-1"/>
+      <blockBackground colorName="#eeeeee" start="2,2" stop="2,-1"/>
+      <blockBackground colorName="#eeeeee" start="0,3" stop="0,-1"/>
+      <blockBackground colorName="#eeeeee" start="1,3" stop="1,-1"/>
+      <blockBackground colorName="#eeeeee" start="2,3" stop="2,-1"/>
+      <blockBackground colorName="#eeeeee" start="0,4" stop="0,-1"/>
+      <blockBackground colorName="#eeeeee" start="1,4" stop="1,-1"/>
+      <blockBackground colorName="#eeeeee" start="2,4" stop="2,-1"/>
+    </blockTableStyle>
+    <blockTableStyle id="Tableau3">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Tableau4">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Tableau5">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <initialize>
+      <paraStyle name="all" alignment="justify"/>
+    </initialize>
+    <paraStyle name="P1" fontName="Helvetica" fontSize="25.0" leading="27" alignment="CENTER"/>
+    <paraStyle name="P2" fontName="Helvetica" fontSize="20.0" leading="27" alignment="CENTER"/>
+    <paraStyle name="P3" fontName="Helvetica"/>
+    <paraStyle name="P4" fontName="Helvetica" fontSize="12.0" leading="20"/>
+    <paraStyle name="P5" fontName="Helvetica" fontSize="12.0" leading="20"/>
+    <paraStyle name="P6" fontName="Helvetica" fontSize="12.0" leading="20" alignment="LEFT"/>
+    <paraStyle name="P7" fontName="Helvetica" fontSize="12.0" leading="20" alignment="LEFT"/>
+    <paraStyle name="P8" fontName="Helvetica" fontSize="14.0" leading="25" alignment="CENTER"/>
+    <paraStyle name="P9" fontName="Helvetica" fontSize="20.0" leading="27" alignment="CENTER" backColor="#eeeeee"/>
+    <paraStyle name="P10" fontName="Helvetica" fontSize="20.0" leading="27" alignment="CENTER" backColor="#eeeeee"/>
+    <paraStyle name="Standard" fontName="Helvetica"/>
+    <paraStyle name="Heading" fontName="Helvetica" fontSize="10.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
+    <paraStyle name="Text_20_body" fontName="Helvetica" spaceBefore="0.0" spaceAfter="7.0"/>
+    <paraStyle name="List" fontName="Helvetica" spaceBefore="0.0" spaceAfter="7.0"/>
+    <paraStyle name="Caption" fontName="Helvetica" fontSize="10.0" leading="15" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="Index" fontName="Helvetica"/>
+    <paraStyle name="Table_20_Contents" fontName="Helvetica"/>
+    <images/>
+  </stylesheet>
+  <story>
+    
+   <para>[[repeatIn(objects,'o')]]</para>
+   
+    <blockTable colWidths="545.0" style="Tableau1">
+      <tr>
+        <td>
+          <para style="P1">FICHE ATHLETE [[o.saison_id.name]]</para>
+        </td>
+      </tr>
+     
+    </blockTable>
+
+     <blockTable colWidths="430.0,60.0" style="Tableau1">
+      
+      <tr>
+        <td>
+          <para style="P8">[[o.ligue_id.name]]</para>
+          <para style="P8"></para>
+          <para style="P8">[[o.club_id.name]]</para>
+        </td>
+
+         <td>
+           <image width="2cm" height="2cm">[[ o.image ]]</image>
+        </td>
+      </tr>
+      
+    </blockTable>
+ 
+
+
+    <blockTable colWidths="249.0,172.0,122.0" style="Tableau2">
+      <tr>
+        <td>
+          <para style="P5">Licence : [[o.name]]</para>
+        </td>
+        <td>
+          <para style="P5">Nom : [[o.name_at]]</para>
+        </td>
+        <td >
+            
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P5">Date de naissance : [[o.datenaissance]]</para>
+        </td>
+        <td>
+          <para style="P5">Prénom : [[o.prenom]]</para>
+        </td>
+
+         <td>
+            
+        </td>
+       
+      </tr>
+      <tr>
+        <td>
+          <para style="P5">Lieu de Naisance : [[o.lieu_naissance]]</para>
+        </td>
+        <td>
+          <para style="P5">Discipline : [[o.discipline_id.name]]</para>
+        </td>
+         <td >
+            
+        </td>
+        
+      </tr>
+      <tr>
+        <td>
+          <para style="P5">Niveau : [[o.niveau_scolaire]]</para>
+        </td>
+        <td>
+            <para style="P5"> Entraîneur [[o.entraineur_id.name]] </para>
+        </td>
+         <td >
+            
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P5">Pointure : [[o.niveau_scolaire]]</para>
+        </td>
+        <td>
+          
+        </td>
+          <td >
+            
+        </td>
+      </tr>
+    </blockTable>
+    
+    <blockTable colWidths="541.0" style="Tableau5">
+      <tr>
+        <td>
+
+        </td>
+      </tr>
+    </blockTable>
+
+
+    <blockTable colWidths="541.0" style="Tableau3">
+      <tr>
+        <td>
+          <para style="P9">Informations Générales</para>
+        </td>
+      </tr>
+    </blockTable>
+    <blockTable colWidths="263.0,278.0" style="Tableau4">
+      <tr>
+        <td>
+          <para style="P6">Adresse :  [[o.adresse]]</para>
+        </td>
+        <td>
+          <para style="P7">Email : [[o.mail]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P7">Tél Fixe : [[o.tel1]]</para>
+        </td>
+        <td>
+          <para style="P7">Mobile : [[o.tel2]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P7">N° CIN : [[o.cin]]</para>
+        </td>
+        <td>
+          <para style="P7">Date Expiration : [[o.cinexpiration]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P7">N° Passeport : [[o.passeport]]</para>
+        </td>
+        <td>
+          <para style="P7">Date Expiration :  [[o.passeportexpiration]]</para>
+        </td>
+      </tr>
+    </blockTable>
+  
+
+    <blockTable colWidths="541.0" style="Tableau5">
+      <tr>
+        <td>
+
+        </td>
+      </tr>
+    </blockTable>
+    <blockTable colWidths="541.0" style="Tableau5">
+      <tr>
+        <td>
+          <para style="P10">Synthèse des Résultats</para>
+        </td>
+      </tr>
+    </blockTable>
+ 
+  </story>
+</document>
+

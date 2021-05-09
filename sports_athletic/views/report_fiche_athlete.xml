@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+<template id="report_fiche_athlete">
+    <t t-call="report.html_container">
+     <t t-call="report.external_layout">
+         <t t-foreach="docs" t-as="doc">
+        <div class="page">
+            <div class="oe_structure"/>
+            
+
+            <h2 style = "align:center;font-family: Arial Bold;
+	font-size: 24px;">
+                <span t-if="doc.licence == 'Athlete'">FICHE ATHLETE </span>
+                <span t-if="doc.licence == 'Entraineur'">FICHE ENTRAINEUR </span>
+                <span t-if="doc.licence == 'Dirigeant'">FICHE DIRIGEANT </span>
+                <span t-if="doc.licence == 'Dirigeant'">FICHE OFFICIEL</span>
+                <span t-field="doc.saison_id.name"/>
+            </h2>
+
+
+            <h4 style = "align:center; vertical-align:middle;font-family: Arial Bold;
+	font-size: 24px;">
+                
+                <span t-field="doc.ligue_id.name"/>
+            </h4>
+
+            <h4 style = "align:center; vertical-align:middle;">
+                
+                <span t-field="doc.club_id.name"/>
+            </h4>
+
+          
+        </div>
+ </t>
+         </t>
+    </t>
+</template>
+</data>
+</openerp>

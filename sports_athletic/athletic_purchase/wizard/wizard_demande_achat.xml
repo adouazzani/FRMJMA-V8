@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+		<record id="wizard_athletic_purchase_demande_achat_view" model="ir.ui.view">
+			<field name="name">Traitement des demandes d'achat</field>
+			<field name="model">wizard_athletic_purchase.demande_achat</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string=" ">
+
+					<group col="3" colspan="4">
+						<separator  string="Date de début :" colspan="1"/>
+						<separator  string=" Date fin :" colspan="1"/>
+						<separator  string="Service demandeur :" colspan="1"/>
+						<field name="date_du" nolabel="1" colspan="1" attrs="{'readonly':[('state','=','step2')]}"/>
+						<field name="date_au" nolabel="1" colspan="1" attrs="{'readonly':[('state','=','step2')]}"/>
+						<field name="service_dem" colspan="1" nolabel="1" attrs="{'readonly':[('state','=','step2')]}"/>
+					</group>
+					<group col="2" colspan="1">
+					</group>
+					<group col="2" colspan="2">
+
+					</group>
+					<group col="2" colspan="1">
+					</group>
+<newline/>
+					<group colspan="4" attrs="{'invisible':[('state','=','step1')]}">
+										<field name="articles_ids" nolabel="1" mode="tree,form">
+												<form string="Articles">
+													<field name="acheter"/>
+													<field name="demande_id" readonly="1"/>
+													<field name="date_dem" readonly="1"/>
+													<field name="prod_name"/>
+													<field name="quantity" readonly="1"/>
+													<field name="unit" readonly="1"/>
+													<field name="quantity_sec" readonly="1"/>
+													<field name="unit_sec" readonly="1"/>
+													<field name="date_prev"/>
+												</form>
+												<tree string="Articles" editable="bottom">
+													<field name="acheter"/>
+													<field name="prod_name" readonly="1"/>
+													<field name="quantity" readonly="1"/>
+													<field name="quantity_sec" readonly="1"/>
+													<field name="date_prev" readonly="1"/>
+													<field name="demande_id" readonly="1"/>
+													<field name="date_dem" readonly="1"/>
+												</tree>
+										</field>
+					</group>
+<newline/>
+					<group col="4">
+                            <field name="partner_id" on_change="onchange_partner_id(partner_id)"  attrs="{'invisible':[('state','=','step1')]}"/>
+                            <field name="partner_address_id" attrs="{'invisible':[('state','=','step1')]}"/>
+                            <field domain="[('type','=','purchase')]" name="pricelist_id" attrs="{'invisible':[('state','=','step1')]}"/>
+                            <field name="location_id" attrs="{'invisible':[('state','=','step1')]}"/>
+
+
+					</group>
+<newline/>
+					<group>
+						<group colspan="2" >
+						<field name="state"/>
+						</group>
+						<group  colspan="2">
+					<button name="afficher_articles" type="object" string="Valider" icon="gtk-go-forward" states="step1" groups="purchase.group_purchase_manager,base_athletic.group_responsable_achats,base_athletic.group_admin_business"/>
+							<!--<button name="demande_prix" type="object" string="Créer une demande de prix" icon="gtk-go-forward" states="step2"/>-->
+							<button name="appel_offre" type="object" string="Créer un appel d'offre" icon="gtk-go-forward" states="step2"/>
+							<button name="bon_commande" type="object" string="Créer un bon de commande" icon="gtk-apply" states="step2"/>
+
+						</group>
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_wizard_athletic_purchase_demande_achat" model="ir.actions.act_window">
+			<field name="name">Traitement des demandes d'achat</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">wizard_athletic_purchase.demande_achat</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+    <menuitem action="action_wizard_athletic_purchase_demande_achat" 
+              id="wizard_athletic_purchase_demande_achat_menu" 
+              name="Traitement des demandes d'achat "
+				sequence="80"
+                groups="purchase.group_purchase_manager,purchase.group_purchase_user"
+				parent="purchase.menu_procurement_management" />
+</data>
+</openerp>
